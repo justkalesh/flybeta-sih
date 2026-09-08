@@ -108,5 +108,5 @@ flybeta/
 ```
 
 ---
-*Built with 💚 for MoSPI SmartSkills Intelligence — SIH 2024*
+*Built with 💚 for MoSPI SmartSkills Intelligence — SIH 2026*
 
