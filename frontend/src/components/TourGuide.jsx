@@ -130,7 +130,7 @@ const TOUR_PAGES = [
         element: '#tour-page-labs',
         popover: {
           title: '🏗️ AI Labs',
-          description: 'Two tools: Project Architect generates step-by-step blueprints from your idea. Code Reviewer analyzes your code for bugs, style, and best practices.',
+          description: 'Two tools: Blueprint Lab generates step-by-step project plans from your idea. Doc Quiz Engine creates FRAC-tagged MCQs from uploaded documents (PDF/PPTX) for self-assessment.',
           side: 'bottom',
           align: 'center',
         },

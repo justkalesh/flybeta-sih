@@ -12,12 +12,11 @@ const NAV_LINKS = [
 ];
 
 const AUTH_NAV_LINKS = [
-  { label: 'Dashboard', path: '/dashboard' },
-  { label: 'Tracks', path: '/tracks' },
   { label: 'Diagnostic', path: '/diagnostic' },
+  { label: 'Tracks', path: '/tracks' },
   { label: 'Pathways', path: '/recommendations' },
-  { label: 'Quiz Engine', path: '/quiz-generator' },
   { label: 'Labs', path: '/labs' },
+  { label: 'Dashboard', path: '/dashboard' },
   { label: 'Admin', path: '/admin' },
 ];
 
