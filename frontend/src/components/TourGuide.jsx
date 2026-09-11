@@ -205,8 +205,9 @@ export default function TourGuide() {
         onPopoverRender: (popover, { state }) => {
           // ── Override progress text with global count ──
           const currentGlobal = stepOffset + state.activeIndex + 1;
-          if (popover.progressText) {
-            popover.progressText.textContent = `${currentGlobal} of ${TOTAL_STEPS}`;
+          const progressEl = popover.progress || popover.progressText;
+          if (progressEl) {
+            progressEl.textContent = `${currentGlobal} OF ${TOTAL_STEPS}`;
           }
 
           // ── Button text ──
