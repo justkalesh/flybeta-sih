@@ -43,7 +43,7 @@ export default function App() {
                 <Route path="/diagnostic" element={<DiagnosticPage />} />
                 <Route path="/recommendations" element={<RecommendationsPage />} />
                 <Route path="/quiz-generator" element={<QuizGeneratorPage />} />
-                <Route path="/labs" element={<Navigate to="/labs/architect" replace />} />
+                <Route path="/labs" element={<Navigate to="/labs/quiz-generator" replace />} />
                 <Route path="/labs/architect" element={<ProjectArchitectPage />} />
                 <Route path="/labs/quiz-generator" element={<DocQuizPage />} />
                 <Route path="/vision" element={<VisionPage />} />

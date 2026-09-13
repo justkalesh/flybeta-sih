@@ -1,8 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 
 const LAB_TABS = [
-  { label: '⚙ Blueprint Lab', path: '/labs/architect' },
   { label: '📝 Doc Quiz Engine', path: '/labs/quiz-generator' },
+  { label: '⚙ Blueprint Lab', path: '/labs/architect' },
 ];
 
 export default function LabsSubNav() {

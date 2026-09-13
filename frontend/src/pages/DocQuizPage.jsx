@@ -1,6 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { generateDocQuiz } from '../services/api';
 import LabsSubNav from '../components/layout/LabsSubNav';
+
+const HISTORY_KEY = 'mospi_doc_quiz_history';
 
 const FRAC_LABELS = {
   comp_statistical: { label: 'Statistical', color: '#3B82F6' },
@@ -24,6 +26,27 @@ export default function DocQuizPage() {
   const [quizData, setQuizData] = useState(null);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
+
+  // Quiz history from localStorage
+  const [quizHistory, setQuizHistory] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+    } catch { return []; }
+  });
+
+  const saveToHistory = (data, userScore, totalQuestions) => {
+    const entry = {
+      id: Date.now(),
+      filename: data.filename,
+      score: userScore,
+      total: totalQuestions,
+      difficulty: data.difficulty,
+      date: new Date().toISOString(),
+    };
+    const updated = [entry, ...quizHistory].slice(0, 20); // keep last 20
+    setQuizHistory(updated);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(updated));
+  };
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -82,6 +105,13 @@ export default function DocQuizPage() {
 
   const handleSubmitQuiz = () => {
     setSubmitted(true);
+    // Save to history
+    if (quizData) {
+      const finalScore = quizData.questions.reduce((acc, q, i) => {
+        return acc + (selectedAnswers[i] === q.correct_answer ? 1 : 0);
+      }, 0);
+      saveToHistory(quizData, finalScore, quizData.questions.length);
+    }
   };
 
   const handleReset = () => {
@@ -477,6 +507,63 @@ export default function DocQuizPage() {
                 </button>
               </>
             )}
+          </div>
+        </section>
+      )}
+
+      {/* ── Quiz History ──────────────────────────────────────── */}
+      {quizHistory.length > 0 && (
+        <section className="mt-12">
+          <div className="flex justify-between items-end mb-6 pb-2 border-b-2 border-ink">
+            <h3 className="heading-lg">📋 QUIZ HISTORY</h3>
+            <span className="label-mono text-muted">{quizHistory.length} attempt{quizHistory.length !== 1 ? 's' : ''}</span>
+          </div>
+          <div className="overflow-x-auto">
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr style={{ borderBottom: '3px solid var(--color-ink)' }}>
+                  <th className="label-mono text-left py-3 px-4">#</th>
+                  <th className="label-mono text-left py-3 px-4">Document</th>
+                  <th className="label-mono text-left py-3 px-4">Score</th>
+                  <th className="label-mono text-left py-3 px-4">Difficulty</th>
+                  <th className="label-mono text-left py-3 px-4">Date & Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {quizHistory.map((entry, i) => {
+                  const pct = Math.round((entry.score / entry.total) * 100);
+                  return (
+                    <tr
+                      key={entry.id}
+                      style={{
+                        borderBottom: '1px solid var(--color-border-light)',
+                        background: i % 2 === 0 ? 'var(--color-canvas)' : 'var(--color-surface)',
+                      }}
+                    >
+                      <td className="py-3 px-4 label-mono" style={{ color: 'var(--color-muted)' }}>{i + 1}</td>
+                      <td className="py-3 px-4" style={{ fontWeight: 600 }}>📄 {entry.filename}</td>
+                      <td className="py-3 px-4">
+                        <span
+                          className="label-mono px-2 py-1"
+                          style={{
+                            background: pct >= 70 ? '#22c55e' : pct >= 40 ? '#f59e0b' : '#ef4444',
+                            color: '#fff',
+                            display: 'inline-block',
+                          }}
+                        >
+                          {entry.score}/{entry.total} ({pct}%)
+                        </span>
+                      </td>
+                      <td className="py-3 px-4 label-mono" style={{ textTransform: 'uppercase' }}>{entry.difficulty}</td>
+                      <td className="py-3 px-4 label-mono" style={{ color: 'var(--color-muted)' }}>
+                        {new Date(entry.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}{' '}
+                        {new Date(entry.date).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </section>
       )}
