@@ -182,8 +182,16 @@ export default function TourGuide() {
       return;
     }
 
-    // Navigate to correct page if needed
+    // If user navigated away from the tour page (e.g. clicked "Take Assessment"),
+    // don't redirect them back — just wait for them to return naturally.
     if (!location.pathname.startsWith(tourPage.path)) {
+      // Check if user is on any other tour page (out of order) — if so, don't interfere
+      const isOnAnyTourPage = TOUR_PAGES.some(pg => location.pathname.startsWith(pg.path));
+      if (!isOnAnyTourPage) {
+        // User went to a non-tour page (e.g. /diagnostic) — let them go, don't redirect
+        return;
+      }
+      // User is on a different tour page — navigate to the correct one
       navigate(tourPage.path);
       return;
     }

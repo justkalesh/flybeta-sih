@@ -29,7 +29,11 @@ export default function DiagnosticPage() {
     if (user && competencyScores && showResults) {
       const fullProfile = { ...intakeData, ...competencyScores };
       saveProfile(fullProfile);
-      localStorage.setItem('mospi_has_seen_tour', ''); // Clear tour flag so it shows
+      // Only trigger tour for first-time users (never seen it before)
+      const hasEverSeenTour = localStorage.getItem('mospi_has_seen_tour');
+      if (hasEverSeenTour !== 'true') {
+        localStorage.setItem('mospi_has_seen_tour', ''); // Clear so tour shows for new users
+      }
       navigate('/dashboard');
     }
   }, [user]);
