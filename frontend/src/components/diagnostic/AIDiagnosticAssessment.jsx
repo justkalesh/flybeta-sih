@@ -122,7 +122,7 @@ export default function AIDiagnosticAssessment({ sections, onSubmit }) {
     onSubmit(payload);
   };
 
-  const isLast = currentSection === sections.length - 1 && currentQuestion === 4;
+  const isLast = currentSection === sections.length - 1 && currentQuestion === 3;
   const isFirst = currentSection === 0 && currentQuestion === 0;
 
   // Progress bar
