@@ -112,3 +112,36 @@ class StudentProfile(models.Model):
                 return round((progress / bracket) * 100) if bracket else 100
             prev_threshold = threshold
         return 100  # Max rank reached
+
+
+class DiagnosticAttempt(models.Model):
+    """
+    Persists each AI-generated Skill Gap Assessment attempt.
+    Stores the generated quiz, user answers, AI feedback, and per-section scores.
+    """
+    user = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name='diagnostic_attempts',
+    )
+    attempted_at = models.DateTimeField(auto_now_add=True)
+
+    # Per-section scores (MCQ out of 4 + descriptive out of 5 = 9 max each)
+    score_statistical = models.FloatField(default=0)
+    score_technical = models.FloatField(default=0)
+    score_digital_governance = models.FloatField(default=0)
+    score_behavioural = models.FloatField(default=0)
+    total_score = models.FloatField(default=0)  # out of 36
+
+    # Full payloads for review
+    quiz_payload = models.JSONField(default=dict, help_text='AI-generated questions')
+    answers_payload = models.JSONField(default=dict, help_text="User's submitted answers")
+    ai_feedback = models.JSONField(default=dict, help_text='AI evaluation of descriptive answers')
+
+    class Meta:
+        ordering = ['-attempted_at']
+        verbose_name = 'Diagnostic Attempt'
+        verbose_name_plural = 'Diagnostic Attempts'
+
+    def __str__(self):
+        return f'{self.user.username} — {self.attempted_at:%Y-%m-%d %H:%M} — {self.total_score}/36'

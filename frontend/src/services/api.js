@@ -230,4 +230,24 @@ export const askOracle = async (message, history) => {
   return data.reply;
 };
 
+// ── Diagnostic Quiz API ─────────────────────────────────────────────────
+
+export const generateDiagnosticQuiz = async (profileData) => {
+  const { data } = await api.post('ai/diagnostic-quiz/', profileData);
+  return data;
+};
+
+export const submitDiagnosticQuiz = async (quizPayload, answersPayload) => {
+  const { data } = await api.post('users/diagnostic-submit/', {
+    quiz_payload: quizPayload,
+    answers_payload: answersPayload,
+  });
+  return data;
+};
+
+export const fetchDiagnosticHistory = async () => {
+  const { data } = await api.get('users/diagnostic-history/');
+  return data.attempts;
+};
+
 export default api;

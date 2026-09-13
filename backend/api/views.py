@@ -2,7 +2,7 @@ from datetime import date, timedelta
 import re
 import traceback
 
-from accounts.models import StudentProfile
+from accounts.models import StudentProfile, DiagnosticAttempt
 # pyrefly: ignore [missing-import]
 from django.contrib.auth import get_user_model
 # pyrefly: ignore [missing-import]
@@ -21,7 +21,7 @@ from api.serializers import (
     DomainSerializer, LevelSerializer, LessonSerializer, UserStatsSerializer,
     CapstoneSubmissionSerializer, UserProfileSerializer
 )
-from api.ai_services import generate_project_blueprint, generate_code_review, generate_video_quiz, ask_oracle, extract_text_from_file, generate_quiz_from_document
+from api.ai_services import generate_project_blueprint, generate_code_review, generate_video_quiz, ask_oracle, extract_text_from_file, generate_quiz_from_document, generate_diagnostic_quiz, evaluate_descriptive_answers
 from learn.services.github_service import fetch_github_repo_content
 from learn.services.ai_evaluator import evaluate_code
 from rest_framework import viewsets
@@ -544,3 +544,163 @@ class DocumentQuizView(APIView):
                 {'error': 'An unexpected error occurred during quiz generation.'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
+
+
+class DiagnosticQuizGenerateView(APIView):
+    """
+    POST /api/v1/ai/diagnostic-quiz/
+    Generate a personalized FRAC skill-gap assessment quiz.
+    """
+    authentication_classes = []
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        designation = request.data.get('designation', '')
+        division = request.data.get('division', '')
+        years_of_service = request.data.get('years_of_service', '')
+        previous_trainings = request.data.get('previous_trainings', [])
+
+        if not designation:
+            return Response(
+                {'error': 'Designation is required.'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            sections = generate_diagnostic_quiz(
+                designation, division, years_of_service, previous_trainings
+            )
+            return Response({'sections': sections}, status=status.HTTP_200_OK)
+
+        except ValueError as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            traceback.print_exc()
+            return Response(
+                {'error': 'Failed to generate diagnostic quiz.'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+
+class DiagnosticSubmitView(APIView):
+    """
+    POST /api/v1/users/diagnostic-submit/
+    Submit answers, auto-grade MCQs, AI-grade descriptives, persist attempt.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        quiz_payload = request.data.get('quiz_payload', {})
+        answers_payload = request.data.get('answers_payload', {})
+        sections = quiz_payload.get('sections', [])
+
+        if not sections or len(sections) != 4:
+            return Response(
+                {'error': 'Invalid quiz payload. Expected 4 sections.'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        QUADRANT_FIELD_MAP = {
+            'comp_statistical': 'score_statistical',
+            'comp_technical': 'score_technical',
+            'comp_digital_governance': 'score_digital_governance',
+            'comp_behavioural': 'score_behavioural',
+        }
+
+        try:
+            # 1. Auto-grade MCQs
+            section_scores = {}
+            for section in sections:
+                quadrant = section['frac_quadrant']
+                mcq_answers = answers_payload.get(quadrant, {}).get('mcq_answers', [])
+                mcq_score = 0
+                for i, mcq in enumerate(section.get('mcqs', [])):
+                    if i < len(mcq_answers) and mcq_answers[i] == mcq.get('correct_answer'):
+                        mcq_score += 1
+                section_scores[quadrant] = {'mcq_score': mcq_score}
+
+            # 2. AI-grade descriptives
+            descriptive_inputs = []
+            for section in sections:
+                quadrant = section['frac_quadrant']
+                desc = section.get('descriptive', {})
+                user_answer = answers_payload.get(quadrant, {}).get('descriptive_answer', '')
+                descriptive_inputs.append({
+                    'frac_quadrant': quadrant,
+                    'question_text': desc.get('question_text', ''),
+                    'ideal_answer_points': desc.get('ideal_answer_points', []),
+                    'user_answer': user_answer,
+                })
+
+            evaluations = evaluate_descriptive_answers(descriptive_inputs)
+
+            # 3. Combine scores
+            ai_feedback = {}
+            total_score = 0
+            for eval_item in evaluations:
+                quadrant = eval_item.get('frac_quadrant', '')
+                desc_score = float(eval_item.get('score', 0))
+                if quadrant in section_scores:
+                    section_scores[quadrant]['desc_score'] = desc_score
+                    section_scores[quadrant]['total'] = section_scores[quadrant]['mcq_score'] + desc_score
+                    total_score += section_scores[quadrant]['total']
+                ai_feedback[quadrant] = {
+                    'score': desc_score,
+                    'feedback': eval_item.get('feedback', ''),
+                }
+
+            # 4. Persist attempt
+            attempt = DiagnosticAttempt.objects.create(
+                user=request.user,
+                score_statistical=section_scores.get('comp_statistical', {}).get('total', 0),
+                score_technical=section_scores.get('comp_technical', {}).get('total', 0),
+                score_digital_governance=section_scores.get('comp_digital_governance', {}).get('total', 0),
+                score_behavioural=section_scores.get('comp_behavioural', {}).get('total', 0),
+                total_score=total_score,
+                quiz_payload=quiz_payload,
+                answers_payload=answers_payload,
+                ai_feedback=ai_feedback,
+            )
+
+            return Response({
+                'attempt_id': attempt.id,
+                'total_score': total_score,
+                'max_score': 36,
+                'section_scores': section_scores,
+                'ai_feedback': ai_feedback,
+                'attempted_at': attempt.attempted_at.isoformat(),
+            }, status=status.HTTP_201_CREATED)
+
+        except ValueError as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            traceback.print_exc()
+            return Response(
+                {'error': 'Failed to submit diagnostic assessment.'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+
+class DiagnosticHistoryView(APIView):
+    """
+    GET /api/v1/users/diagnostic-history/
+    Return all past diagnostic attempts for the logged-in user.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        attempts = DiagnosticAttempt.objects.filter(user=request.user)
+        data = [
+            {
+                'id': a.id,
+                'attempted_at': a.attempted_at.isoformat(),
+                'score_statistical': a.score_statistical,
+                'score_technical': a.score_technical,
+                'score_digital_governance': a.score_digital_governance,
+                'score_behavioural': a.score_behavioural,
+                'total_score': a.total_score,
+                'max_score': 36,
+            }
+            for a in attempts
+        ]
+        return Response({'attempts': data}, status=status.HTTP_200_OK)

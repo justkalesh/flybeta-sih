@@ -1,44 +1,126 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import DiagnosticAssessment from '../components/diagnostic/DiagnosticAssessment';
 import ProfileIntake from '../components/diagnostic/ProfileIntake';
+import AIDiagnosticAssessment from '../components/diagnostic/AIDiagnosticAssessment';
+import DiagnosticResults from '../components/diagnostic/DiagnosticResults';
+import AttemptHistory from '../components/diagnostic/AttemptHistory';
 import AuthModal from '../components/auth/AuthModal';
 import { useCompetency } from '../context/CompetencyContext';
-import { ALL_TAGS, COMPETENCY_META, TARGET_FRAMEWORK } from '../data/competencyTaxonomy';
-import { BarChart3, UserPlus, RotateCcw, CheckCircle } from 'lucide-react';
+import { generateDiagnosticQuiz, submitDiagnosticQuiz, fetchDiagnosticHistory } from '../services/api';
+import { BarChart3, History, Loader2, AlertTriangle } from 'lucide-react';
+
+const FRAC_LABELS = {
+  comp_statistical: { label: 'Statistical', color: '#3B82F6' },
+  comp_technical: { label: 'Technical', color: '#8B5CF6' },
+  comp_digital_governance: { label: 'Digital Gov', color: '#10B981' },
+  comp_behavioural: { label: 'Behavioural', color: '#F59E0B' },
+};
 
 /**
- * DiagnosticPage
+ * DiagnosticPage — AI-Powered Personalized Skill Gap Assessment
  * 
- * Now accessible WITHOUT login (pre-auth onboarding).
- * Flow: ProfileIntake → DiagnosticAssessment → Results → Signup Prompt → Dashboard
+ * Flow: ProfileIntake → AI Quiz Generation → Take Quiz (no feedback) → Submit → Results Overview
+ * Also shows history of past attempts.
  */
 export default function DiagnosticPage() {
-  const { user, loading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { saveProfile, profile: existingProfile, hasCompletedDiagnostic } = useCompetency();
   const navigate = useNavigate();
 
+  // View state: 'intake' | 'generating' | 'quiz' | 'submitting' | 'results' | 'history'
+  const [view, setView] = useState('intake');
   const [intakeData, setIntakeData] = useState(null);
-  const [competencyScores, setCompetencyScores] = useState(null);
+  const [quizData, setQuizData] = useState(null);
+  const [answers, setAnswers] = useState({});
+  const [results, setResults] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [error, setError] = useState(null);
   const [showAuth, setShowAuth] = useState(false);
-  const [showResults, setShowResults] = useState(false);
 
-  // If user logs in while on the results page, auto-save and redirect
+  // Load history on mount if logged in
   useEffect(() => {
-    if (user && competencyScores && showResults) {
-      const fullProfile = { ...intakeData, ...competencyScores };
-      saveProfile(fullProfile);
-      // Only trigger tour for first-time users (never seen it before)
-      const hasEverSeenTour = localStorage.getItem('mospi_has_seen_tour');
-      if (hasEverSeenTour !== 'true') {
-        localStorage.setItem('mospi_has_seen_tour', ''); // Clear so tour shows for new users
-      }
-      navigate('/dashboard');
+    if (user) {
+      fetchDiagnosticHistory()
+        .then(setHistory)
+        .catch(() => {});
     }
   }, [user]);
 
-  if (loading) {
+  // If user logs in on results page, auto-save
+  useEffect(() => {
+    if (user && results && view === 'results') {
+      // Update competency profile with latest scores
+      const scores = {};
+      const sectionScores = results.section_scores || {};
+      for (const [quadrant, data] of Object.entries(sectionScores)) {
+        scores[quadrant] = Math.round((data.total / 9) * 100);
+      }
+      const fullProfile = { ...intakeData, ...scores };
+      saveProfile(fullProfile);
+
+      // Tour logic
+      const hasEverSeenTour = localStorage.getItem('mospi_has_seen_tour');
+      if (hasEverSeenTour !== 'true') {
+        localStorage.setItem('mospi_has_seen_tour', '');
+      }
+    }
+  }, [user]);
+
+  const handleIntakeComplete = async (data) => {
+    setIntakeData(data);
+    setView('generating');
+    setError(null);
+
+    try {
+      const response = await generateDiagnosticQuiz({
+        designation: data.designation,
+        division: data.division,
+        years_of_service: data.yearsOfService,
+        previous_trainings: data.previousTrainings,
+      });
+      setQuizData({ sections: response.sections });
+      setView('quiz');
+    } catch (err) {
+      const msg = err.response?.data?.error || err.message || 'Failed to generate quiz.';
+      setError(msg);
+      setView('intake');
+    }
+  };
+
+  const handleQuizSubmit = async (userAnswers) => {
+    setAnswers(userAnswers);
+    setView('submitting');
+    setError(null);
+
+    try {
+      const result = await submitDiagnosticQuiz(
+        { sections: quizData.sections },
+        userAnswers,
+      );
+      setResults(result);
+      setView('results');
+
+      // Refresh history
+      if (user) {
+        fetchDiagnosticHistory().then(setHistory).catch(() => {});
+      }
+    } catch (err) {
+      const msg = err.response?.data?.error || err.message || 'Failed to submit assessment.';
+      setError(msg);
+      setView('quiz'); // Let them retry
+    }
+  };
+
+  const handleRetake = () => {
+    setView('intake');
+    setQuizData(null);
+    setAnswers({});
+    setResults(null);
+    setError(null);
+  };
+
+  if (authLoading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="brutalist-card p-8 text-center">
@@ -47,183 +129,6 @@ export default function DiagnosticPage() {
       </div>
     );
   }
-
-  const handleIntakeComplete = (data) => {
-    setIntakeData(data);
-  };
-
-  const handleDiagnosticComplete = (scores) => {
-    setCompetencyScores(scores);
-
-    if (user) {
-      // Already logged in — save and redirect
-      const fullProfile = { ...intakeData, ...scores };
-      saveProfile(fullProfile);
-      navigate('/dashboard');
-    } else {
-      // Not logged in — show results + signup prompt
-      setShowResults(true);
-    }
-  };
-
-  const handleRetake = () => {
-    setIntakeData(null);
-    setCompetencyScores(null);
-    setShowResults(false);
-  };
-
-  // ── Results View (pre-auth) ─────────────────────────────────────────
-  if (showResults && competencyScores) {
-    const designation = intakeData?.designation || 'JSO';
-
-    return (
-      <div>
-        <header className="mb-8">
-          <div
-            className="bg-surface p-6 md:p-8 inline-block"
-            style={{
-              border: 'var(--border-width) solid var(--color-border)',
-              borderRadius: 'var(--border-radius)',
-              boxShadow: 'var(--shadow-brutal-lg)',
-            }}
-          >
-            <div className="flex items-center gap-2 md:gap-4 mb-2 flex-wrap">
-              <div
-                className="brutalist-badge"
-                style={{ background: 'var(--color-emerald)', color: '#fff' }}
-              >
-                COMPLETE
-              </div>
-              <span className="label-mono text-muted">
-                FRAC Competency Results
-              </span>
-            </div>
-            <h1 className="heading-xl m-0" style={{ color: 'var(--color-primary)' }}>
-              Your Skill Gap Profile
-            </h1>
-          </div>
-        </header>
-
-        <div className="max-w-2xl mx-auto space-y-6">
-          {/* Score Cards */}
-          <div className="brutalist-card p-6 bg-surface">
-            <h3 className="heading-md mb-4 flex items-center gap-2">
-              <BarChart3 size={20} style={{ color: 'var(--color-primary)' }} />
-              Competency Breakdown
-            </h3>
-            <div className="space-y-4">
-              {ALL_TAGS.map((tag) => {
-                const meta = COMPETENCY_META[tag];
-                const score = competencyScores?.[tag] ?? 0;
-                const target = TARGET_FRAMEWORK[designation]?.[tag] ?? 60;
-                const isGap = score < target;
-                return (
-                  <div key={tag}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="label-mono font-bold text-sm">
-                        {meta.icon} {meta.label}
-                      </span>
-                      <span
-                        className="label-mono text-sm"
-                        style={{ color: isGap ? '#DC2626' : 'var(--color-emerald)' }}
-                      >
-                        {score}%{' '}
-                        <span className="text-muted text-xs">/ {target}% target</span>
-                      </span>
-                    </div>
-                    <div
-                      className="w-full h-3 bg-canvas overflow-hidden"
-                      style={{
-                        border: 'var(--border-width) solid var(--color-border)',
-                        borderRadius: 'var(--border-radius)',
-                      }}
-                    >
-                      <div
-                        className="h-full transition-all duration-700 ease-out"
-                        style={{
-                          width: `${score}%`,
-                          backgroundColor: isGap ? '#DC2626' : meta.color,
-                          borderRadius: 'var(--border-radius)',
-                        }}
-                      />
-                    </div>
-                    {isGap && (
-                      <p className="text-xs text-muted mt-1" style={{ color: '#DC2626' }}>
-                        ⚠ Below target — training recommended
-                      </p>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Signup Prompt */}
-          <div
-            className="brutalist-card p-6"
-            style={{
-              background: 'var(--color-primary)',
-              color: '#fff',
-            }}
-          >
-            <div className="flex items-start gap-3 md:gap-4 flex-col sm:flex-row">
-              <div className="p-2 rounded-full" style={{ background: 'rgba(255,255,255,0.2)' }}>
-                <UserPlus size={24} />
-              </div>
-              <div className="flex-1">
-                <h3 className="heading-md m-0 mb-1" style={{ color: '#fff' }}>
-                  Save Your Profile & Get Recommendations
-                </h3>
-                <p className="text-sm m-0 mb-4" style={{ opacity: 0.9 }}>
-                  Create your free MoSPI SmartSkills account to save your FRAC competency profile, 
-                  access personalized iGOT &amp; NSSTA training pathways, and track your progress over time.
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  <button
-                    onClick={() => setShowAuth(true)}
-                    className="brutalist-btn bg-white flex items-center gap-2 px-5 md:px-6 py-2.5 w-full sm:w-auto justify-center"
-                    style={{ color: 'var(--color-primary)' }}
-                  >
-                    <CheckCircle size={16} /> Create Account
-                  </button>
-                  <button
-                    onClick={handleRetake}
-                    className="brutalist-btn flex items-center gap-2 px-6 py-2.5"
-                    style={{
-                      background: 'transparent',
-                      border: '2px solid rgba(255,255,255,0.5)',
-                      color: '#fff',
-                    }}
-                  >
-                    <RotateCcw size={16} /> Retake Assessment
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Auth Modal with custom message */}
-        <AuthModal
-          isOpen={showAuth}
-          onClose={() => setShowAuth(false)}
-          initialView="register"
-          customMessage="🎯 Great job on the assessment! Create an account to save your FRAC competency profile and unlock personalized training recommendations."
-        />
-      </div>
-    );
-  }
-
-  // ── Determine step description ──────────────────────────────────────
-  const getDescription = () => {
-    if (hasCompletedDiagnostic && user) {
-      return 'Retake the assessment to update your competency profile. Your previous profile data has been pre-filled.';
-    }
-    if (intakeData) {
-      return 'Answer 12 domain-specific questions to identify your competency gaps across the 4 FRAC quadrants.';
-    }
-    return "Welcome to the MoSPI SmartSkills diagnostic. We'll start by building your officer profile.";
-  };
 
   return (
     <div id="tour-page-diagnostic">
@@ -242,7 +147,7 @@ export default function DiagnosticPage() {
               className="brutalist-badge"
               style={{ background: 'var(--color-primary)', color: 'var(--color-canvas)' }}
             >
-              ASSESSMENT
+              AI ASSESSMENT
             </div>
             <span className="label-mono text-muted">
               FRAC Competency Diagnostic
@@ -260,17 +165,132 @@ export default function DiagnosticPage() {
             Skill Gap Analysis
           </h1>
           <p className="text-muted mt-2 mb-0" style={{ maxWidth: '600px' }}>
-            {getDescription()}
+            {view === 'generating' && 'Generating your personalized assessment using AI...'}
+            {view === 'submitting' && 'Evaluating your responses with AI...'}
+            {view === 'quiz' && 'Answer all questions. Results will be shown after submission.'}
+            {view === 'results' && 'Assessment complete. Review your results below.'}
+            {view === 'history' && 'View your past assessment attempts and track progress.'}
+            {view === 'intake' && (hasCompletedDiagnostic && user
+              ? 'Retake the AI-generated assessment to update your competency profile.'
+              : "AI generates a unique quiz based on your officer profile. 20 questions across 4 FRAC sections."
+            )}
           </p>
         </div>
+
+        {/* Tab Buttons */}
+        {user && (
+          <div className="flex gap-3 mt-6">
+            <button
+              onClick={() => view !== 'generating' && view !== 'submitting' && handleRetake()}
+              className="brutalist-btn px-5 py-2 flex items-center gap-2"
+              style={{
+                background: view !== 'history' ? 'var(--color-primary)' : 'var(--color-surface)',
+                color: view !== 'history' ? '#fff' : 'var(--color-ink)',
+              }}
+            >
+              <BarChart3 size={16} /> Take Assessment
+            </button>
+            <button
+              onClick={() => setView('history')}
+              className="brutalist-btn px-5 py-2 flex items-center gap-2"
+              style={{
+                background: view === 'history' ? 'var(--color-primary)' : 'var(--color-surface)',
+                color: view === 'history' ? '#fff' : 'var(--color-ink)',
+              }}
+            >
+              <History size={16} /> Attempt History ({history.length})
+            </button>
+          </div>
+        )}
       </header>
 
-      {/* Assessment Flow */}
-      {!intakeData ? (
-        <ProfileIntake onComplete={handleIntakeComplete} />
-      ) : (
-        <DiagnosticAssessment onComplete={handleDiagnosticComplete} />
+      {/* Error Banner */}
+      {error && (
+        <div
+          className="brutalist-card p-4 mb-6 flex items-center gap-3"
+          style={{ background: '#FEF2F2', border: '2px solid #DC2626' }}
+        >
+          <AlertTriangle size={20} style={{ color: '#DC2626' }} />
+          <span style={{ color: '#DC2626' }}>{error}</span>
+        </div>
       )}
+
+      {/* ── GENERATING STATE ── */}
+      {view === 'generating' && (
+        <div className="flex flex-col items-center justify-center min-h-[40vh] gap-4">
+          <div className="brutalist-card p-10 text-center bg-surface" style={{ maxWidth: 500 }}>
+            <Loader2 size={48} className="mx-auto mb-4 animate-spin" style={{ color: 'var(--color-primary)' }} />
+            <h3 className="heading-md mb-2">Generating Your Assessment</h3>
+            <p className="text-muted text-sm">
+              AI is creating 20 personalized questions based on your profile as a{' '}
+              <strong>{intakeData?.designation}</strong> in{' '}
+              <strong>{intakeData?.division}</strong>...
+            </p>
+            <div className="mt-4 flex gap-2 flex-wrap justify-center">
+              {Object.values(FRAC_LABELS).map((q) => (
+                <span
+                  key={q.label}
+                  className="label-mono px-2 py-1 text-xs"
+                  style={{ background: q.color, color: '#fff' }}
+                >
+                  {q.label}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── SUBMITTING STATE ── */}
+      {view === 'submitting' && (
+        <div className="flex flex-col items-center justify-center min-h-[40vh] gap-4">
+          <div className="brutalist-card p-10 text-center bg-surface" style={{ maxWidth: 500 }}>
+            <Loader2 size={48} className="mx-auto mb-4 animate-spin" style={{ color: 'var(--color-primary)' }} />
+            <h3 className="heading-md mb-2">Evaluating Responses</h3>
+            <p className="text-muted text-sm">
+              AI is grading your MCQs and evaluating descriptive answers...
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* ── PROFILE INTAKE ── */}
+      {view === 'intake' && (
+        <ProfileIntake onComplete={handleIntakeComplete} />
+      )}
+
+      {/* ── AI QUIZ ── */}
+      {view === 'quiz' && quizData && (
+        <AIDiagnosticAssessment
+          sections={quizData.sections}
+          onSubmit={handleQuizSubmit}
+        />
+      )}
+
+      {/* ── RESULTS ── */}
+      {view === 'results' && results && (
+        <DiagnosticResults
+          results={results}
+          quizData={quizData}
+          answers={answers}
+          onRetake={handleRetake}
+          showSignup={!user}
+          onSignup={() => setShowAuth(true)}
+        />
+      )}
+
+      {/* ── HISTORY ── */}
+      {view === 'history' && (
+        <AttemptHistory attempts={history} onRetake={handleRetake} />
+      )}
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuth}
+        onClose={() => setShowAuth(false)}
+        initialView="register"
+        customMessage="🎯 Great job on the assessment! Create an account to save your FRAC competency profile and unlock personalized training recommendations."
+      />
     </div>
   );
 }

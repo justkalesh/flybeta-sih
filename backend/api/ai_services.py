@@ -338,3 +338,178 @@ def generate_quiz_from_document(text, num_questions=5, difficulty='intermediate'
     except Exception as e:
         print(f"Gemini API Error (Doc Quiz): {e}")
         raise ValueError(f"Document quiz generation failed: {str(e)}")
+
+
+# ── Diagnostic Quiz Pydantic Schemas ──────────────────────────────────
+
+class DiagnosticMCQ(BaseModel):
+    question_text: str
+    options: list[str] = Field(min_length=4, max_length=4, description="Exactly 4 answer options of roughly equal length")
+    correct_answer: str = Field(description="The full text of the correct option")
+    explanation: str = Field(description="Why this is correct")
+    igot_topic: str = Field(description="Related iGOT Karmayogi course topic")
+
+class DiagnosticDescriptive(BaseModel):
+    question_text: str = Field(description="Question answerable in 50-100 words")
+    ideal_answer_points: list[str] = Field(description="3-5 key points for rubric grading")
+    igot_topic: str = Field(description="Related iGOT Karmayogi course topic")
+
+class DiagnosticSection(BaseModel):
+    frac_quadrant: str = Field(description="One of: comp_statistical, comp_technical, comp_digital_governance, comp_behavioural")
+    mcqs: list[DiagnosticMCQ] = Field(min_length=4, max_length=4)
+    descriptive: DiagnosticDescriptive
+
+class DiagnosticQuizResponse(BaseModel):
+    sections: list[DiagnosticSection] = Field(min_length=4, max_length=4)
+
+
+class DescriptiveEvaluation(BaseModel):
+    frac_quadrant: str
+    score: float = Field(ge=0, le=5, description="Score out of 5")
+    feedback: str = Field(description="Written feedback explaining the score")
+
+class DescriptiveEvaluationResponse(BaseModel):
+    evaluations: list[DescriptiveEvaluation] = Field(min_length=4, max_length=4)
+
+
+# ── Diagnostic Quiz Generation ────────────────────────────────────────
+
+DIFFICULTY_MAP = {
+    'Junior Statistical Officer (JSO)': 'beginner to intermediate',
+    'Senior Statistical Officer (SSO)': 'intermediate',
+    'Assistant Director': 'intermediate to advanced',
+    'Deputy Director': 'advanced',
+    'Joint Director': 'advanced',
+    'Director': 'advanced to expert',
+    'Deputy Director General': 'expert',
+    'Additional Director General': 'expert',
+    'Director General': 'expert',
+}
+
+
+def generate_diagnostic_quiz(designation, division, years_of_service, previous_trainings):
+    """
+    Generate a personalized FRAC skill-gap assessment quiz using Gemini.
+    Returns 4 sections × (4 MCQs + 1 descriptive) = 20 questions.
+    """
+    if not client:
+        raise ValueError("Missing API Key. Diagnostic quiz generation cannot run.")
+
+    difficulty = DIFFICULTY_MAP.get(designation, 'intermediate')
+    trainings_str = ', '.join(previous_trainings) if previous_trainings else 'None'
+
+    prompt = (
+        f"Generate a personalized FRAC competency assessment for an Indian government statistical officer.\n\n"
+        f"OFFICER PROFILE:\n"
+        f"- Designation: {designation}\n"
+        f"- Division: {division}\n"
+        f"- Years of Service: {years_of_service}\n"
+        f"- Previous Trainings: {trainings_str}\n"
+        f"- Difficulty Level: {difficulty}\n\n"
+        f"Generate exactly 4 sections, one for each FRAC quadrant:\n"
+        f"1. comp_statistical (Survey Design, Sampling, National Accounts, SDG Indicators)\n"
+        f"2. comp_technical (Python, R, SQL, GIS, AI/ML, Data Pipelines)\n"
+        f"3. comp_digital_governance (Cybersecurity, Data Privacy, Gov-Cloud, DPI Systems)\n"
+        f"4. comp_behavioural (Leadership, Communication, Project Management, Ethics)\n\n"
+        f"Each section must have:\n"
+        f"- 4 MCQs with exactly 4 options each\n"
+        f"- 1 descriptive question answerable in 50-100 words\n\n"
+        f"IMPORTANT RULES:\n"
+        f"- All 4 MCQ options MUST be roughly equal in length (15-25 words each)\n"
+        f"- Questions must be calibrated to the officer's designation and experience\n"
+        f"- Map each question to a real iGOT Karmayogi course topic\n"
+        f"- For the descriptive question, provide 3-5 ideal answer points for rubric grading\n"
+        f"- Questions should test practical knowledge relevant to MoSPI operations\n"
+        f"- Do NOT repeat questions from previous assessments"
+    )
+
+    system_instruction = (
+        "You are an expert assessment designer for India's Ministry of Statistics and Programme "
+        "Implementation (MoSPI). You design FRAC (Framework of Roles, Activities & Competencies) "
+        "assessments for the iGOT Karmayogi platform. Your questions are precise, practical, "
+        "and calibrated to the officer's seniority. MCQ options must be plausible distractors "
+        "of roughly equal length. Descriptive questions must be answerable in 50-100 words and "
+        "test conceptual understanding, not rote memorization."
+    )
+
+    try:
+        response = client.models.generate_content(
+            model='gemini-3.6-flash',
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                system_instruction=system_instruction,
+                response_mime_type="application/json",
+                response_schema=DiagnosticQuizResponse,
+                temperature=0.7,
+            ),
+        )
+
+        data = json.loads(response.text)
+        return data.get("sections", [])
+
+    except Exception as e:
+        print(f"Gemini API Error (Diagnostic Quiz): {e}")
+        raise ValueError(f"Diagnostic quiz generation failed: {str(e)}")
+
+
+# ── Descriptive Answer Evaluation ─────────────────────────────────────
+
+def evaluate_descriptive_answers(sections_with_answers):
+    """
+    Evaluate 4 descriptive answers using Gemini.
+    
+    Args:
+        sections_with_answers: list of dicts, each with:
+            - frac_quadrant: str
+            - question_text: str
+            - ideal_answer_points: list[str]
+            - user_answer: str
+    
+    Returns:
+        List of evaluation dicts with score (0-5) and feedback.
+    """
+    if not client:
+        raise ValueError("Missing API Key. Descriptive evaluation cannot run.")
+
+    answers_text = ""
+    for i, section in enumerate(sections_with_answers, 1):
+        answers_text += (
+            f"\n--- SECTION {i}: {section['frac_quadrant']} ---\n"
+            f"Question: {section['question_text']}\n"
+            f"Ideal Answer Points: {', '.join(section['ideal_answer_points'])}\n"
+            f"Student's Answer: {section['user_answer']}\n"
+        )
+
+    prompt = (
+        f"Evaluate the following 4 descriptive answers from a government officer's "
+        f"FRAC competency assessment.\n\n{answers_text}\n\n"
+        f"Score each answer out of 5 marks. Provide written feedback for each."
+    )
+
+    system_instruction = (
+        "You are a lenient but fair examiner for MoSPI officer assessments. "
+        "Grade based on UNDERSTANDING visible in the answer, not exact keywords or phrasing. "
+        "Award partial credit generously — a decent attempt showing basic understanding should "
+        "get at least 2.5-3/5. Only give 0-1 for completely wrong or blank answers. "
+        "Give 4-5 for answers that demonstrate strong conceptual grasp even if not perfectly worded. "
+        "Keep feedback constructive and specific (1-2 sentences)."
+    )
+
+    try:
+        response = client.models.generate_content(
+            model='gemini-3.6-flash',
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                system_instruction=system_instruction,
+                response_mime_type="application/json",
+                response_schema=DescriptiveEvaluationResponse,
+                temperature=0.3,
+            ),
+        )
+
+        data = json.loads(response.text)
+        return data.get("evaluations", [])
+
+    except Exception as e:
+        print(f"Gemini API Error (Descriptive Eval): {e}")
+        raise ValueError(f"Descriptive evaluation failed: {str(e)}")
