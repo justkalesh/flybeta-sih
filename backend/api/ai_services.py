@@ -420,7 +420,9 @@ def generate_diagnostic_quiz(designation, division, years_of_service, previous_t
         f"- Map each question to a real iGOT Karmayogi course topic\n"
         f"- For the descriptive question, provide 3-5 ideal answer points for rubric grading\n"
         f"- Questions should test practical knowledge relevant to MoSPI operations\n"
-        f"- Do NOT repeat questions from previous assessments"
+        f"- Do NOT repeat questions from previous assessments\n\n"
+        f"Respond with ONLY valid JSON in this exact format:\n"
+        f'{{"sections": [{{"frac_quadrant": "comp_statistical", "mcqs": [{{"question_text": "...", "options": ["A","B","C","D"], "correct_answer": "full text of correct option", "explanation": "...", "igot_topic": "..."}}], "descriptive": {{"question_text": "...", "ideal_answer_points": ["point1","point2","point3"], "igot_topic": "..."}}}}]}}'
     )
 
     system_instruction = (
@@ -429,7 +431,8 @@ def generate_diagnostic_quiz(designation, division, years_of_service, previous_t
         "assessments for the iGOT Karmayogi platform. Your questions are precise, practical, "
         "and calibrated to the officer's seniority. MCQ options must be plausible distractors "
         "of roughly equal length. Descriptive questions must be answerable in 50-100 words and "
-        "test conceptual understanding, not rote memorization."
+        "test conceptual understanding, not rote memorization. "
+        "Always respond with valid JSON only, no markdown."
     )
 
     try:
@@ -439,7 +442,6 @@ def generate_diagnostic_quiz(designation, division, years_of_service, previous_t
             config=types.GenerateContentConfig(
                 system_instruction=system_instruction,
                 response_mime_type="application/json",
-                response_schema=DiagnosticQuizResponse,
                 temperature=0.7,
             ),
         )
@@ -483,7 +485,9 @@ def evaluate_descriptive_answers(sections_with_answers):
     prompt = (
         f"Evaluate the following 4 descriptive answers from a government officer's "
         f"FRAC competency assessment.\n\n{answers_text}\n\n"
-        f"Score each answer out of 5 marks. Provide written feedback for each."
+        f"Score each answer out of 5 marks. Provide written feedback for each.\n\n"
+        f"Respond with ONLY valid JSON in this exact format:\n"
+        f'{{"evaluations": [{{"frac_quadrant": "comp_statistical", "score": 3.5, "feedback": "..."}}]}}'
     )
 
     system_instruction = (
@@ -492,7 +496,8 @@ def evaluate_descriptive_answers(sections_with_answers):
         "Award partial credit generously — a decent attempt showing basic understanding should "
         "get at least 2.5-3/5. Only give 0-1 for completely wrong or blank answers. "
         "Give 4-5 for answers that demonstrate strong conceptual grasp even if not perfectly worded. "
-        "Keep feedback constructive and specific (1-2 sentences)."
+        "Keep feedback constructive and specific (1-2 sentences). "
+        "Always respond with valid JSON only, no markdown."
     )
 
     try:
@@ -502,7 +507,6 @@ def evaluate_descriptive_answers(sections_with_answers):
             config=types.GenerateContentConfig(
                 system_instruction=system_instruction,
                 response_mime_type="application/json",
-                response_schema=DescriptiveEvaluationResponse,
                 temperature=0.3,
             ),
         )
