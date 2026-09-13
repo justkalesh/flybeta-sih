@@ -356,7 +356,7 @@ class DiagnosticDescriptive(BaseModel):
 
 class DiagnosticSection(BaseModel):
     frac_quadrant: str = Field(description="One of: comp_statistical, comp_technical, comp_digital_governance, comp_behavioural")
-    mcqs: list[DiagnosticMCQ] = Field(min_length=4, max_length=4)
+    mcqs: list[DiagnosticMCQ] = Field(min_length=3, max_length=3)
     descriptive: DiagnosticDescriptive
 
 class DiagnosticQuizResponse(BaseModel):
@@ -412,7 +412,7 @@ def generate_diagnostic_quiz(designation, division, years_of_service, previous_t
         f"3. comp_digital_governance (Cybersecurity, Data Privacy, Gov-Cloud, DPI Systems)\n"
         f"4. comp_behavioural (Leadership, Communication, Project Management, Ethics)\n\n"
         f"Each section must have:\n"
-        f"- 4 MCQs with exactly 4 options each\n"
+        f"- 3 MCQs with exactly 4 options each\n"
         f"- 1 descriptive question answerable in 50-100 words\n\n"
         f"IMPORTANT RULES:\n"
         f"- All 4 MCQ options MUST be roughly equal in length (15-25 words each)\n"

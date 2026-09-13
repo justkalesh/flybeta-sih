@@ -29,7 +29,7 @@ function shuffle(array) {
  */
 export default function AIDiagnosticAssessment({ sections, onSubmit }) {
   const [currentSection, setCurrentSection] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState(0); // 0-3 = MCQ, 4 = descriptive
+  const [currentQuestion, setCurrentQuestion] = useState(0); // 0-2 = MCQ, 3 = descriptive
   const [mcqAnswers, setMcqAnswers] = useState({}); // { quadrant: [ans0, ans1, ans2, ans3] }
   const [descriptiveAnswers, setDescriptiveAnswers] = useState({}); // { quadrant: text }
 
@@ -48,8 +48,8 @@ export default function AIDiagnosticAssessment({ sections, onSubmit }) {
   const section = sections[currentSection];
   const quadrant = section.frac_quadrant;
   const fracMeta = FRAC_LABELS[quadrant] || { label: quadrant, color: '#666', icon: '📝' };
-  const isDescriptive = currentQuestion === 4;
-  const totalQuestionsPerSection = 5; // 4 MCQ + 1 descriptive
+  const isDescriptive = currentQuestion === 3;
+  const totalQuestionsPerSection = 4; // 3 MCQ + 1 descriptive
   const globalQuestion = currentSection * totalQuestionsPerSection + currentQuestion + 1;
   const totalQuestions = sections.length * totalQuestionsPerSection;
 
@@ -70,7 +70,7 @@ export default function AIDiagnosticAssessment({ sections, onSubmit }) {
     for (const sec of sections) {
       const q = sec.frac_quadrant;
       const mcqAns = mcqAnswers[q] || [];
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 3; i++) {
         if (!mcqAns[i]) return false;
       }
       const desc = descriptiveAnswers[q] || '';
@@ -92,7 +92,7 @@ export default function AIDiagnosticAssessment({ sections, onSubmit }) {
   };
 
   const goNext = () => {
-    if (currentQuestion < 4) {
+    if (currentQuestion < 3) {
       setCurrentQuestion((p) => p + 1);
     } else if (currentSection < sections.length - 1) {
       setCurrentSection((p) => p + 1);
@@ -105,7 +105,7 @@ export default function AIDiagnosticAssessment({ sections, onSubmit }) {
       setCurrentQuestion((p) => p - 1);
     } else if (currentSection > 0) {
       setCurrentSection((p) => p - 1);
-      setCurrentQuestion(4);
+      setCurrentQuestion(3);
     }
   };
 
@@ -140,7 +140,7 @@ export default function AIDiagnosticAssessment({ sections, onSubmit }) {
             className="label-mono px-3 py-1 text-xs"
             style={{ background: fracMeta.color, color: '#fff' }}
           >
-            {fracMeta.icon} {fracMeta.label} — {isDescriptive ? 'Descriptive (5 marks)' : `MCQ ${currentQuestion + 1}/4 (1 mark)`}
+            {fracMeta.icon} {fracMeta.label} — {isDescriptive ? 'Descriptive (5 marks)' : `MCQ ${currentQuestion + 1}/3 (1 mark)`}
           </span>
         </div>
         <div

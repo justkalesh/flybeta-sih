@@ -49,7 +49,7 @@ export default function DiagnosticResults({ results, quizData, answers, onRetake
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
           {Object.entries(section_scores).map(([quadrant, data]) => {
             const meta = FRAC_LABELS[quadrant] || { label: quadrant, color: '#666' };
-            const sectionPct = Math.round((data.total / 9) * 100);
+            const sectionPct = Math.round((data.total / 8) * 100);
             return (
               <div key={quadrant} className="text-center">
                 <div
@@ -59,10 +59,10 @@ export default function DiagnosticResults({ results, quizData, answers, onRetake
                   {meta.label}
                 </div>
                 <div className="heading-md" style={{ color: meta.color }}>
-                  {data.total.toFixed(1)}/9
+                  {data.total.toFixed(1)}/8
                 </div>
                 <div className="text-xs text-muted">
-                  MCQ: {data.mcq_score}/4 · Desc: {data.desc_score?.toFixed(1) || 0}/5
+                  MCQ: {data.mcq_score}/3 · Desc: {data.desc_score?.toFixed(1) || 0}/5
                 </div>
                 <div
                   className="w-full h-2 mt-2 overflow-hidden"

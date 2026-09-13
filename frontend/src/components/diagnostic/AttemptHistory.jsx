@@ -48,23 +48,23 @@ export default function AttemptHistory({ attempts, onRetake }) {
               <th className="label-mono text-left py-3 px-4">#</th>
               <th className="label-mono text-left py-3 px-4">Date & Time</th>
               <th className="label-mono text-center py-3 px-4" style={{ color: '#3B82F6' }}>
-                Statistical (/9)
+                Statistical (/8)
               </th>
               <th className="label-mono text-center py-3 px-4" style={{ color: '#8B5CF6' }}>
-                Technical (/9)
+                Technical (/8)
               </th>
               <th className="label-mono text-center py-3 px-4" style={{ color: '#10B981' }}>
-                Digital Gov (/9)
+                Digital Gov (/8)
               </th>
               <th className="label-mono text-center py-3 px-4" style={{ color: '#F59E0B' }}>
-                Behavioural (/9)
+                Behavioural (/8)
               </th>
-              <th className="label-mono text-center py-3 px-4">Total (/36)</th>
+              <th className="label-mono text-center py-3 px-4">Total (/32)</th>
             </tr>
           </thead>
           <tbody>
             {attempts.map((attempt, i) => {
-              const pct = Math.round((attempt.total_score / 36) * 100);
+              const pct = Math.round((attempt.total_score / 32) * 100);
               return (
                 <tr
                   key={attempt.id}

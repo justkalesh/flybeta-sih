@@ -54,7 +54,7 @@ export default function DiagnosticPage() {
       const scores = {};
       const sectionScores = results.section_scores || {};
       for (const [quadrant, data] of Object.entries(sectionScores)) {
-        scores[quadrant] = Math.round((data.total / 9) * 100);
+        scores[quadrant] = Math.round((data.total / 8) * 100);
       }
       const fullProfile = { ...intakeData, ...scores };
       saveProfile(fullProfile);

@@ -665,7 +665,7 @@ class DiagnosticSubmitView(APIView):
             return Response({
                 'attempt_id': attempt.id,
                 'total_score': total_score,
-                'max_score': 36,
+                'max_score': 32,
                 'section_scores': section_scores,
                 'ai_feedback': ai_feedback,
                 'attempted_at': attempt.attempted_at.isoformat(),
@@ -699,7 +699,7 @@ class DiagnosticHistoryView(APIView):
                 'score_digital_governance': a.score_digital_governance,
                 'score_behavioural': a.score_behavioural,
                 'total_score': a.total_score,
-                'max_score': 36,
+                'max_score': 32,
             }
             for a in attempts
         ]
