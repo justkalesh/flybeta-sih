@@ -28,6 +28,23 @@ export default function TrackRoadmapPage() {
       .finally(() => setLoading(false));
   }, [name, cached]);
 
+  const levels = domain?.levels || [];
+  const totalLessons = levels.reduce((acc, l) => acc + (l.lessons?.length || 0), 0);
+  const domainProgress = user?.domain_progress?.find(p => p.domain_name === name);
+  const highestUnlockedLevel = domainProgress?.highest_unlocked_level || 1;
+
+  // Auto-scroll to the active level after the roadmap loads
+  useEffect(() => {
+    if (!loading && highestUnlockedLevel) {
+      setTimeout(() => {
+        const element = document.getElementById(`level-${highestUnlockedLevel}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 150);
+    }
+  }, [loading, highestUnlockedLevel]);
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -51,23 +68,6 @@ export default function TrackRoadmapPage() {
     );
   }
 
-  const levels = domain?.levels || [];
-  const totalLessons = levels.reduce((acc, l) => acc + (l.lessons?.length || 0), 0);
-  
-  const domainProgress = user?.domain_progress?.find(p => p.domain_name === name);
-  const highestUnlockedLevel = domainProgress?.highest_unlocked_level || 1;
-
-  // Auto-scroll to the active level after the roadmap loads
-  useEffect(() => {
-    if (!loading && highestUnlockedLevel) {
-      setTimeout(() => {
-        const element = document.getElementById(`level-${highestUnlockedLevel}`);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 150);
-    }
-  }, [loading, highestUnlockedLevel]);
 
   return (
     <div>

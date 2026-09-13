@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 const LAB_TABS = [
   { label: '⚙ Blueprint Lab', path: '/labs/architect' },
-  { label: '🔍 Code Drishti', path: '/labs/reviewer' },
+  { label: '📝 Doc Quiz Engine', path: '/labs/quiz-generator' },
 ];
 
 export default function LabsSubNav() {

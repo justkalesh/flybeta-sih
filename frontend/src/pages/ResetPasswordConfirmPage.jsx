@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Lock, CheckCircle, ArrowRight, Loader } from 'lucide-react';
+import { Lock, CheckCircle, ArrowRight, Loader, Eye, EyeOff } from 'lucide-react';
 import { resetPassword } from '../services/api';
 
 export default function ResetPasswordConfirmPage() {
@@ -8,6 +8,8 @@ export default function ResetPasswordConfirmPage() {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
@@ -89,14 +91,22 @@ export default function ResetPasswordConfirmPage() {
                   <div className="relative">
                     <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                     <input
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
                       minLength={8}
-                      className="w-full pl-10 pr-4 py-3 bg-[var(--color-bg-primary,#f5f5f5)] border-2 border-black text-[var(--color-ink,#000)] focus:outline-none focus:border-[var(--color-primary,#EAB308)] placeholder-gray-500 transition-colors"
+                      className="w-full pl-10 pr-12 py-3 bg-[var(--color-bg-primary,#f5f5f5)] border-2 border-black text-[var(--color-ink,#000)] focus:outline-none focus:border-[var(--color-primary,#EAB308)] placeholder-gray-500 transition-colors"
                       placeholder="••••••••"
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[var(--color-ink,#000)] bg-transparent border-none cursor-pointer p-0 transition-colors"
+                      tabIndex={-1}
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
                   </div>
                 </div>
 
@@ -107,14 +117,22 @@ export default function ResetPasswordConfirmPage() {
                   <div className="relative">
                     <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                     <input
-                      type="password"
+                      type={showConfirm ? 'text' : 'password'}
                       value={passwordConfirm}
                       onChange={(e) => setPasswordConfirm(e.target.value)}
                       required
                       minLength={8}
-                      className="w-full pl-10 pr-4 py-3 bg-[var(--color-bg-primary,#f5f5f5)] border-2 border-black text-[var(--color-ink,#000)] focus:outline-none focus:border-[var(--color-primary,#EAB308)] placeholder-gray-500 transition-colors"
+                      className="w-full pl-10 pr-12 py-3 bg-[var(--color-bg-primary,#f5f5f5)] border-2 border-black text-[var(--color-ink,#000)] focus:outline-none focus:border-[var(--color-primary,#EAB308)] placeholder-gray-500 transition-colors"
                       placeholder="••••••••"
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirm(!showConfirm)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[var(--color-ink,#000)] bg-transparent border-none cursor-pointer p-0 transition-colors"
+                      tabIndex={-1}
+                    >
+                      {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
                   </div>
                 </div>
 

@@ -130,7 +130,7 @@ const TOUR_PAGES = [
         element: '#tour-page-labs',
         popover: {
           title: '🏗️ AI Labs',
-          description: 'Two tools: Project Architect generates step-by-step blueprints from your idea. Code Reviewer analyzes your code for bugs, style, and best practices.',
+          description: 'Two tools: Blueprint Lab generates step-by-step project plans from your idea. Doc Quiz Engine creates FRAC-tagged MCQs from uploaded documents (PDF/PPTX) for self-assessment.',
           side: 'bottom',
           align: 'center',
         },
@@ -205,8 +205,9 @@ export default function TourGuide() {
         onPopoverRender: (popover, { state }) => {
           // ── Override progress text with global count ──
           const currentGlobal = stepOffset + state.activeIndex + 1;
-          if (popover.progressText) {
-            popover.progressText.textContent = `${currentGlobal} of ${TOTAL_STEPS}`;
+          const progressEl = popover.progress || popover.progressText;
+          if (progressEl) {
+            progressEl.textContent = `${currentGlobal} OF ${TOTAL_STEPS}`;
           }
 
           // ── Button text ──

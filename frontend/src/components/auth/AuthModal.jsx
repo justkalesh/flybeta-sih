@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, Mail, User, Lock, ArrowRight, Loader } from 'lucide-react';
+import { X, Mail, User, Lock, ArrowRight, Loader, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { requestPasswordReset } from '../../services/api';
 
@@ -9,6 +9,8 @@ export default function AuthModal({ isOpen, onClose, customMessage = null, initi
   // 'login', 'register', 'forgot'
   const [view, setView] = useState(initialView); 
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
@@ -195,14 +197,22 @@ export default function AuthModal({ isOpen, onClose, customMessage = null, initi
                 <div className="relative">
                   <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                   <input 
-                    type="password" 
+                    type={showPassword ? 'text' : 'password'} 
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 bg-[var(--color-bg-primary)] border-2 border-black text-[var(--color-ink)] focus:outline-none focus:border-[var(--color-primary)] placeholder-gray-500 transition-colors"
+                    className="w-full pl-10 pr-12 py-3 bg-[var(--color-bg-primary)] border-2 border-black text-[var(--color-ink)] focus:outline-none focus:border-[var(--color-primary)] placeholder-gray-500 transition-colors"
                     placeholder="••••••••"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[var(--color-ink)] bg-transparent border-none cursor-pointer p-0 transition-colors"
+                    tabIndex={-1}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
               </div>
             )}
@@ -213,14 +223,22 @@ export default function AuthModal({ isOpen, onClose, customMessage = null, initi
                 <div className="relative">
                   <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                   <input 
-                    type="password" 
+                    type={showConfirm ? 'text' : 'password'} 
                     name="password_confirm"
                     value={formData.password_confirm}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 bg-[var(--color-bg-primary)] border-2 border-black text-[var(--color-ink)] focus:outline-none focus:border-[var(--color-primary)] placeholder-gray-500 transition-colors"
+                    className="w-full pl-10 pr-12 py-3 bg-[var(--color-bg-primary)] border-2 border-black text-[var(--color-ink)] focus:outline-none focus:border-[var(--color-primary)] placeholder-gray-500 transition-colors"
                     placeholder="••••••••"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirm(!showConfirm)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[var(--color-ink)] bg-transparent border-none cursor-pointer p-0 transition-colors"
+                    tabIndex={-1}
+                  >
+                    {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
               </div>
             )}

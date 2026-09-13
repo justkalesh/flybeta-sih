@@ -8,7 +8,7 @@ import TrackSelectionPage from './pages/TrackSelectionPage';
 import TrackRoadmapPage from './pages/TrackRoadmapPage';
 import LessonRunnerPage from './pages/LessonRunnerPage';
 import ProjectArchitectPage from './pages/ProjectArchitectPage';
-import CodeReviewerPage from './pages/CodeReviewerPage';
+import DocQuizPage from './pages/DocQuizPage';
 import VisionPage from './pages/VisionPage';
 import VideoDetailPage from './pages/VideoDetailPage';
 import ResetPasswordConfirmPage from './pages/ResetPasswordConfirmPage';
@@ -45,7 +45,7 @@ export default function App() {
                 <Route path="/quiz-generator" element={<QuizGeneratorPage />} />
                 <Route path="/labs" element={<Navigate to="/labs/architect" replace />} />
                 <Route path="/labs/architect" element={<ProjectArchitectPage />} />
-                <Route path="/labs/reviewer" element={<CodeReviewerPage />} />
+                <Route path="/labs/quiz-generator" element={<DocQuizPage />} />
                 <Route path="/vision" element={<VisionPage />} />
                 <Route path="/vision/video/:id" element={<VideoDetailPage />} />
                 <Route path="/admin" element={<AdminDashboardPage />} />
