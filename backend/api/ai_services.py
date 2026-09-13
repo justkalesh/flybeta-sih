@@ -390,62 +390,85 @@ DIFFICULTY_MAP = {
 def generate_diagnostic_quiz(designation, division, years_of_service, previous_trainings):
     """
     Generate a personalized FRAC skill-gap assessment quiz using Gemini.
-    Returns 4 sections × (4 MCQs + 1 descriptive) = 20 questions.
+    Makes 4 parallel API calls (one per FRAC quadrant) for speed.
+    Returns 4 sections × (3 MCQs + 1 descriptive) = 16 questions.
     """
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
     if not client:
         raise ValueError("Missing API Key. Diagnostic quiz generation cannot run.")
 
     difficulty = DIFFICULTY_MAP.get(designation, 'intermediate')
     trainings_str = ', '.join(previous_trainings) if previous_trainings else 'None'
 
-    prompt = (
-        f"Generate a personalized FRAC competency assessment for an Indian government statistical officer.\n\n"
-        f"OFFICER PROFILE:\n"
-        f"- Designation: {designation}\n"
-        f"- Division: {division}\n"
-        f"- Years of Service: {years_of_service}\n"
-        f"- Previous Trainings: {trainings_str}\n"
-        f"- Difficulty Level: {difficulty}\n\n"
-        f"Generate exactly 4 sections, one for each FRAC quadrant:\n"
-        f"1. comp_statistical (Survey Design, Sampling, National Accounts, SDG Indicators)\n"
-        f"2. comp_technical (Python, R, SQL, GIS, AI/ML, Data Pipelines)\n"
-        f"3. comp_digital_governance (Cybersecurity, Data Privacy, Gov-Cloud, DPI Systems)\n"
-        f"4. comp_behavioural (Leadership, Communication, Project Management, Ethics)\n\n"
-        f"Each section must have:\n"
-        f"- 3 MCQs with exactly 4 options each\n"
-        f"- 1 descriptive question answerable in 50-100 words\n\n"
-        f"IMPORTANT RULES:\n"
-        f"- All 4 MCQ options MUST be roughly equal in length (15-25 words each)\n"
-        f"- Questions must be calibrated to the officer's designation and experience\n"
-        f"- Map each question to a real iGOT Karmayogi course topic\n"
-        f"- For the descriptive question, provide 3-5 ideal answer points for rubric grading\n"
-        f"- Questions should test practical knowledge relevant to MoSPI operations\n"
-        f"- Do NOT repeat questions from previous assessments"
-    )
+    QUADRANTS = [
+        ('comp_statistical', 'Survey Design, Sampling Methods, National Accounts, SDG Indicators'),
+        ('comp_technical', 'Python, R, SQL, GIS, AI/ML, Data Pipelines'),
+        ('comp_digital_governance', 'Cybersecurity, Data Privacy, Gov-Cloud, DPI Systems'),
+        ('comp_behavioural', 'Leadership, Communication, Project Management, Ethics'),
+    ]
 
     system_instruction = (
-        "You are an expert assessment designer for India's Ministry of Statistics and Programme "
-        "Implementation (MoSPI). You design FRAC (Framework of Roles, Activities & Competencies) "
-        "assessments for the iGOT Karmayogi platform. Your questions are precise, practical, "
-        "and calibrated to the officer's seniority. MCQ options must be plausible distractors "
-        "of roughly equal length. Descriptive questions must be answerable in 50-100 words and "
-        "test conceptual understanding, not rote memorization."
+        "You are an expert assessment designer for India's Ministry of Statistics (MoSPI). "
+        "You design FRAC assessments for iGOT Karmayogi. "
+        "MCQ options must be plausible distractors of roughly equal length (15-25 words). "
+        "Respond ONLY with valid JSON, no markdown fences."
     )
 
-    try:
+    def generate_section(quadrant_key, quadrant_topics):
+        prompt = (
+            f"Generate a FRAC competency assessment section for the '{quadrant_key}' quadrant.\n\n"
+            f"OFFICER PROFILE:\n"
+            f"- Designation: {designation}\n"
+            f"- Division: {division}\n"
+            f"- Years of Service: {years_of_service}\n"
+            f"- Previous Trainings: {trainings_str}\n"
+            f"- Difficulty: {difficulty}\n\n"
+            f"QUADRANT TOPICS: {quadrant_topics}\n\n"
+            f"Generate exactly:\n"
+            f"- 3 MCQs with exactly 4 options each (options roughly equal length)\n"
+            f"- 1 descriptive question answerable in 50-100 words\n"
+            f"- Map each question to a real iGOT Karmayogi course topic\n\n"
+            f'Respond with ONLY valid JSON:\n'
+            f'{{"frac_quadrant": "{quadrant_key}", "mcqs": ['
+            f'{{"question_text": "...", "options": ["A","B","C","D"], '
+            f'"correct_answer": "full text of correct option", '
+            f'"explanation": "why correct", "igot_topic": "..."}}], '
+            f'"descriptive": {{"question_text": "...", '
+            f'"ideal_answer_points": ["point1","point2","point3"], "igot_topic": "..."}}}}'
+        )
+
         response = client.models.generate_content(
             model='gemini-3.6-flash',
             contents=prompt,
             config=types.GenerateContentConfig(
                 system_instruction=system_instruction,
                 response_mime_type="application/json",
-                response_schema=DiagnosticQuizResponse,
                 temperature=0.7,
             ),
         )
+        return json.loads(response.text)
 
-        data = json.loads(response.text)
-        return data.get("sections", [])
+    try:
+        sections = []
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            futures = {
+                executor.submit(generate_section, key, topics): key
+                for key, topics in QUADRANTS
+            }
+            for future in as_completed(futures):
+                quadrant_key = futures[future]
+                try:
+                    section = future.result()
+                    sections.append(section)
+                except Exception as e:
+                    print(f"Error generating section {quadrant_key}: {e}")
+                    raise ValueError(f"Failed to generate {quadrant_key} section: {e}")
+
+        # Sort sections in canonical order
+        order = {q[0]: i for i, q in enumerate(QUADRANTS)}
+        sections.sort(key=lambda s: order.get(s.get('frac_quadrant', ''), 99))
+        return sections
 
     except Exception as e:
         print(f"Gemini API Error (Diagnostic Quiz): {e}")
@@ -483,16 +506,16 @@ def evaluate_descriptive_answers(sections_with_answers):
     prompt = (
         f"Evaluate the following 4 descriptive answers from a government officer's "
         f"FRAC competency assessment.\n\n{answers_text}\n\n"
-        f"Score each answer out of 5 marks. Provide written feedback for each."
+        f"Score each answer out of 5 marks. Provide written feedback for each.\n\n"
+        f'Respond with ONLY valid JSON: {{"evaluations": [{{"frac_quadrant": "...", "score": 3.5, "feedback": "..."}}]}}'
     )
 
     system_instruction = (
         "You are a lenient but fair examiner for MoSPI officer assessments. "
-        "Grade based on UNDERSTANDING visible in the answer, not exact keywords or phrasing. "
-        "Award partial credit generously — a decent attempt showing basic understanding should "
-        "get at least 2.5-3/5. Only give 0-1 for completely wrong or blank answers. "
-        "Give 4-5 for answers that demonstrate strong conceptual grasp even if not perfectly worded. "
-        "Keep feedback constructive and specific (1-2 sentences)."
+        "Grade based on UNDERSTANDING visible in the answer, not exact keywords. "
+        "Award partial credit generously — a decent attempt gets 2.5-3/5. "
+        "Only give 0-1 for completely wrong or blank answers. "
+        "Keep feedback constructive (1-2 sentences). Respond ONLY with valid JSON."
     )
 
     try:
@@ -502,7 +525,6 @@ def evaluate_descriptive_answers(sections_with_answers):
             config=types.GenerateContentConfig(
                 system_instruction=system_instruction,
                 response_mime_type="application/json",
-                response_schema=DescriptiveEvaluationResponse,
                 temperature=0.3,
             ),
         )
