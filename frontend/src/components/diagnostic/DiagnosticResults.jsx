@@ -196,11 +196,18 @@ export default function DiagnosticResults({ results, quizData, answers, onRetake
 
       {/* Action Buttons */}
       <div className="flex flex-wrap gap-4 mt-8 justify-center">
+        <button
+          onClick={() => window.location.href = '/dashboard'}
+          className="brutalist-btn px-6 py-3 flex items-center gap-2"
+          style={{ background: 'var(--color-primary)', color: '#fff' }}
+        >
+          <Award size={18} /> View FRAC Profile on Dashboard
+        </button>
         {showSignup && (
           <button
             onClick={onSignup}
             className="brutalist-btn px-6 py-3 flex items-center gap-2"
-            style={{ background: 'var(--color-primary)', color: '#fff' }}
+            style={{ background: '#059669', color: '#fff' }}
           >
             <UserPlus size={18} /> Save Profile & Create Account
           </button>

@@ -47,9 +47,9 @@ export default function DiagnosticPage() {
     }
   }, [user]);
 
-  // If user logs in on results page, auto-save
+  // Save competency profile when results arrive
   useEffect(() => {
-    if (user && results && view === 'results') {
+    if (results && view === 'results') {
       // Update competency profile with latest scores
       const scores = {};
       const sectionScores = results.section_scores || {};
@@ -59,13 +59,13 @@ export default function DiagnosticPage() {
       const fullProfile = { ...intakeData, ...scores };
       saveProfile(fullProfile);
 
-      // Tour logic
+      // Tour logic — only for first-time users
       const hasEverSeenTour = localStorage.getItem('mospi_has_seen_tour');
       if (hasEverSeenTour !== 'true') {
         localStorage.setItem('mospi_has_seen_tour', '');
       }
     }
-  }, [user]);
+  }, [results, view]);
 
   const handleIntakeComplete = async (data) => {
     setIntakeData(data);
@@ -172,7 +172,7 @@ export default function DiagnosticPage() {
             {view === 'history' && 'View your past assessment attempts and track progress.'}
             {view === 'intake' && (hasCompletedDiagnostic && user
               ? 'Retake the AI-generated assessment to update your competency profile.'
-              : "AI generates a unique quiz based on your officer profile. 20 questions across 4 FRAC sections."
+              : "AI generates a unique quiz based on your officer profile. 16 questions across 4 FRAC sections."
             )}
           </p>
         </div>
@@ -222,7 +222,7 @@ export default function DiagnosticPage() {
             <Loader2 size={48} className="mx-auto mb-4 animate-spin" style={{ color: 'var(--color-primary)' }} />
             <h3 className="heading-md mb-2">Generating Your Assessment</h3>
             <p className="text-muted text-sm">
-              AI is creating 20 personalized questions based on your profile as a{' '}
+              AI is creating 16 personalized questions based on your profile as a{' '}
               <strong>{intakeData?.designation}</strong> in{' '}
               <strong>{intakeData?.division}</strong>...
             </p>
