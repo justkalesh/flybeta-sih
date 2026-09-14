@@ -123,6 +123,8 @@ class DiagnosticAttempt(models.Model):
         CustomUser,
         on_delete=models.CASCADE,
         related_name='diagnostic_attempts',
+        null=True,
+        blank=True,
     )
     attempted_at = models.DateTimeField(auto_now_add=True)
 

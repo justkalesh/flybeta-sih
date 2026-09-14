@@ -3,7 +3,7 @@ import { X, Mail, User, Lock, ArrowRight, Loader, Eye, EyeOff } from 'lucide-rea
 import { useAuth } from '../../context/AuthContext';
 import { requestPasswordReset } from '../../services/api';
 
-export default function AuthModal({ isOpen, onClose, customMessage = null, initialView = 'login' }) {
+export default function AuthModal({ isOpen, onClose, onSuccess, customMessage = null, initialView = 'login' }) {
   const { login, register } = useAuth();
   
   // 'login', 'register', 'forgot'
@@ -49,6 +49,7 @@ export default function AuthModal({ isOpen, onClose, customMessage = null, initi
         const res = await login(formData.username, formData.password);
         if (res.success) {
           onClose();
+          onSuccess?.('login');
         } else {
           setError(res.error);
         }
@@ -67,6 +68,7 @@ export default function AuthModal({ isOpen, onClose, customMessage = null, initi
         });
         if (res.success) {
           onClose();
+          onSuccess?.('register');
         } else {
           setError(res.error);
         }

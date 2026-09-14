@@ -586,8 +586,9 @@ class DiagnosticSubmitView(APIView):
     """
     POST /api/v1/users/diagnostic-submit/
     Submit answers, auto-grade MCQs, AI-grade descriptives, persist attempt.
+    Accepts both authenticated and guest users.
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def post(self, request):
         quiz_payload = request.data.get('quiz_payload', {})
@@ -649,9 +650,10 @@ class DiagnosticSubmitView(APIView):
                     'feedback': eval_item.get('feedback', ''),
                 }
 
-            # 4. Persist attempt
+            # 4. Persist attempt (user=None for guests)
+            current_user = request.user if request.user.is_authenticated else None
             attempt = DiagnosticAttempt.objects.create(
-                user=request.user,
+                user=current_user,
                 score_statistical=section_scores.get('comp_statistical', {}).get('total', 0),
                 score_technical=section_scores.get('comp_technical', {}).get('total', 0),
                 score_digital_governance=section_scores.get('comp_digital_governance', {}).get('total', 0),

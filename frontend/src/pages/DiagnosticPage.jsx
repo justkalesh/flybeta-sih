@@ -288,6 +288,14 @@ export default function DiagnosticPage() {
       <AuthModal
         isOpen={showAuth}
         onClose={() => setShowAuth(false)}
+        onSuccess={(type) => {
+          if (type === 'register') {
+            // Reset tour so it starts fresh on dashboard
+            localStorage.removeItem('mospi_has_seen_tour');
+            localStorage.setItem('mospi_tour_page', '0');
+            navigate('/dashboard');
+          }
+        }}
         initialView="register"
         customMessage="🎯 Great job on the assessment! Create an account to save your FRAC competency profile and unlock personalized training recommendations."
       />
