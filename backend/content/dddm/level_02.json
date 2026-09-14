@@ -1,0 +1,28 @@
+{
+  "domain": { "name": "dddm", "title": "Data Driven Decision Making for Government", "icon": "bar_chart", "color": "#059669" },
+  "level": { "number": 2, "title": "Data Analytics", "description": "Core analytics concepts for government professionals — descriptive, diagnostic, predictive, and prescriptive." },
+  "lessons": [
+    {
+      "order": 1, "title": "Descriptive & Diagnostic Analytics", "lesson_type": "theory",
+      "content_md": "# Descriptive & Diagnostic Analytics\n\n## Descriptive Analytics: What Happened?\n\nThe foundation of all analytics — summarizing historical data.\n\n### Tools & Techniques\n- **Summary statistics**: Mean, median, mode, standard deviation\n- **Frequency tables**: Count and percentage distributions\n- **Cross-tabulations**: Two-way tables showing relationships\n- **Time series**: Trends over months, quarters, years\n\n### Government Examples\n\n| Question | Descriptive Answer |\n|---|---|\n| How many PLFS responses this quarter? | 42,500 households surveyed |\n| What's the unemployment rate? | 7.2% (urban), 4.8% (rural) |\n| How many RTI requests this year? | 15,234 (up 12% from last year) |\n\n## Diagnostic Analytics: Why Did It Happen?\n\nGoes beyond 'what' to understand 'why'.\n\n### Techniques\n- **Drill-down analysis**: Breaking data by subcategories\n- **Correlation analysis**: Finding relationships between variables\n- **Comparative analysis**: Benchmarking against peers\n- **Root cause analysis**: Systematic investigation\n\n### Example: Rising Infant Mortality in District X\n\n1. **Descriptive**: IMR rose from 28 to 35 per 1000\n2. **Diagnostic drill-down**:\n   - By block: 3 of 8 blocks show increase\n   - By cause: Neonatal causes up 40%\n   - By facility: PHCs with vacant doctor positions\n   - **Root cause**: 4 doctor vacancies unfilled for 8+ months\n\n### Key Metrics for Government\n\n- **YoY (Year-over-Year)**: Compare same period across years\n- **MoM (Month-over-Month)**: Short-term trend analysis\n- **Per capita / Per 1000**: Normalize for population differences\n- **Index numbers**: CPI, IIP, WPI",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Predictive & Prescriptive Analytics", "lesson_type": "theory",
+      "content_md": "# Predictive & Prescriptive Analytics\n\n## Predictive Analytics: What Will Happen?\n\nUses historical data and statistical models to forecast future outcomes.\n\n### Techniques\n- **Trend extrapolation**: Extending historical trends\n- **Regression models**: Predicting outcomes from multiple factors\n- **Time series forecasting**: ARIMA, exponential smoothing\n- **Machine learning**: Neural networks, random forests\n\n### Government Applications\n\n| Application | Prediction |\n|---|---|\n| Revenue forecasting | Expected GST collection next quarter |\n| Crop yield | Predicted wheat production using weather data |\n| Disease outbreak | Dengue hotspot prediction using rainfall + past cases |\n| Traffic | Expected congestion based on event calendar |\n| Population | Census projections for 2031, 2041 |\n\n### Accuracy vs. Usefulness\n\nA prediction doesn't need to be perfect to be useful:\n- Weather forecast: 80% accuracy → still saves lives\n- Revenue projection: ±5% → still enables budget planning\n- Flood warning: 70% accuracy → still triggers evacuation\n\n## Prescriptive Analytics: What Should We Do?\n\nRecommends **optimal actions** based on predictions.\n\n### Techniques\n- **Optimization models**: Linear programming, integer programming\n- **Simulation**: Monte Carlo, agent-based models\n- **Decision trees**: Mapping choices and outcomes\n- **Scenario analysis**: Best case, worst case, most likely\n\n### Government Example: Vaccine Distribution\n\n```\nGiven:\n- 10 million doses available\n- 30 districts with varying risk levels\n- Cold chain capacity constraints\n- Transportation cost per dose\n\nPrescriptive model recommends:\n- Priority allocation to 8 high-risk districts\n- Optimal route plan for cold chain logistics\n- Phased rollout schedule to minimize wastage\n```\n\n## The Analytics Maturity Ladder\n\n```\nLevel 1: Descriptive  → \"What happened?\"\nLevel 2: Diagnostic   → \"Why did it happen?\"\nLevel 3: Predictive   → \"What will happen?\"\nLevel 4: Prescriptive → \"What should we do?\"\n```\n\nMost government departments are at Level 1-2. The goal is to move toward Level 3-4.",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 3, "title": "Reflection Quiz: Analytics", "lesson_type": "quiz",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of analytics types.",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "Which type of analytics answers 'What will happen?'", "options": ["Descriptive", "Diagnostic", "Predictive", "Prescriptive"], "correct_index": 2 },
+    { "question": "Drill-down analysis is a technique used in:", "options": ["Descriptive analytics", "Diagnostic analytics", "Predictive analytics", "Prescriptive analytics"], "correct_index": 1 },
+    { "question": "Which analytics type recommends optimal actions?", "options": ["Descriptive", "Diagnostic", "Predictive", "Prescriptive"], "correct_index": 3 },
+    { "question": "YoY comparison means:", "options": ["Year-over-Year", "Yesterday-over-Yesterday", "Yield-over-Yield", "Youth-over-Youth"], "correct_index": 0 },
+    { "question": "Most government departments are currently at which analytics maturity level?", "options": ["Predictive-Prescriptive", "Descriptive-Diagnostic", "Fully automated AI", "No analytics at all"], "correct_index": 1 }
+  ]
+}

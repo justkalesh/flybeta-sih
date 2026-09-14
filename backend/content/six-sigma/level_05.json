@@ -1,0 +1,23 @@
+{
+  "domain": { "name": "six-sigma", "title": "Six Sigma Fundamentals", "icon": "target", "color": "#DC2626" },
+  "level": { "number": 5, "title": "Design Phase", "description": "Develop and pilot solutions to eliminate root causes identified in the Analyze phase." },
+  "lessons": [
+    {
+      "order": 1, "title": "Solution Generation & FMEA", "lesson_type": "theory",
+      "content_md": "# Solution Generation & FMEA\n\n## Generating Solutions\n\nAfter identifying root causes, brainstorm solutions using:\n\n### Brainstorming Rules\n1. No criticism during idea generation\n2. Build on others' ideas\n3. Encourage wild ideas\n4. Go for quantity first, quality later\n\n### Solution Selection Matrix\n\n| Solution | Impact (1-5) | Feasibility (1-5) | Cost (1-5) | Total |\n|---|---|---|---|---|\n| Add dropdown validation | 5 | 4 | 5 | 14 |\n| Hire more QA staff | 3 | 2 | 1 | 6 |\n| Redesign survey form | 4 | 3 | 3 | 10 |\n| Mobile data collection | 5 | 3 | 2 | 10 |\n\n## FMEA — Failure Mode and Effects Analysis\n\nFMEA proactively identifies what could go wrong with your solution:\n\n| Failure Mode | Severity (1-10) | Occurrence (1-10) | Detection (1-10) | RPN |\n|---|---|---|---|---|\n| Users bypass validation | 7 | 4 | 3 | 84 |\n| System crashes under load | 9 | 2 | 5 | 90 |\n| Training not completed | 6 | 5 | 4 | 120 |\n\n**RPN** = Severity × Occurrence × Detection\n\nPrioritize actions for highest RPN items first.\n\n## Pilot Planning\n\n1. Select a representative pilot group (1-2 districts)\n2. Define success criteria before starting\n3. Run for a fixed duration (4-6 weeks)\n4. Compare pilot results against baseline\n5. Gather feedback from pilot participants",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Reflection Quiz: Design Phase", "lesson_type": "quiz",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of the Design/Improve phase.",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "What does RPN stand for in FMEA?", "options": ["Risk Priority Number", "Root Problem Notation", "Reliability Performance Number", "Reduction Plan Number"], "correct_index": 0 },
+    { "question": "RPN is calculated as:", "options": ["Severity + Occurrence + Detection", "Severity × Occurrence × Detection", "Severity × Impact / Cost", "(Severity + Occurrence) × Detection"], "correct_index": 1 },
+    { "question": "What is the purpose of a pilot test?", "options": ["Train all employees", "Validate the solution on a small scale before full rollout", "Eliminate all defects immediately", "Satisfy audit requirements"], "correct_index": 1 },
+    { "question": "In a solution selection matrix, which solution should be prioritized?", "options": ["Lowest cost", "Highest total score across impact, feasibility, and cost", "Most innovative", "Easiest to implement"], "correct_index": 1 },
+    { "question": "During brainstorming, which rule is most important?", "options": ["Only experts should contribute", "No criticism during idea generation", "Limit ideas to 5 per person", "Focus only on proven solutions"], "correct_index": 1 }
+  ]
+}

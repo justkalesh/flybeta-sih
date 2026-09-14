@@ -1,0 +1,23 @@
+{
+  "domain": { "name": "ai-chatgpt", "title": "AI Using Google Bard & ChatGPT for Beginners", "icon": "bot", "color": "#7C3AED" },
+  "level": { "number": 3, "title": "AI: Expert's Insights", "description": "Expert perspectives on AI trends, responsible usage, and applications in governance." },
+  "lessons": [
+    {
+      "order": 1, "title": "AI Trends & Applications in Governance", "lesson_type": "theory",
+      "content_md": "# AI Trends & Applications in Governance\n\n## Current AI Landscape\n\n### Generative AI Revolution\nSince late 2022, generative AI has transformed how we work:\n- **Text generation**: ChatGPT, Gemini, Claude\n- **Image generation**: DALL-E, Midjourney, Stable Diffusion\n- **Code generation**: GitHub Copilot, Cursor\n- **Video generation**: Sora, Runway\n\n### Key Trends for 2024-2025\n1. **Multimodal AI**: Models that understand text, images, audio, and video\n2. **AI Agents**: AI that can take actions, not just generate text\n3. **Small Language Models**: Efficient models that run on devices\n4. **RAG (Retrieval Augmented Generation)**: AI grounded in your own data\n5. **AI Regulation**: Governments worldwide creating AI governance frameworks\n\n## India's AI Strategy\n\n### IndiaAI Mission\n- **Budget**: ₹10,372 crore allocation\n- **Focus areas**: Compute infrastructure, datasets, skilling\n- **Goal**: Make India a global AI leader\n\n### Government AI Applications\n\n| Department | AI Application |\n|---|---|\n| Revenue | AI-powered tax fraud detection |\n| Agriculture | Crop yield prediction using satellite imagery |\n| Health | Disease outbreak prediction models |\n| Education | Personalized learning pathways |\n| Statistics (MoSPI) | Survey quality assurance, automated tabulation |\n\n## Responsible AI Principles\n\n1. **Transparency**: Disclose when AI is being used\n2. **Fairness**: Check for bias in AI outputs\n3. **Privacy**: Protect personal data used in AI systems\n4. **Accountability**: Humans remain responsible for AI-assisted decisions\n5. **Safety**: Test AI systems thoroughly before deployment\n\n## Expert Advice for Government Officers\n\n> \"AI is a tool, not a replacement. Your domain expertise in statistics, governance, and policy is irreplaceable. Use AI to augment your capabilities, not substitute your judgment.\"\n\n### Do's\n- ✅ Use AI for drafting, research, and data analysis\n- ✅ Verify all AI outputs\n- ✅ Stay updated on AI developments\n- ✅ Experiment with different AI tools\n\n### Don'ts\n- ❌ Upload classified or sensitive data\n- ❌ Use AI outputs without verification\n- ❌ Rely on AI for final decision-making\n- ❌ Ignore AI bias and limitations",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Reflection Quiz: AI Insights", "lesson_type": "quiz",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of AI trends and responsible usage.",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "What does RAG stand for in AI?", "options": ["Random Access Generation", "Retrieval Augmented Generation", "Rapid AI Growth", "Responsible AI Governance"], "correct_index": 1 },
+    { "question": "India's IndiaAI Mission has a budget allocation of:", "options": ["₹1,000 crore", "₹5,000 crore", "₹10,372 crore", "₹25,000 crore"], "correct_index": 2 },
+    { "question": "Which is a key principle of Responsible AI?", "options": ["AI should replace human decision-making", "Transparency about AI usage", "Only tech companies should use AI", "AI outputs need no verification"], "correct_index": 1 },
+    { "question": "Multimodal AI can process:", "options": ["Only text", "Text and images only", "Text, images, audio, and video", "Only structured data"], "correct_index": 2 },
+    { "question": "For government officers, AI should be used to:", "options": ["Make all decisions automatically", "Replace domain expertise", "Augment capabilities while maintaining human oversight", "Avoid learning new technologies"], "correct_index": 2 }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "domain": { "name": "dddm", "title": "Data Driven Decision Making for Government", "icon": "bar_chart", "color": "#059669" },
+  "level": { "number": 1, "title": "Introduction to DDDM", "description": "Course overview and foundational concepts of Data Driven Decision Making." },
+  "lessons": [
+    {
+      "order": 1, "title": "What is Data Driven Decision Making?", "lesson_type": "theory",
+      "content_md": "# What is Data Driven Decision Making?\n\n## Definition\n\nData Driven Decision Making (DDDM) is the practice of **basing decisions on data analysis and interpretation** rather than intuition, experience, or opinion alone.\n\n## Why DDDM for Government?\n\nTraditionally, government decisions have been based on:\n- Political considerations\n- Past precedent\n- Senior officer's experience\n- Anecdotal evidence\n\nDDDM adds a **systematic, evidence-based layer**:\n\n| Traditional | Data-Driven |\n|---|---|\n| \"I think traffic is worse\" | \"Traffic volume increased 23% YoY\" |\n| \"We need more hospitals\" | \"District X has 0.3 beds per 1000 vs national average of 1.3\" |\n| \"Poverty is declining\" | \"Multi-dimensional poverty index dropped from 25% to 14.9%\" |\n\n## The DDDM Cycle\n\n```\n1. Identify the Decision → 2. Collect Relevant Data → \n3. Analyze & Interpret → 4. Make Decision → \n5. Monitor Outcomes → 6. Refine & Repeat\n```\n\n## Benefits for Government\n\n1. **Transparency**: Decisions backed by evidence, not opinion\n2. **Accountability**: Clear metrics for measuring impact\n3. **Efficiency**: Resources allocated based on need, not influence\n4. **Equity**: Data reveals disparities invisible to intuition\n5. **Timeliness**: Real-time data enables proactive governance\n\n## India's Data Ecosystem\n\n- **Census of India**: Decadal population data\n- **NSS/PLFS**: Household survey microdata\n- **NFHS**: Health and demographic data\n- **UDISE+**: Education statistics\n- **Open Government Data (OGD)**: data.gov.in\n- **Aadhaar**: Identity infrastructure\n\n## Prerequisites\n\nThis course assumes:\n- Basic computer literacy\n- Familiarity with spreadsheets (Excel/Google Sheets)\n- No programming knowledge required",
+      "xp_reward": 10, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "The Data Value Chain in Government", "lesson_type": "theory",
+      "content_md": "# The Data Value Chain in Government\n\n## From Raw Data to Informed Decisions\n\n```\nData Collection → Data Storage → Data Processing → \nData Analysis → Visualization → Decision → Action → Impact\n```\n\n## Stages Explained\n\n### 1. Data Collection\n- Surveys (NSS, PLFS, Economic Census)\n- Administrative data (tax records, registrations)\n- Sensor data (weather, traffic, satellite)\n- Digital footprints (app usage, website analytics)\n\n### 2. Data Storage\n- Databases (SQL, NoSQL)\n- Data warehouses (for historical analysis)\n- Data lakes (for unstructured data)\n- Cloud storage (MeghRaj/NIC Cloud)\n\n### 3. Data Processing\n- Cleaning: Remove errors, duplicates, outliers\n- Transformation: Standardize formats, units\n- Integration: Merge data from multiple sources\n- Anonymization: Protect personal information\n\n### 4. Data Analysis\n- Descriptive: What happened?\n- Diagnostic: Why did it happen?\n- Predictive: What will happen?\n- Prescriptive: What should we do?\n\n### 5. Visualization\n- Charts, graphs, dashboards\n- Maps (GIS/spatial visualization)\n- Infographics for public communication\n\n### 6. Decision & Action\n- Evidence-based policy design\n- Resource allocation\n- Program monitoring\n- Course correction\n\n## Data Quality Dimensions\n\n| Dimension | Question |\n|---|---|\n| Accuracy | Is the data correct? |\n| Completeness | Is anything missing? |\n| Timeliness | Is the data current? |\n| Consistency | Does it match across sources? |\n| Relevance | Does it answer our question? |",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 3, "title": "Reflection Quiz: Introduction", "lesson_type": "quiz",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of DDDM fundamentals.",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "DDDM stands for:", "options": ["Digital Data Distribution Model", "Data Driven Decision Making", "Dynamic Data Deployment Method", "Data Design and Development Management"], "correct_index": 1 },
+    { "question": "Which is NOT a benefit of DDDM in government?", "options": ["Transparency", "Accountability", "Eliminating the need for domain expertise", "Equity"], "correct_index": 2 },
+    { "question": "The four types of data analysis are:", "options": ["Fast, Slow, Medium, Complex", "Descriptive, Diagnostic, Predictive, Prescriptive", "Manual, Automated, Semi-automated, AI-based", "Primary, Secondary, Tertiary, Quaternary"], "correct_index": 1 },
+    { "question": "India's open government data portal is:", "options": ["data.india.in", "data.gov.in", "opendata.nic.in", "statistics.gov.in"], "correct_index": 1 },
+    { "question": "Which data quality dimension asks 'Is the data current?'", "options": ["Accuracy", "Completeness", "Timeliness", "Relevance"], "correct_index": 2 }
+  ]
+}

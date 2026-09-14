@@ -1,0 +1,22 @@
+{
+  "domain": { "name": "ai-chatgpt", "title": "AI Using Google Bard & ChatGPT for Beginners", "icon": "bot", "color": "#7C3AED" },
+  "level": { "number": 4, "title": "Knowledge Assessment", "description": "Final assessment covering generative AI concepts and practical applications." },
+  "lessons": [
+    {
+      "order": 1, "title": "Course Summary", "lesson_type": "theory",
+      "content_md": "# Course Summary\n\n## What You've Learned\n\n### ChatGPT & Code Interpreter\n- Using prompts effectively for data analysis\n- Uploading CSV/Excel files for automated analysis\n- Generating charts and visualizations\n- Data cleaning and transformation\n\n### Google Bard (Gemini)\n- Real-time web access for research\n- Google Workspace integration\n- Multiple response drafts\n- Indian language support\n\n### AI Trends & Responsible Usage\n- Generative AI landscape (text, image, code, video)\n- India's IndiaAI Mission\n- Responsible AI principles\n- Do's and don'ts for government officers\n\n## Key Takeaways\n\n1. **AI is a productivity multiplier** — use it to save time on routine tasks\n2. **Always verify** AI outputs against official sources\n3. **Never share sensitive data** with AI chatbots\n4. **Stay curious** — AI tools are evolving rapidly\n5. **Your expertise matters** — AI augments, not replaces, your judgment\n\n## Recommended Next Steps\n\n- Explore ChatGPT's Code Interpreter with a sample dataset\n- Try Google Gemini for drafting a report summary\n- Take the AI/ML track for deeper technical skills\n- Share your learnings with colleagues",
+      "xp_reward": 10, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Final Assessment: AI for Beginners", "lesson_type": "boss",
+      "content_md": "# Knowledge Assessment\n\nComplete this final quiz to earn your AI for Beginners certificate.",
+      "xp_reward": 40, "coins_reward": 20, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "ChatGPT's Code Interpreter can:", "options": ["Browse the web", "Execute Python code on uploaded files", "Access government databases", "Create mobile apps"], "correct_index": 1 },
+    { "question": "Google Bard/Gemini differs from ChatGPT primarily in:", "options": ["It cannot generate text", "It has real-time internet access", "It only works in English", "It requires a paid subscription"], "correct_index": 1 },
+    { "question": "A 'hallucination' in AI means:", "options": ["The AI crashes", "The AI generates incorrect but confident-sounding information", "The AI sees images", "The AI stops responding"], "correct_index": 1 },
+    { "question": "Which is NOT a responsible AI principle?", "options": ["Transparency", "Fairness", "Replacing human oversight entirely", "Accountability"], "correct_index": 2 }
+  ]
+}

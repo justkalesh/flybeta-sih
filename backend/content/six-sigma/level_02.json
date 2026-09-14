@@ -1,0 +1,28 @@
+{
+  "domain": { "name": "six-sigma", "title": "Six Sigma Fundamentals", "icon": "target", "color": "#DC2626" },
+  "level": { "number": 2, "title": "Define Phase", "description": "Learn to clearly define the problem, scope, and goals of a Six Sigma project." },
+  "lessons": [
+    {
+      "order": 1, "title": "Project Charter & Problem Statement", "lesson_type": "theory",
+      "content_md": "# Project Charter & Problem Statement\n\nThe **Project Charter** is the foundational document of any Six Sigma project. It answers: *What are we fixing, why, and for whom?*\n\n## Elements of a Project Charter\n\n### 1. Problem Statement\nA clear, quantifiable description of the issue:\n- **Bad**: \"Our data collection process has problems.\"\n- **Good**: \"15% of household survey forms in Q2 2024 contained data entry errors in income fields, causing 3-week delays in tabulation.\"\n\n### 2. Goal Statement\nWhat success looks like, using SMART criteria:\n- **Specific**: Reduce data entry errors in income fields\n- **Measurable**: From 15% to below 2%\n- **Achievable**: Similar divisions achieved 1.5%\n- **Relevant**: Directly impacts data quality\n- **Time-bound**: Within 6 months\n\n### 3. Scope\n- **In scope**: Data entry process for PLFS household surveys\n- **Out of scope**: Field enumeration methodology, sampling design\n\n### 4. Team\n- Champion: Director (ESD)\n- Black Belt: Deputy Director\n- Green Belts: 2 Assistant Directors\n- Team Members: 4 SSOs\n\n### 5. Timeline\nMilestone-based DMAIC schedule with review gates.",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Voice of Customer (VOC) & SIPOC", "lesson_type": "theory",
+      "content_md": "# Voice of Customer (VOC) & SIPOC\n\n## Voice of Customer\n\nVOC captures what stakeholders need from a process. In government:\n\n| Stakeholder | Need | CTQ (Critical to Quality) |\n|---|---|---|\n| Parliament | Timely GDP estimates | Published within 60 days of quarter end |\n| Researchers | Clean microdata | <1% missing values in key variables |\n| States | District-level data | All 780+ districts covered |\n| Citizens | Transparent methodology | Documentation publicly available |\n\n### How to Capture VOC\n1. **Surveys**: Structured feedback from data users\n2. **Complaints**: Analyze recurring issues\n3. **Benchmarking**: Compare with international NSOs\n4. **Interviews**: Direct conversations with stakeholders\n\n## SIPOC Diagram\n\nSIPOC maps the high-level process:\n\n| S (Suppliers) | I (Inputs) | P (Process) | O (Outputs) | C (Customers) |\n|---|---|---|---|---|\n| Field enumerators | Survey schedules | Data collection → Entry → Validation → Tabulation | Statistical tables, reports | Parliament, researchers, states |\n| IT division | Software, servers | | Microdata files | International agencies (UN, World Bank) |\n\n## Critical-to-Quality (CTQ) Tree\n\nBreaks down broad needs into measurable requirements:\n\n```\nNeed: Accurate GDP Estimate\n├── Driver: Reliable source data\n│   ├── CTQ: <2% revision between advance and final estimate\n│   └── CTQ: 95% response rate from large enterprises\n└── Driver: Timely publication\n    ├── CTQ: Advance estimate by Jan 7\n    └── CTQ: Final estimate within 11 months\n```",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 3, "title": "Reflection Quiz: Define Phase", "lesson_type": "quiz",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of the Define phase tools.",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "What does SIPOC stand for?", "options": ["Suppliers, Inputs, Process, Outputs, Customers", "Scope, Inputs, Plan, Objectives, Controls", "Standards, Indicators, Process, Outcomes, Compliance", "Survey, Interview, Process, Observation, Certification"], "correct_index": 0 },
+    { "question": "A good problem statement should be:", "options": ["Broad and aspirational", "Quantifiable and specific", "Solution-oriented", "Focused on blame"], "correct_index": 1 },
+    { "question": "What is VOC in Six Sigma?", "options": ["Volume of Complaints", "Voice of Customer", "Verification of Compliance", "Value of Change"], "correct_index": 1 },
+    { "question": "CTQ stands for:", "options": ["Cost to Quality", "Critical to Quality", "Compliance to Quantify", "Change to Qualify"], "correct_index": 1 },
+    { "question": "Which is NOT part of a Project Charter?", "options": ["Problem statement", "Goal statement", "Root cause analysis", "Team composition"], "correct_index": 2 }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "domain": { "name": "dddm", "title": "Data Driven Decision Making for Government", "icon": "bar_chart", "color": "#059669" },
+  "level": { "number": 3, "title": "Common Tools for Visualization", "description": "Introduction to data visualization tools — Excel, Tableau, and Power BI." },
+  "lessons": [
+    {
+      "order": 1, "title": "Data Visualization Principles", "lesson_type": "theory",
+      "content_md": "# Data Visualization Principles\n\n## Why Visualize?\n\n> *\"A picture is worth a thousand words. A good chart is worth a thousand data points.\"*\n\nVisualization helps:\n- **Spot patterns** invisible in raw numbers\n- **Communicate findings** to non-technical audiences\n- **Drive action** through compelling evidence\n- **Monitor** KPIs in real-time dashboards\n\n## Choosing the Right Chart\n\n| Data Type | Best Chart | Example |\n|---|---|---|\n| Comparison | Bar chart | GDP by state |\n| Trend over time | Line chart | Unemployment rate 2015-2024 |\n| Proportion | Pie/Donut chart | Budget allocation by ministry |\n| Distribution | Histogram | Age distribution of respondents |\n| Relationship | Scatter plot | Education vs. income correlation |\n| Geographic | Map/Choropleth | District-wise poverty rates |\n| Part-to-whole | Stacked bar | Revenue sources breakdown |\n\n## Design Best Practices\n\n### Do's ✅\n- Use clear, descriptive titles\n- Label axes with units\n- Use consistent color schemes\n- Start Y-axis at zero (for bar charts)\n- Add data source citations\n\n### Don'ts ❌\n- Don't use 3D charts (they distort proportions)\n- Don't use too many colors (max 5-7)\n- Don't truncate axes misleadingly\n- Don't clutter with unnecessary gridlines\n- Don't use pie charts for more than 5 categories\n\n## Color in Government Dashboards\n\n- **Red**: Below target / critical\n- **Yellow/Amber**: Warning / needs attention\n- **Green**: On target / healthy\n- Use colorblind-friendly palettes",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Excel, Tableau & Power BI Overview", "lesson_type": "theory",
+      "content_md": "# Excel, Tableau & Power BI\n\n## Microsoft Excel\n\nThe most widely used tool in government.\n\n### Strengths\n- Universal availability (already on most govt computers)\n- Familiar interface\n- Pivot tables for quick analysis\n- Chart creation without coding\n\n### Key Features for DDDM\n- **Pivot Tables**: Summarize large datasets instantly\n- **VLOOKUP/INDEX-MATCH**: Merge data from multiple sheets\n- **Conditional Formatting**: Highlight anomalies\n- **Charts**: Bar, line, scatter, maps\n- **Power Query**: Data cleaning and transformation\n\n### Limitations\n- Row limit: ~1 million rows\n- No real-time dashboards\n- Manual refresh required\n- Limited collaboration\n\n## Tableau\n\nProfessional-grade visualization platform.\n\n### Strengths\n- Drag-and-drop interface\n- Beautiful, interactive visualizations\n- Can handle millions of rows\n- **Tableau Public**: Free version\n\n### Government Use\n- NITI Aayog dashboards\n- State-level SDG monitoring\n- Election data visualization\n\n## Power BI\n\nMicrosoft's business intelligence tool.\n\n### Strengths\n- Integrates with Excel and Microsoft 365\n- Cloud-based real-time dashboards\n- AI-powered insights\n- **Power BI Desktop**: Free\n\n### Government Use\n- Ministry dashboards on NIC infrastructure\n- Budget monitoring and tracking\n- Performance management systems\n\n## Tool Selection Guide\n\n| Factor | Excel | Tableau | Power BI |\n|---|---|---|---|\n| Learning curve | Low | Medium | Medium |\n| Data volume | <1M rows | Millions | Millions |\n| Real-time | No | Yes | Yes |\n| Cost | Included | Paid (Public=free) | Free desktop |\n| Collaboration | Limited | Cloud-based | Cloud-based |\n| Best for | Quick analysis | Publication-quality viz | Internal dashboards |",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 3, "title": "Reflection Quiz: Visualization", "lesson_type": "quiz",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of visualization tools and principles.",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "Which chart type is best for showing trends over time?", "options": ["Pie chart", "Bar chart", "Line chart", "Scatter plot"], "correct_index": 2 },
+    { "question": "Excel's row limit is approximately:", "options": ["100,000", "500,000", "1 million", "10 million"], "correct_index": 2 },
+    { "question": "Which visualization tool is available for free as 'Tableau Public'?", "options": ["Excel", "Tableau", "Power BI", "QGIS"], "correct_index": 1 },
+    { "question": "3D charts should generally be avoided because:", "options": ["They are too expensive", "They distort data proportions", "They don't print well", "They require special software"], "correct_index": 1 },
+    { "question": "A pivot table in Excel is used to:", "options": ["Create 3D models", "Summarize and analyze large datasets", "Write Python code", "Send emails"], "correct_index": 1 }
+  ]
+}

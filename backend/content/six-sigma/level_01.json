@@ -1,0 +1,78 @@
+{
+  "domain": {
+    "name": "six-sigma",
+    "title": "Six Sigma Fundamentals",
+    "icon": "target",
+    "color": "#DC2626"
+  },
+  "level": {
+    "number": 1,
+    "title": "Overview to Six Sigma",
+    "description": "Introduction to Six Sigma principles and the DMAIC methodology for process improvement."
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "title": "What is Six Sigma?",
+      "content_md": "# What is Six Sigma?\n\nSix Sigma is a **data-driven methodology** for eliminating defects and reducing variability in any process — from manufacturing to government service delivery.\n\n## Origin\n\nDeveloped by **Motorola** in 1986 and popularized by **General Electric** under Jack Welch in the 1990s, Six Sigma aims to achieve no more than **3.4 defects per million opportunities** (DPMO).\n\n## The Sigma Scale\n\n| Sigma Level | DPMO | Yield |\n|---|---|---|\n| 1σ | 691,462 | 30.9% |\n| 2σ | 308,538 | 69.1% |\n| 3σ | 66,807 | 93.3% |\n| 4σ | 6,210 | 99.4% |\n| 5σ | 233 | 99.98% |\n| **6σ** | **3.4** | **99.9997%** |\n\n## Why Six Sigma in Government?\n\nGovernment processes — issuing certificates, processing surveys, disbursing payments — all have measurable defect rates. Six Sigma provides a **structured, evidence-based approach** to:\n\n- Reduce processing errors in statistical data collection\n- Improve citizen service delivery timelines\n- Minimize resource wastage in survey operations\n- Standardize workflows across divisions\n\n## Key Principles\n\n1. **Customer Focus**: Define quality from the stakeholder's perspective\n2. **Data-Driven**: Base decisions on data, not assumptions\n3. **Process-Centric**: Improve the process, not blame people\n4. **Proactive Management**: Anticipate and prevent defects\n5. **Collaboration**: Cross-functional teamwork",
+      "xp_reward": 10,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 2,
+      "title": "The DMAIC Framework",
+      "content_md": "# The DMAIC Framework\n\nDMAIC is the core methodology of Six Sigma. It stands for:\n\n## D — Define\n\nClearly articulate the **problem**, the **process**, and the **goal**.\n\n- What is the problem?\n- Who is the customer?\n- What does the customer consider a 'defect'?\n- Tools: Project Charter, SIPOC Diagram, Voice of Customer (VOC)\n\n## M — Measure\n\nQuantify the **current state** of the process.\n\n- How is the process performing today?\n- What data do we need to collect?\n- How reliable is our measurement system?\n- Tools: Data Collection Plan, Process Mapping, Measurement System Analysis\n\n## A — Analyze\n\nIdentify the **root causes** of defects.\n\n- Why are defects occurring?\n- What are the vital few causes vs. trivial many?\n- Tools: Fishbone Diagram, Pareto Chart, 5 Whys, Regression Analysis\n\n## I — Improve\n\nDevelop and implement **solutions** to eliminate root causes.\n\n- What changes will address the root causes?\n- How do we pilot and validate solutions?\n- Tools: Brainstorming, FMEA, Pilot Testing, DOE\n\n## C — Control\n\n**Sustain** the improvements over time.\n\n- How do we prevent regression?\n- What monitoring systems do we put in place?\n- Tools: Control Charts, SOPs, Training Plans, Dashboards\n\n## DMAIC in Practice\n\nA District Statistical Office notices that 15% of household survey forms have data entry errors. Using DMAIC:\n\n1. **Define**: Error rate = 15%, target = <2%\n2. **Measure**: Track errors by field, enumerator, and district\n3. **Analyze**: Root cause = unclear field definitions + no validation\n4. **Improve**: Add dropdown validation, mandatory field checks\n5. **Control**: Monthly error rate dashboard, re-training trigger at 5%",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 3,
+      "title": "Six Sigma Roles & Belt System",
+      "content_md": "# Six Sigma Roles & Belt System\n\nSix Sigma uses a **martial arts belt system** to denote expertise levels:\n\n## Belt Hierarchy\n\n### White Belt\n- Basic awareness of Six Sigma concepts\n- Supports project teams as needed\n- Every government employee can be a White Belt\n\n### Yellow Belt\n- Understands DMAIC at a working level\n- Participates in project teams\n- Can lead small improvement projects\n\n### Green Belt\n- Leads Six Sigma projects part-time\n- Proficient in statistical tools\n- Typically manages 1-2 projects per year\n\n### Black Belt\n- Full-time Six Sigma project leader\n- Expert in statistical analysis\n- Mentors Green and Yellow Belts\n- Manages 3-5 projects per year\n\n### Master Black Belt\n- Strategic advisor and trainer\n- Develops Six Sigma methodology for the organization\n- Coaches Black Belts\n\n## Champion / Sponsor\n\nA senior leader who:\n- Removes organizational barriers\n- Allocates resources\n- Ensures project alignment with strategic goals\n\n## Government Context\n\nIn MoSPI, the belt system can be mapped to:\n- **White/Yellow**: JSO, SSO — awareness and participation\n- **Green**: Assistant Director — leading division-level improvements\n- **Black**: Deputy Director — cross-division process optimization\n- **Champion**: Director General — strategic quality mandate",
+      "xp_reward": 10,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 4,
+      "title": "Reflection Quiz: Six Sigma Basics",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of Six Sigma fundamentals.",
+      "xp_reward": 20,
+      "coins_reward": 10,
+      "is_mandatory": true,
+      "lesson_type": "quiz"
+    }
+  ],
+  "quiz_data": [
+    {
+      "question": "What does DMAIC stand for?",
+      "options": ["Design, Measure, Analyze, Improve, Control", "Define, Measure, Analyze, Improve, Control", "Define, Map, Analyze, Implement, Control", "Design, Map, Adjust, Improve, Certify"],
+      "correct_index": 1
+    },
+    {
+      "question": "Six Sigma aims for no more than how many defects per million opportunities?",
+      "options": ["34", "3.4", "340", "0.34"],
+      "correct_index": 1
+    },
+    {
+      "question": "Which Six Sigma belt level is typically a full-time project leader?",
+      "options": ["Green Belt", "Yellow Belt", "Black Belt", "White Belt"],
+      "correct_index": 2
+    },
+    {
+      "question": "In which DMAIC phase do you identify root causes of defects?",
+      "options": ["Define", "Measure", "Analyze", "Improve"],
+      "correct_index": 2
+    },
+    {
+      "question": "What tool is used in the Control phase to monitor process stability?",
+      "options": ["Fishbone Diagram", "Pareto Chart", "Control Chart", "SIPOC Diagram"],
+      "correct_index": 2
+    }
+  ]
+}

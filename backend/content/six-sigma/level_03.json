@@ -1,0 +1,28 @@
+{
+  "domain": { "name": "six-sigma", "title": "Six Sigma Fundamentals", "icon": "target", "color": "#DC2626" },
+  "level": { "number": 3, "title": "Diagnose Process Door", "description": "Map and analyze process flows to identify inefficiencies and bottlenecks." },
+  "lessons": [
+    {
+      "order": 1, "title": "Process Mapping & Flowcharts", "lesson_type": "theory",
+      "content_md": "# Process Mapping & Flowcharts\n\nProcess mapping creates a **visual representation** of every step in a workflow, revealing hidden inefficiencies.\n\n## Types of Process Maps\n\n### Basic Flowchart\nSimple sequential diagram using standard symbols:\n- **Oval**: Start/End\n- **Rectangle**: Process step\n- **Diamond**: Decision point\n- **Arrow**: Flow direction\n\n### Swim Lane Diagram\nShows which **department/person** owns each step. Critical in government where processes cross divisions.\n\n### Value Stream Map\nDistinguishes between:\n- **Value-adding steps**: Directly contribute to the output\n- **Non-value-adding but necessary**: Compliance, approvals\n- **Waste**: Rework, waiting, over-processing\n\n## Example: Survey Data Processing\n\n```\nField Collection → Data Entry → First Validation → Error Correction\n→ Second Validation → Supervisor Review → Tabulation → Report\n```\n\n**Findings from mapping:**\n- Data entry and validation happen in 3 separate systems\n- Supervisor review takes 5 days average (waiting waste)\n- Error correction loop repeats 2.3 times on average\n\n## Government Process Mapping Tips\n\n1. Walk the actual process — don't rely on documented SOPs\n2. Include wait times between steps\n3. Note handoffs between divisions\n4. Identify approval bottlenecks\n5. Count the number of times data is re-entered",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Value Stream Analysis & Waste Identification", "lesson_type": "theory",
+      "content_md": "# Value Stream Analysis & Waste\n\n## The 8 Wastes (DOWNTIME)\n\nOriginally from Lean Manufacturing, adapted for government:\n\n| Waste | Government Example |\n|---|---|\n| **D**efects | Incorrect data entries requiring rework |\n| **O**verproduction | Generating reports nobody reads |\n| **W**aiting | Files pending approval for weeks |\n| **N**on-utilized talent | PhDs doing data entry |\n| **T**ransportation | Physical files moving between buildings |\n| **I**nventory | Backlogs of unprocessed survey forms |\n| **M**otion | Walking to different floors for signatures |\n| **E**xtra processing | Entering same data in 3 different systems |\n\n## Value Stream Metrics\n\n### Lead Time\nTotal time from request to delivery.\n- Example: Time from survey completion to published report = 180 days\n\n### Process Time\nActual working time spent on the process.\n- Example: Actual processing work = 45 days\n\n### Process Cycle Efficiency (PCE)\n```\nPCE = Process Time / Lead Time × 100\nPCE = 45 / 180 × 100 = 25%\n```\n\nA PCE of 25% means **75% of the time is wasted** on waiting, rework, and handoffs.\n\n## Quick Wins\n\nAfter value stream analysis, look for:\n- Steps that can be eliminated entirely\n- Steps that can be done in parallel\n- Handoffs that can be automated\n- Approvals that can be delegated",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 3, "title": "Reflection Quiz: Process Door", "lesson_type": "quiz",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of process analysis tools.",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "What does PCE (Process Cycle Efficiency) measure?", "options": ["Ratio of defects to total outputs", "Ratio of process time to lead time", "Number of process steps eliminated", "Customer satisfaction score"], "correct_index": 1 },
+    { "question": "Which of the 8 wastes refers to having PhDs do data entry?", "options": ["Overproduction", "Non-utilized talent", "Extra processing", "Motion"], "correct_index": 1 },
+    { "question": "A swim lane diagram is useful for showing:", "options": ["Statistical distributions", "Ownership of process steps across departments", "Timeline of project milestones", "Cost breakdown by category"], "correct_index": 1 },
+    { "question": "In value stream mapping, which type of step should be minimized?", "options": ["Value-adding steps", "Non-value-adding but necessary steps", "Waste steps", "Customer-facing steps"], "correct_index": 2 },
+    { "question": "DOWNTIME is an acronym for:", "options": ["Decision, Observation, Work, Notation, Testing, Investigation, Monitoring, Evaluation", "Defects, Overproduction, Waiting, Non-utilized talent, Transportation, Inventory, Motion, Extra processing", "Define, Observe, Write, Note, Test, Improve, Measure, Execute", "Data, Operations, Workflow, Networking, Technology, Infrastructure, Management, Execution"], "correct_index": 1 }
+  ]
+}

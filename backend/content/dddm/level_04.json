@@ -1,0 +1,23 @@
+{
+  "domain": { "name": "dddm", "title": "Data Driven Decision Making for Government", "icon": "bar_chart", "color": "#059669" },
+  "level": { "number": 4, "title": "Process Model Through Case Study", "description": "Applying the DDDM process through a real government case study." },
+  "lessons": [
+    {
+      "order": 1, "title": "Case Study: School Dropout Analysis", "lesson_type": "theory",
+      "content_md": "# Case Study: Reducing School Dropouts\n\n## Background\n\nA State Education Department wants to reduce dropout rates in Class 9-10 across 40 districts.\n\n## Step 1: Define the Question\n\n**Policy question**: Which districts need immediate intervention, and what factors drive dropouts?\n\n**Data questions**:\n- What is the current dropout rate by district?\n- What factors correlate with high dropout rates?\n- Can we predict which students are at risk?\n\n## Step 2: Collect Data\n\n| Source | Data | Variables |\n|---|---|---|\n| UDISE+ | School-level enrollment/dropout | Enrollment, retention, infrastructure |\n| Census | District demographics | Population, urbanization, literacy |\n| NFHS | Household characteristics | Poverty, mother's education, child marriage |\n| State records | Teacher availability | Pupil-teacher ratio, vacancies |\n\n## Step 3: Analyze\n\n### Descriptive\n- State average dropout rate: 17.5%\n- Range: 4.2% (urban district) to 38.7% (tribal district)\n- Gender gap: 12% boys vs 23% girls\n\n### Diagnostic (Correlation Analysis)\n\n| Factor | Correlation with Dropout |\n|---|---|\n| Poverty rate | +0.78 (strong positive) |\n| Mother's literacy | -0.72 (strong negative) |\n| Pupil-teacher ratio | +0.65 (moderate positive) |\n| Distance to school | +0.61 (moderate positive) |\n| Mid-day meal quality | -0.45 (moderate negative) |\n\n### Predictive\nLogistic regression model predicts at-risk students with 82% accuracy using:\n- Previous year's attendance (<75%)\n- Family income below poverty line\n- Mother's education < Class 8\n- Distance to school > 3 km\n\n## Step 4: Decide & Act\n\n### Priority Districts (top 10 by dropout rate)\n- Deploy additional teachers\n- Provide transportation support\n- Launch mother's literacy program\n\n### At-Risk Students (flagged by model)\n- Assign counselors\n- Provide scholarships\n- Monthly attendance monitoring\n\n## Step 5: Monitor\n\n- **Dashboard**: Monthly dropout rate by district\n- **Alert**: Auto-notification if district exceeds 20%\n- **Review**: Quarterly review by Education Secretary\n\n## Results After 1 Year\n- State dropout rate: 17.5% → 12.3%\n- Top 10 priority districts: Average reduction of 8 percentage points\n- 2,400 at-risk students retained through early intervention",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Reflection Quiz: Case Study", "lesson_type": "quiz",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of the DDDM process through the case study.",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "What was the strongest factor correlated with school dropout?", "options": ["Distance to school", "Pupil-teacher ratio", "Poverty rate", "Mid-day meal quality"], "correct_index": 2 },
+    { "question": "The predictive model achieved what accuracy?", "options": ["65%", "72%", "82%", "95%"], "correct_index": 2 },
+    { "question": "The gender gap in dropout rates showed:", "options": ["Boys dropped out more than girls", "Girls dropped out more than boys", "No gender difference", "Data was not available by gender"], "correct_index": 1 },
+    { "question": "Which data source provided school-level enrollment data?", "options": ["Census", "NFHS", "UDISE+", "NSS"], "correct_index": 2 },
+    { "question": "After 1 year, the state dropout rate reduced by:", "options": ["2 percentage points", "5.2 percentage points", "10 percentage points", "No change"], "correct_index": 1 }
+  ]
+}

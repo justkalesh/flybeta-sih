@@ -1,0 +1,23 @@
+{
+  "domain": { "name": "six-sigma", "title": "Six Sigma Fundamentals", "icon": "target", "color": "#DC2626" },
+  "level": { "number": 6, "title": "Deploy Phase", "description": "Implement control plans and statistical process control to sustain improvements." },
+  "lessons": [
+    {
+      "order": 1, "title": "Control Plans & SPC Charts", "lesson_type": "theory",
+      "content_md": "# Control Plans & SPC Charts\n\n## Control Plan\n\nA living document that ensures improvements are **sustained** after the project ends.\n\n### Components\n\n| Element | Description | Example |\n|---|---|---|\n| Process step | Key step being controlled | Data entry validation |\n| CTQ | What's being measured | Error rate per batch |\n| Specification | Acceptable limits | <2% error rate |\n| Measurement method | How it's measured | Automated system check |\n| Frequency | How often | Every batch (100 forms) |\n| Reaction plan | What to do if out of spec | Re-train, root cause review |\n| Owner | Who is responsible | QA Lead |\n\n## Statistical Process Control (SPC)\n\n### Control Charts\n\nControl charts monitor process stability over time:\n\n```\nUCL ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─  Upper Control Limit\n      ·  ·     ·  ·  ·\nCL  ─ ─ ─ · ─ ─ ─ ─ ─ ─ · ─ ─ ─   Center Line (Mean)\n            ·        ·     ·\nLCL ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─  Lower Control Limit\n```\n\n### Types of Control Charts\n- **X-bar and R chart**: For continuous data (averages and ranges)\n- **p-chart**: For proportion defective\n- **c-chart**: For count of defects per unit\n- **np-chart**: For number of defective items\n\n### Interpreting Control Charts\n\nProcess is **out of control** if:\n1. A point falls outside control limits\n2. 7 consecutive points on one side of center line (run)\n3. 7 consecutive points trending up or down\n4. Cyclic patterns\n\n## Standard Operating Procedures (SOPs)\n\nDocument the improved process so anyone can follow it:\n- Step-by-step instructions with screenshots\n- Decision trees for exception handling\n- Escalation procedures\n- Review and update schedule",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Reflection Quiz: Deploy Phase", "lesson_type": "quiz",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of the Control/Deploy phase.",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "A control chart signals a process is 'out of control' when:", "options": ["All points are near the center line", "A point falls outside the control limits", "The mean shifts by less than 1 sigma", "Data collection stops"], "correct_index": 1 },
+    { "question": "A p-chart is used to monitor:", "options": ["Average measurement values", "Proportion of defective items", "Count of defects per unit", "Range of measurements"], "correct_index": 1 },
+    { "question": "What is the purpose of a Control Plan?", "options": ["Define the problem", "Ensure improvements are sustained after project ends", "Identify root causes", "Calculate process capability"], "correct_index": 1 },
+    { "question": "How many consecutive points on one side of the center line indicate a 'run'?", "options": ["3", "5", "7", "10"], "correct_index": 2 },
+    { "question": "SOPs are important in the Control phase because:", "options": ["They replace statistical analysis", "They document the improved process for consistent execution", "They eliminate the need for training", "They are required by law"], "correct_index": 1 }
+  ]
+}

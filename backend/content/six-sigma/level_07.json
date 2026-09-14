@@ -1,0 +1,23 @@
+{
+  "domain": { "name": "six-sigma", "title": "Six Sigma Fundamentals", "icon": "target", "color": "#DC2626" },
+  "level": { "number": 7, "title": "Case Study: District Health Society", "description": "Real-world Six Sigma application in a government healthcare setting." },
+  "lessons": [
+    {
+      "order": 1, "title": "Case Study: Reducing Patient Wait Times", "lesson_type": "theory",
+      "content_md": "# Case Study: District Health Society\n\n## Background\n\nA District Health Society in Madhya Pradesh was facing complaints about long wait times at Primary Health Centres (PHCs). The District Collector commissioned a Six Sigma project.\n\n## Define\n- **Problem**: Average patient wait time = 2.5 hours; target = 45 minutes\n- **Scope**: OPD services at 12 PHCs in the district\n- **Team**: District Health Officer (Champion), 2 Medical Officers (Green Belts)\n\n## Measure\n- Collected wait time data from 500 patients across 12 PHCs over 4 weeks\n- Baseline: Mean = 152 min, Std Dev = 48 min, Sigma Level = 1.2\n- Key metrics: Registration time, Doctor consultation time, Pharmacy dispensing time\n\n## Analyze\n\n**Pareto Analysis** of wait time components:\n| Component | % of Total Wait |\n|---|---|\n| Waiting for doctor | 55% |\n| Registration queue | 25% |\n| Pharmacy queue | 12% |\n| Lab results | 8% |\n\n**Root Causes (5 Whys)**:\n- Doctor starts late → No accountability mechanism\n- Single registration window → Bottleneck during peak hours\n- Manual prescription → Pharmacy can't read handwriting\n\n## Improve\n1. **Staggered appointments**: Token system with time slots\n2. **Dual registration counters** during 9-11 AM peak\n3. **Digital prescriptions**: Tablet-based system linked to pharmacy\n4. **Doctor attendance tracking**: Biometric + dashboard\n\n## Control\n- Weekly dashboard: Average wait time by PHC\n- Monthly review by District Health Officer\n- Trigger: Any PHC exceeding 60 min → immediate investigation\n\n## Results\n- Wait time reduced from **152 min to 38 min** (75% reduction)\n- Patient satisfaction increased from 45% to 88%\n- Sigma level improved from 1.2 to 3.8\n- Zero additional budget required — pure process improvement",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Reflection Quiz: Case Study", "lesson_type": "quiz",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of the case study.",
+      "xp_reward": 15, "coins_reward": 10, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "What was the biggest contributor to patient wait time?", "options": ["Registration queue", "Waiting for doctor", "Pharmacy queue", "Lab results"], "correct_index": 1 },
+    { "question": "By how much was the wait time reduced?", "options": ["25%", "50%", "75%", "90%"], "correct_index": 2 },
+    { "question": "What tool was used to identify the top contributors to wait time?", "options": ["Control Chart", "FMEA", "Pareto Analysis", "Regression"], "correct_index": 2 },
+    { "question": "The improvement required:", "options": ["Major capital investment", "Hiring additional doctors", "Zero additional budget — pure process improvement", "Outsourcing to private sector"], "correct_index": 2 },
+    { "question": "What monitoring mechanism was put in place?", "options": ["Annual audit", "Weekly dashboard with trigger thresholds", "Patient complaints only", "No monitoring needed"], "correct_index": 1 }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "domain": { "name": "dddm", "title": "Data Driven Decision Making for Government", "icon": "bar_chart", "color": "#059669" },
+  "level": { "number": 5, "title": "Filters & Pages Dashboard", "description": "Designing effective government dashboards with filters, pages, and interactive elements." },
+  "lessons": [
+    {
+      "order": 1, "title": "Dashboard Design Principles", "lesson_type": "theory",
+      "content_md": "# Dashboard Design Principles\n\n## What Makes a Good Dashboard?\n\nA dashboard is a **single-screen visual display** of the most important information needed to monitor KPIs and make decisions.\n\n## The 5-Second Rule\n\nA well-designed dashboard should communicate its key message within **5 seconds** of first glance.\n\n## Layout Principles\n\n### Visual Hierarchy\n```\n┌─────────────────────────────────────────┐\n│  TITLE    │  Date Filter │  KPI Cards  │  ← Most important\n├───────────┴──────────────┴─────────────┤\n│                                         │\n│       Primary Chart (largest)           │  ← Key trend/insight\n│                                         │\n├────────────────────┬────────────────────┤\n│  Supporting Chart  │  Supporting Chart  │  ← Detail/context\n│                    │                    │\n├────────────────────┴────────────────────┤\n│  Data Table (detail on demand)          │  ← Drill-down\n└─────────────────────────────────────────┘\n```\n\n### KPI Cards\nPlace key metrics at the top with:\n- Current value in large font\n- Trend indicator (↑↓→)\n- Comparison (vs. target, vs. last period)\n- Color coding (green/amber/red)\n\n## Filters & Interactivity\n\n### Common Filter Types\n\n| Filter | Use Case |\n|---|---|\n| Date range | Time period selection |\n| Geographic | State, district, block |\n| Category | Department, scheme, sector |\n| Search | Find specific entity |\n| Slider | Numeric range (budget, population) |\n\n### Filters Best Practices\n1. Provide sensible defaults (current quarter, user's state)\n2. Show applied filters prominently\n3. Allow multi-select where appropriate\n4. Include a \"Reset All\" button\n5. Cascade filters (State → District → Block)\n\n## Pages in Multi-Page Dashboards\n\n### Page Structure\n- **Executive Summary**: Top-line KPIs for leadership\n- **Detailed Analysis**: Charts and tables for analysts\n- **Geographic View**: Map-based visualization\n- **Trend Analysis**: Time series and forecasts\n- **Data Table**: Raw data for download",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Reflection Quiz: Dashboards", "lesson_type": "quiz",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of dashboard design.",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "The '5-second rule' for dashboards means:", "options": ["Dashboards should load in 5 seconds", "Key message should be clear within 5 seconds of viewing", "Only 5 charts should be shown", "Data should refresh every 5 seconds"], "correct_index": 1 },
+    { "question": "KPI cards should include:", "options": ["Only the current value", "Current value, trend indicator, and comparison", "A detailed paragraph explanation", "Raw data tables"], "correct_index": 1 },
+    { "question": "Cascading filters means:", "options": ["All filters reset together", "Selecting a state automatically filters districts", "Filters are applied in alphabetical order", "Only one filter can be active at a time"], "correct_index": 1 },
+    { "question": "Where should the most important information be placed?", "options": ["Bottom of the dashboard", "Hidden behind a filter", "Top of the dashboard", "In a separate report"], "correct_index": 2 },
+    { "question": "RAG colors (Red-Amber-Green) are used for:", "options": ["Making dashboards colorful", "Indicating performance against targets", "Showing different departments", "Highlighting data sources"], "correct_index": 1 }
+  ]
+}

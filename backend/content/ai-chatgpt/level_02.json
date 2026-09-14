@@ -1,0 +1,23 @@
+{
+  "domain": { "name": "ai-chatgpt", "title": "AI Using Google Bard & ChatGPT for Beginners", "icon": "bot", "color": "#7C3AED" },
+  "level": { "number": 2, "title": "Google Bard", "description": "Explore Google Bard's capabilities for content creation, research, and government applications." },
+  "lessons": [
+    {
+      "order": 1, "title": "Introduction to Google Bard (Gemini)", "lesson_type": "theory",
+      "content_md": "# Introduction to Google Bard (Gemini)\n\n## What is Google Bard?\n\nGoogle Bard (now rebranded as **Gemini**) is Google's AI chatbot powered by large language models. Unlike ChatGPT, Bard:\n\n- **Has internet access**: Can search the web in real-time\n- **Integrates with Google Workspace**: Docs, Sheets, Gmail\n- **Supports multimodal input**: Text, images, and code\n- **Available in multiple Indian languages**: Hindi, Tamil, Telugu, Bengali, and more\n\n## Key Features\n\n### 1. Real-Time Information\nBard can access current information, unlike ChatGPT's knowledge cutoff.\n```\nPrompt: \"What are the latest GDP growth figures for India?\"\n→ Bard searches the web and provides current data with sources\n```\n\n### 2. Google Workspace Integration\n- Draft emails directly in Gmail\n- Create spreadsheets in Google Sheets\n- Generate presentations in Google Slides\n\n### 3. Multiple Drafts\nBard generates **3 different response drafts** for each prompt, letting you choose the best one.\n\n### 4. Export Options\n- Export to Google Docs\n- Export to Gmail as draft\n- Copy to clipboard\n\n## Bard vs ChatGPT\n\n| Feature | ChatGPT | Google Bard/Gemini |\n|---|---|---|\n| Internet access | Limited (paid) | Yes (always) |\n| Code execution | Yes (Code Interpreter) | Yes (Gemini Advanced) |\n| Google integration | No | Deep integration |\n| Indian languages | Limited | Extensive support |\n| Image generation | DALL-E | Imagen |\n| Free tier | GPT-3.5 | Gemini Pro |\n\n## Government Use Cases\n\n1. **Research**: Quickly summarize policy reports with citations\n2. **Translation**: Draft communications in regional languages\n3. **Data lookup**: Find latest statistics with source links\n4. **Report drafting**: Generate initial drafts of official reports\n5. **Meeting prep**: Summarize background documents before meetings",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Reflection Quiz: Google Bard", "lesson_type": "quiz",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of Google Bard/Gemini.",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "What is Google Bard now rebranded as?", "options": ["Google Assistant", "Gemini", "Copilot", "Claude"], "correct_index": 1 },
+    { "question": "A key advantage of Bard over ChatGPT is:", "options": ["Better code generation", "Real-time internet access", "More training data", "Faster responses"], "correct_index": 1 },
+    { "question": "Bard generates how many response drafts per prompt?", "options": ["1", "2", "3", "5"], "correct_index": 2 },
+    { "question": "Bard integrates natively with:", "options": ["Microsoft Office", "Google Workspace", "Adobe Creative Cloud", "SAP"], "correct_index": 1 },
+    { "question": "For government officers, Bard is most useful for:", "options": ["Replacing human judgment", "Quick research with source citations", "Making policy decisions", "Handling classified information"], "correct_index": 1 }
+  ]
+}

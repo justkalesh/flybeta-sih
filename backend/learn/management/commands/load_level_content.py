@@ -56,6 +56,9 @@ class Command(BaseCommand):
         'ai': {'track_code': 'TS-01', 'is_published': True},
         'cloud': {'track_code': 'TS-02', 'is_published': True},
         'data': {'track_code': 'TS-03', 'is_published': True},
+        'six-sigma': {'track_code': 'IG-01', 'is_published': True},
+        'ai-chatgpt': {'track_code': 'IG-02', 'is_published': True},
+        'dddm': {'track_code': 'IG-03', 'is_published': True},
     }
 
     def add_arguments(self, parser):
@@ -120,7 +123,7 @@ class Command(BaseCommand):
 
         # Summary
         self.stdout.write('')
-        self.stdout.write(self.style.SUCCESS('═' * 50))
+        self.stdout.write(self.style.SUCCESS('=' * 50))
         self.stdout.write(self.style.SUCCESS('LOAD COMPLETE'))
         self.stdout.write(f'  Files processed : {stats["files_processed"]}')
         self.stdout.write(f'  Domains created  : {stats["domains_created"]}')
@@ -131,7 +134,7 @@ class Command(BaseCommand):
         self.stdout.write(f'  Lessons updated  : {stats["lessons_updated"]}')
         if stats['errors']:
             self.stdout.write(self.style.ERROR(f'  Errors           : {stats["errors"]}'))
-        self.stdout.write(self.style.SUCCESS('═' * 50))
+        self.stdout.write(self.style.SUCCESS('=' * 50))
 
     def _process_file(self, filepath: Path, stats: dict, dry_run: bool):
         """Parse a single level JSON file and upsert Domain, Level, Lessons."""
@@ -155,7 +158,7 @@ class Command(BaseCommand):
         if dry_run:
             self.stdout.write(
                 self.style.SUCCESS(
-                    f'    ✓ Valid — Domain: {domain_data.get("title")}, '
+                    f'    [OK] Valid -- Domain: {domain_data.get("title")}, '
                     f'Level {level_data.get("number")}: {level_data.get("title")}, '
                     f'{len(lessons_data)} lesson(s)'
                 )

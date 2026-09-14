@@ -1,0 +1,28 @@
+{
+  "domain": { "name": "ai-chatgpt", "title": "AI Using Google Bard & ChatGPT for Beginners", "icon": "bot", "color": "#7C3AED" },
+  "level": { "number": 1, "title": "ChatGPT — Code Interpreter", "description": "Learn to use ChatGPT's Code Interpreter for data analysis, file processing, and visualization." },
+  "lessons": [
+    {
+      "order": 1, "title": "Introduction to ChatGPT", "lesson_type": "theory",
+      "content_md": "# Introduction to ChatGPT\n\n## What is ChatGPT?\n\nChatGPT is a **large language model (LLM)** developed by OpenAI. It can:\n- Generate human-like text responses\n- Analyze and summarize documents\n- Write and debug code\n- Answer questions on a wide range of topics\n\n## How It Works\n\nChatGPT is trained on vast amounts of text data. It predicts the next word in a sequence based on patterns learned during training.\n\n### Key Concepts\n- **Prompt**: Your input or question\n- **Response**: The AI's generated output\n- **Context Window**: The amount of conversation the AI can 'remember'\n- **Temperature**: Controls randomness (lower = more focused, higher = more creative)\n\n## Versions\n| Version | Key Features |\n|---|---|\n| GPT-3.5 | Fast, free, good for general tasks |\n| GPT-4 | More accurate, handles complex reasoning |\n| GPT-4 with Code Interpreter | Can execute Python code, analyze files |\n\n## Government Applications\n\n- Drafting official communications and reports\n- Summarizing lengthy policy documents\n- Analyzing survey data uploaded as CSV/Excel\n- Generating visualizations from raw data\n- Translating documents across Indian languages\n\n## Important Limitations\n\n1. **Can produce incorrect information** (hallucinations)\n2. **Not connected to the internet** (knowledge cutoff)\n3. **Should not be used for classified/sensitive data**\n4. Always verify AI outputs against official sources",
+      "xp_reward": 10, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Code Interpreter: Data Analysis", "lesson_type": "theory",
+      "content_md": "# Code Interpreter: Data Analysis\n\n## What is Code Interpreter?\n\nCode Interpreter is a ChatGPT feature that can:\n- **Upload files**: CSV, Excel, PDF, images\n- **Execute Python code**: Pandas, matplotlib, seaborn\n- **Generate outputs**: Charts, cleaned datasets, reports\n\n## How to Use It\n\n### Step 1: Upload Your Data\n```\nUpload a CSV file → ChatGPT reads it automatically\n```\n\n### Step 2: Ask Questions in Plain English\n\n**Example prompts:**\n- \"Show me the top 10 districts by population\"\n- \"Create a bar chart comparing GDP by state\"\n- \"Clean this dataset — remove duplicates and fill missing values\"\n- \"Calculate the correlation between literacy rate and infant mortality\"\n\n### Step 3: Get Results\n\nChatGPT writes and executes Python code behind the scenes, returning:\n- Data tables\n- Charts and graphs\n- Statistical summaries\n- Cleaned/transformed files for download\n\n## Practical Examples for Government Officers\n\n### Example 1: Survey Data Summary\n```\nPrompt: \"Upload PLFS_data.csv. Give me a summary table showing \naverage wages by state, gender, and sector (rural/urban).\"\n```\n\n### Example 2: Visualization\n```\nPrompt: \"Create a heatmap showing correlation between \neducation level, employment status, and income.\"\n```\n\n### Example 3: Data Cleaning\n```\nPrompt: \"This dataset has 5000 rows. Find and list all rows \nwhere age < 0 or income < 0. Then create a cleaned version.\"\n```\n\n## Best Practices\n\n1. **Be specific** in your prompts\n2. **Verify results** against known benchmarks\n3. **Never upload sensitive/classified data**\n4. **Download and archive** useful outputs\n5. **Iterate**: Refine your prompts based on initial results",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 3, "title": "Reflection Quiz: ChatGPT", "lesson_type": "quiz",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of ChatGPT and Code Interpreter.",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "What can ChatGPT's Code Interpreter do?", "options": ["Browse the internet in real-time", "Execute Python code and analyze uploaded files", "Access government databases directly", "Replace human analysts entirely"], "correct_index": 1 },
+    { "question": "What is a 'hallucination' in the context of AI?", "options": ["The AI seeing images", "The AI generating incorrect but confident-sounding information", "A hardware error", "The AI refusing to respond"], "correct_index": 1 },
+    { "question": "Which file types can be uploaded to Code Interpreter?", "options": ["Only text files", "CSV, Excel, PDF, and images", "Only Python scripts", "Only government-approved formats"], "correct_index": 1 },
+    { "question": "What is the most important rule when using ChatGPT for government work?", "options": ["Use it for all decisions", "Never upload sensitive or classified data", "Always use GPT-4", "Share your prompts publicly"], "correct_index": 1 },
+    { "question": "A 'prompt' in ChatGPT refers to:", "options": ["The AI's response", "Your input or question to the AI", "The training data", "The model version"], "correct_index": 1 }
+  ]
+}

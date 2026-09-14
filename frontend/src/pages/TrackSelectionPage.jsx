@@ -110,10 +110,12 @@ export default function TrackSelectionPage() {
 
       {/* Tracks Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Legacy Tracks */}
-        {domains.map((domain) => (
-          <TrackCard key={`legacy-${domain.id || domain.name}`} domain={domain} />
-        ))}
+        {/* Legacy Tracks (exclude any that overlap with MoSPI tracks) */}
+        {domains
+          .filter((d) => !MOSPI_TRACKS.some((t) => t.id === d.name))
+          .map((domain) => (
+            <TrackCard key={`legacy-${domain.id || domain.name}`} domain={domain} />
+          ))}
 
         {/* MoSPI Tracks */}
         {sortedTracks.map((track, index) => {

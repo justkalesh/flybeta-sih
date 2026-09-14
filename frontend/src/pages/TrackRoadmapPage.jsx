@@ -58,9 +58,13 @@ export default function TrackRoadmapPage() {
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="brutalist-card p-8 text-center">
-          <p className="heading-md text-primary mb-2">Track not found</p>
-          <Link to="/" className="brutalist-btn brutalist-btn-primary no-underline mt-4 inline-block">
+        <div className="brutalist-card p-8 text-center" style={{ maxWidth: 480 }}>
+          <p className="text-4xl mb-4">🚧</p>
+          <p className="heading-md mb-2" style={{ color: 'var(--color-primary)' }}>Track Under Construction</p>
+          <p className="text-muted text-sm mb-4">
+            Our team is building this learning pathway with curated lessons and assessments. Check back soon!
+          </p>
+          <Link to="/tracks" className="brutalist-btn brutalist-btn-primary no-underline mt-4 inline-block">
             ← Back to Tracks
           </Link>
         </div>

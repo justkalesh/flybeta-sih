@@ -1,0 +1,28 @@
+{
+  "domain": { "name": "dddm", "title": "Data Driven Decision Making for Government", "icon": "bar_chart", "color": "#059669" },
+  "level": { "number": 7, "title": "Final Assessment", "description": "Comprehensive assessment covering all DDDM concepts and tools." },
+  "lessons": [
+    {
+      "order": 1, "title": "Course Summary & Next Steps", "lesson_type": "theory",
+      "content_md": "# Course Summary\n\n## What You've Learned\n\n### Module 1: Introduction to DDDM\n- Definition and importance of data-driven decisions\n- The DDDM cycle\n- India's data ecosystem\n\n### Module 2: Data Analytics\n- Descriptive, diagnostic, predictive, prescriptive analytics\n- Key metrics and analysis techniques\n\n### Module 3: Visualization Tools\n- Chart selection principles\n- Excel, Tableau, Power BI comparison\n- Design best practices\n\n### Module 4: Case Study\n- End-to-end DDDM application\n- From data collection to impact measurement\n\n### Module 5: Dashboard Design\n- Layout principles and visual hierarchy\n- Filters, interactivity, and KPI cards\n\n### Module 6: Analytics Maturity\n- 5-level maturity model\n- Building a data-driven culture\n\n## Key Takeaways\n\n1. **Start with a question**, not with data\n2. **Data quality matters** more than data quantity\n3. **Visualization is communication** — design for your audience\n4. **Culture trumps technology** — tools without culture fail\n5. **Begin small, think big** — pick one process and improve it\n\n## Recommended Next Steps\n\n1. Assess your department's analytics maturity level\n2. Identify one decision that could be improved with data\n3. Build a simple dashboard for your KPIs\n4. Explore data.gov.in for open datasets relevant to your work\n5. Take the Digital Governance & Cybersecurity track for data privacy",
+      "xp_reward": 10, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Final Assessment: DDDM", "lesson_type": "boss",
+      "content_md": "# Final Assessment\n\nComplete this comprehensive quiz to earn your DDDM certificate.",
+      "xp_reward": 50, "coins_reward": 25, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "DDDM stands for:", "options": ["Digital Data Distribution Model", "Data Driven Decision Making", "Dynamic Data Deployment Method", "Data Design and Development Management"], "correct_index": 1 },
+    { "question": "Which analytics type answers 'What should we do?'", "options": ["Descriptive", "Diagnostic", "Predictive", "Prescriptive"], "correct_index": 3 },
+    { "question": "The best chart for showing geographic data is:", "options": ["Pie chart", "Bar chart", "Choropleth map", "Line chart"], "correct_index": 2 },
+    { "question": "A good dashboard should communicate its message within:", "options": ["30 seconds", "5 seconds", "1 minute", "5 minutes"], "correct_index": 1 },
+    { "question": "At which analytics maturity level is data scattered with no standards?", "options": ["Opportunistic", "Systematic", "Ad Hoc", "Differentiating"], "correct_index": 2 },
+    { "question": "Which tool integrates best with Google Workspace?", "options": ["Power BI", "Tableau", "Excel", "None — they all integrate equally"], "correct_index": 1 },
+    { "question": "In the case study, the strongest predictor of school dropout was:", "options": ["Distance to school", "Poverty rate", "Teacher quality", "Mid-day meal quality"], "correct_index": 1 },
+    { "question": "RAG colors in dashboards stand for:", "options": ["Random, Aligned, Grouped", "Red, Amber, Green", "Range, Average, Goal", "Report, Analysis, Graph"], "correct_index": 1 },
+    { "question": "The most important factor for building a data culture is:", "options": ["Expensive software", "Leadership commitment", "Hiring data scientists", "More data collection"], "correct_index": 1 },
+    { "question": "India's open government data portal is:", "options": ["data.india.gov.in", "opendata.nic.in", "data.gov.in", "statistics.gov.in"], "correct_index": 2 }
+  ]
+}

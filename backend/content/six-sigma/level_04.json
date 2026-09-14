@@ -1,0 +1,28 @@
+{
+  "domain": { "name": "six-sigma", "title": "Six Sigma Fundamentals", "icon": "target", "color": "#DC2626" },
+  "level": { "number": 4, "title": "Diagnose Data Door", "description": "Apply statistical tools for measurement system analysis and data-driven root cause identification." },
+  "lessons": [
+    {
+      "order": 1, "title": "Data Collection & Measurement Systems", "lesson_type": "theory",
+      "content_md": "# Data Collection & Measurement Systems\n\n## Data Types in Six Sigma\n\n### Continuous (Variable) Data\nMeasured on a scale — can take any value within a range.\n- Processing time (hours)\n- Error rate (%)\n- Survey response rate\n\n### Discrete (Attribute) Data\nCounted in whole numbers or categories.\n- Number of defective forms\n- Pass/Fail classification\n- Complaint categories\n\n## Data Collection Plan\n\n| What | How | Who | When | Sample Size |\n|---|---|---|---|---|\n| Data entry error rate | Compare entry vs. original | QA team | Weekly | 100 forms/batch |\n| Processing time | Timestamp logs | System | Continuous | All records |\n| Error type | Classification code | Reviewer | Per error | All errors |\n\n## Measurement System Analysis (MSA)\n\nBefore trusting your data, verify your **measurement system** is reliable:\n\n### Accuracy\nDoes the measurement hit the true value?\n\n### Precision (Repeatability & Reproducibility)\n- **Repeatability**: Same person, same item → same result?\n- **Reproducibility**: Different people, same item → same result?\n\n### Gage R&R Study\nIf measurement variation > 30% of total variation, your measurement system needs improvement before analyzing the process.",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Statistical Tools for Root Cause Analysis", "lesson_type": "theory",
+      "content_md": "# Statistical Tools for Root Cause Analysis\n\n## Pareto Chart (80/20 Rule)\n\nIdentifies the **vital few** causes that create most defects.\n\n**Example**: Survey form errors\n- Income field errors: 45%\n- Age misreporting: 25%\n- Address incomplete: 15%\n- Occupation coding: 10%\n- Other: 5%\n\n→ Fixing income and age fields addresses **70%** of all errors.\n\n## Fishbone (Ishikawa) Diagram\n\nOrganizes potential causes into categories:\n\n```\n                    ┌─ People: Training gaps, fatigue\n                    ├─ Process: Unclear instructions\nData Entry Errors ──├─ Technology: No validation rules\n                    ├─ Materials: Illegible forms\n                    └─ Environment: Noisy field conditions\n```\n\n## 5 Whys\n\nDrill down to root cause:\n1. Why are there data entry errors? → Fields are confusing\n2. Why are fields confusing? → Instructions are ambiguous\n3. Why are instructions ambiguous? → Written for statisticians, not enumerators\n4. Why weren't they simplified? → No user testing was done\n5. Why no user testing? → No budget/process for it\n\n**Root cause**: Lack of user-centered design process for survey instruments.\n\n## Hypothesis Testing\n\nUse statistical tests to validate suspected causes:\n- **t-test**: Is there a significant difference between two groups?\n- **Chi-square**: Is there a relationship between categorical variables?\n- **ANOVA**: Are there differences across multiple groups?\n- **Regression**: What factors predict the outcome?",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 3, "title": "Reflection Quiz: Data Door", "lesson_type": "quiz",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of statistical tools.",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "The Pareto principle suggests that roughly what percentage of effects come from what percentage of causes?", "options": ["50/50", "80/20", "90/10", "70/30"], "correct_index": 1 },
+    { "question": "What does a Gage R&R study measure?", "options": ["Process capability", "Measurement system reliability", "Customer satisfaction", "Defect rate"], "correct_index": 1 },
+    { "question": "The '5 Whys' technique is used to:", "options": ["Identify 5 potential solutions", "Drill down to root cause", "Survey 5 stakeholders", "Complete 5 DMAIC cycles"], "correct_index": 1 },
+    { "question": "Which statistical test compares means of two groups?", "options": ["Chi-square test", "t-test", "Pareto analysis", "Regression"], "correct_index": 1 },
+    { "question": "A Fishbone diagram is also called:", "options": ["Pareto diagram", "Ishikawa diagram", "Control chart", "Run chart"], "correct_index": 1 }
+  ]
+}

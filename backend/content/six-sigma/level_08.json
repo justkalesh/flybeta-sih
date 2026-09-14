@@ -1,0 +1,28 @@
+{
+  "domain": { "name": "six-sigma", "title": "Six Sigma Fundamentals", "icon": "target", "color": "#DC2626" },
+  "level": { "number": 8, "title": "Final Assessment", "description": "Comprehensive assessment covering all DMAIC phases and Six Sigma concepts." },
+  "lessons": [
+    {
+      "order": 1, "title": "Course Summary & Key Takeaways", "lesson_type": "theory",
+      "content_md": "# Course Summary\n\n## What You've Learned\n\n### The DMAIC Framework\n1. **Define**: Project charter, VOC, SIPOC, CTQ\n2. **Measure**: Data collection, MSA, baseline metrics\n3. **Analyze**: Pareto, Fishbone, 5 Whys, hypothesis testing\n4. **Improve**: Solution selection, FMEA, pilot testing\n5. **Control**: Control plans, SPC charts, SOPs\n\n### Key Principles\n- Six Sigma = **3.4 DPMO** (99.9997% yield)\n- **Data-driven** decisions, not opinions\n- **Process-centric** thinking — improve the system\n- **Belt system**: White → Yellow → Green → Black → Master Black\n\n### Government Applications\n- Survey data quality improvement\n- Service delivery optimization\n- Processing time reduction\n- Cost elimination through waste removal\n\n## Next Steps\n\n1. Identify a process in your division that has measurable defects\n2. Apply the DMAIC framework\n3. Start with a small, achievable project\n4. Document your results\n5. Share with your division head\n\n> *\"In God we trust. All others must bring data.\"* — W. Edwards Deming",
+      "xp_reward": 10, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Final Assessment: Six Sigma Fundamentals", "lesson_type": "boss",
+      "content_md": "# Final Assessment\n\nComplete this comprehensive quiz to earn your Six Sigma Fundamentals certificate.",
+      "xp_reward": 50, "coins_reward": 25, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "Which DMAIC phase involves creating a control plan?", "options": ["Define", "Measure", "Improve", "Control"], "correct_index": 3 },
+    { "question": "A sigma level of 6 corresponds to approximately how many defects per million?", "options": ["34", "3.4", "340", "3,400"], "correct_index": 1 },
+    { "question": "SIPOC is used in which DMAIC phase?", "options": ["Define", "Measure", "Analyze", "Control"], "correct_index": 0 },
+    { "question": "What statistical tool shows the vital few vs. trivial many?", "options": ["Control chart", "Fishbone diagram", "Pareto chart", "Scatter plot"], "correct_index": 2 },
+    { "question": "In FMEA, a higher RPN indicates:", "options": ["Lower risk", "Higher priority for action", "Better process performance", "More data needed"], "correct_index": 1 },
+    { "question": "Process Cycle Efficiency of 25% means:", "options": ["25% of outputs are defective", "The process is 25% faster than target", "75% of time is wasted on non-value activities", "Only 25% of staff are productive"], "correct_index": 2 },
+    { "question": "Which belt level typically leads Six Sigma projects full-time?", "options": ["Yellow Belt", "Green Belt", "Black Belt", "White Belt"], "correct_index": 2 },
+    { "question": "A control chart shows 8 consecutive points above the center line. This indicates:", "options": ["Normal variation", "Process is out of control", "Measurement error", "Improved performance"], "correct_index": 1 },
+    { "question": "VOC stands for:", "options": ["Volume of Changes", "Voice of Customer", "Verification of Compliance", "Value of Correction"], "correct_index": 1 },
+    { "question": "The primary purpose of a pilot test is to:", "options": ["Train all staff", "Validate solutions on a small scale before full rollout", "Collect baseline data", "Satisfy regulatory requirements"], "correct_index": 1 }
+  ]
+}

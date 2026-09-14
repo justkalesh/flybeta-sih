@@ -1,0 +1,23 @@
+{
+  "domain": { "name": "dddm", "title": "Data Driven Decision Making for Government", "icon": "bar_chart", "color": "#059669" },
+  "level": { "number": 6, "title": "Analytics Maturity Model", "description": "Understanding organizational analytics maturity and building a data-driven culture." },
+  "lessons": [
+    {
+      "order": 1, "title": "Analytics Maturity Framework", "lesson_type": "theory",
+      "content_md": "# Analytics Maturity Framework\n\n## What is Analytics Maturity?\n\nAnalytics maturity measures how effectively an organization uses data for decision-making.\n\n## The 5-Level Model\n\n### Level 1: Ad Hoc\n- Data is scattered across spreadsheets\n- Analysis is manual and reactive\n- No standard tools or processes\n- Decisions are mostly intuition-based\n- *\"We have data somewhere, but finding it is hard.\"*\n\n### Level 2: Opportunistic\n- Some departments use data regularly\n- Basic reports and dashboards exist\n- Limited data sharing across departments\n- Pockets of analytical expertise\n- *\"Some teams use data well, but it's not organization-wide.\"*\n\n### Level 3: Systematic\n- Organization-wide data strategy exists\n- Standardized tools and platforms\n- Regular training and capacity building\n- Data governance policies in place\n- *\"Data is a recognized asset with clear ownership.\"*\n\n### Level 4: Differentiating\n- Advanced analytics (predictive, prescriptive)\n- Real-time dashboards and alerts\n- Cross-departmental data integration\n- Data scientists embedded in teams\n- *\"Data drives strategic decisions and innovation.\"*\n\n### Level 5: Transformational\n- AI/ML embedded in core processes\n- Automated decision systems (with human oversight)\n- Continuous improvement through data\n- Data culture permeates entire organization\n- *\"We couldn't function without our data capabilities.\"*\n\n## Assessing Your Department\n\n### Self-Assessment Checklist\n\n| Question | Yes/No |\n|---|---|\n| Do we have a data strategy document? | |\n| Is there a designated data officer? | |\n| Do staff receive analytics training? | |\n| Are dashboards updated regularly? | |\n| Do we use data in budget planning? | |\n| Can we share data across departments? | |\n| Do we have data quality standards? | |\n| Have we implemented predictive analytics? | |\n\n## Building a Data Culture\n\n1. **Leadership commitment**: Senior officers must champion data use\n2. **Training**: Regular capacity building at all levels\n3. **Tools**: Provide accessible analytics platforms\n4. **Incentives**: Recognize data-driven improvements\n5. **Quick wins**: Start with small, visible projects\n6. **Share success stories**: Build momentum through examples\n7. **Data literacy**: Make it a core competency in appraisals",
+      "xp_reward": 15, "coins_reward": 5, "is_mandatory": true
+    },
+    {
+      "order": 2, "title": "Reflection Quiz: Maturity Model", "lesson_type": "quiz",
+      "content_md": "# Reflection Quiz\n\nTest your understanding of analytics maturity.",
+      "xp_reward": 20, "coins_reward": 10, "is_mandatory": true
+    }
+  ],
+  "quiz_data": [
+    { "question": "At which maturity level is data scattered across spreadsheets with no standard processes?", "options": ["Opportunistic", "Ad Hoc", "Systematic", "Differentiating"], "correct_index": 1 },
+    { "question": "An organization at Level 4 'Differentiating' would have:", "options": ["No data strategy", "Basic reports only", "Advanced predictive analytics and real-time dashboards", "Manual data entry only"], "correct_index": 2 },
+    { "question": "The most important factor in building a data culture is:", "options": ["Buying expensive software", "Leadership commitment and championing data use", "Hiring external consultants", "Mandating data use by policy"], "correct_index": 1 },
+    { "question": "Which is NOT a recommended strategy for building data culture?", "options": ["Regular training", "Quick wins with visible impact", "Keeping analytics knowledge in a single team", "Sharing success stories"], "correct_index": 2 },
+    { "question": "At the Transformational level (Level 5):", "options": ["Data is still optional", "AI/ML is embedded in core processes", "Only senior officers use data", "Data is only used for compliance"], "correct_index": 1 }
+  ]
+}
