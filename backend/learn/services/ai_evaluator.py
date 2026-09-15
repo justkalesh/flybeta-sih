@@ -1,9 +1,13 @@
 import os
 import json
+from pathlib import Path
+from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 from pydantic import BaseModel, Field
 
+# Ensure .env is loaded
+load_dotenv(Path(__file__).resolve().parent.parent.parent / '.env')
 # ── Gemini Client Configuration (shared logic with api/ai_services.py) ────
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', 'route429-managed')
 ROUTE429_BASE_URL = os.environ.get(

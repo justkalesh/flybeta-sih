@@ -45,7 +45,7 @@ const PREVIOUS_TRAININGS = [
   'None',
 ];
 
-export default function ProfileIntake({ onComplete }) {
+export default function ProfileIntake({ onComplete, onSkip }) {
   const { profile: existingProfile } = useCompetency();
 
   // Pre-fill from existing profile if available (returning user)
@@ -184,7 +184,7 @@ export default function ProfileIntake({ onComplete }) {
             </div>
           </div>
 
-          <div className="pt-4 flex justify-end">
+          <div className="pt-4 flex flex-col items-end gap-3">
             <button
               type="submit"
               disabled={!isValid}
@@ -192,6 +192,26 @@ export default function ProfileIntake({ onComplete }) {
             >
               Start FRAC Diagnostic <ArrowRight size={20} />
             </button>
+            {onSkip && (
+              <button
+                type="button"
+                disabled={!isValid}
+                onClick={() => {
+                  if (isValid) {
+                    onSkip({
+                      designation,
+                      division,
+                      yearsOfService,
+                      previousTrainings: previousTrainings.filter((t) => t !== 'None'),
+                    });
+                  }
+                }}
+                className="text-sm font-semibold cursor-pointer bg-transparent border-none underline disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ color: 'var(--color-muted)' }}
+              >
+                Skip assessment & continue →
+              </button>
+            )}
           </div>
         </form>
       </div>

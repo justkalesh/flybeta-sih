@@ -6,10 +6,15 @@ for automatic API key rotation on rate limits.
 import os
 import json
 import time
+from pathlib import Path
+from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 from pydantic import BaseModel, Field
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
+
+# Ensure .env is loaded (may run before settings.py in some import orders)
+load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 
 # ── Gemini Client Configuration ──────────────────────────────────────────
 # Mode 1: Direct API key (set GEMINI_API_KEY to a real key)
@@ -35,7 +40,7 @@ try:
             api_key=GEMINI_API_KEY,
             http_options=_http_options,
         )
-        print(f"[Gemini] Initialized via Route429 proxy → {ROUTE429_BASE_URL}")
+        print(f"[Gemini] Initialized via Route429 proxy -> {ROUTE429_BASE_URL}")
 except Exception as e:
     print(f"[Gemini] Failed to initialize client: {e}")
     client = None

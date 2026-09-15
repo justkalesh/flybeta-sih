@@ -120,6 +120,31 @@ export default function DiagnosticPage() {
     setError(null);
   };
 
+  const handleSkip = (data) => {
+    // Save profile info without quiz scores
+    const profileData = {
+      ...data,
+      comp_statistical: 0,
+      comp_technical: 0,
+      comp_digital_governance: 0,
+      comp_behavioural: 0,
+    };
+    saveProfile(profileData);
+
+    // Setup tour for first-time users
+    const hasEverSeenTour = localStorage.getItem('mospi_has_seen_tour');
+    if (hasEverSeenTour !== 'true') {
+      localStorage.setItem('mospi_has_seen_tour', '');
+    }
+
+    // Navigate: if logged in go to dashboard, otherwise show signup
+    if (user) {
+      navigate('/dashboard');
+    } else {
+      setShowAuth(true);
+    }
+  };
+
   if (authLoading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -256,7 +281,7 @@ export default function DiagnosticPage() {
 
       {/* ── PROFILE INTAKE ── */}
       {view === 'intake' && (
-        <ProfileIntake onComplete={handleIntakeComplete} />
+        <ProfileIntake onComplete={handleIntakeComplete} onSkip={handleSkip} />
       )}
 
       {/* ── AI QUIZ ── */}
