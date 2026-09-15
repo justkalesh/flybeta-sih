@@ -1,11 +1,11 @@
 """
 Real AI service for the Project Architect, Doc Quiz Engine, and Diagnostic Evaluator.
-Uses the official google-genai SDK routed through Route429 proxy
-for automatic API key rotation on rate limits.
+Supports multi-key rotation for rate limit resilience.
 """
 import os
 import json
 import time
+import threading
 from pathlib import Path
 from dotenv import load_dotenv
 from google import genai
@@ -16,34 +16,90 @@ from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, No
 # Ensure .env is loaded (may run before settings.py in some import orders)
 load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 
-# ── Gemini Client Configuration ──────────────────────────────────────────
-# Mode 1: Direct API key (set GEMINI_API_KEY to a real key)
-# Mode 2: Route429 proxy (set GEMINI_API_KEY to 'route429-managed')
-GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', 'route429-managed')
-ROUTE429_BASE_URL = os.environ.get(
-    'ROUTE429_BASE_URL',
-    'https://route429.parth-ie-kalash.workers.dev/p/flybeta-sih'
-)
-ROUTE429_PROXY_SECRET = os.environ.get('ROUTE429_PROXY_SECRET', '')
 
-try:
-    if GEMINI_API_KEY and GEMINI_API_KEY != 'route429-managed':
-        # Direct mode — use the real API key, no proxy
-        client = genai.Client(api_key=GEMINI_API_KEY)
-        print(f"[Gemini] Initialized with direct API key")
-    else:
-        # Proxy mode — route through Route429
-        _http_options = {'base_url': ROUTE429_BASE_URL, 'headers': {}}
-        if ROUTE429_PROXY_SECRET:
-            _http_options['headers']['X-Proxy-Secret'] = ROUTE429_PROXY_SECRET
-        client = genai.Client(
-            api_key=GEMINI_API_KEY,
-            http_options=_http_options,
-        )
-        print(f"[Gemini] Initialized via Route429 proxy -> {ROUTE429_BASE_URL}")
-except Exception as e:
-    print(f"[Gemini] Failed to initialize client: {e}")
-    client = None
+# ── Multi-Key Rotator ────────────────────────────────────────────────────
+
+class GeminiKeyRotator:
+    """
+    Thread-safe round-robin key rotator for Gemini API.
+    On 429/RESOURCE_EXHAUSTED, automatically retries with the next key.
+    Exposes .models.generate_content() so call sites don't change.
+    """
+
+    RETRYABLE = ('429', 'resource_exhausted', 'unavailable')
+
+    def __init__(self, clients):
+        self._clients = clients
+        self._index = 0
+        self._lock = threading.Lock()
+        self.models = self  # so client.models.generate_content() works
+
+    @property
+    def available(self):
+        return len(self._clients) > 0
+
+    def _next(self):
+        with self._lock:
+            c = self._clients[self._index % len(self._clients)]
+            self._index += 1
+            return c
+
+    def generate_content(self, **kwargs):
+        """Try each key once before giving up."""
+        last_error = None
+        for _ in range(len(self._clients)):
+            c = self._next()
+            try:
+                return c.models.generate_content(**kwargs)
+            except Exception as e:
+                last_error = e
+                err_lower = str(e).lower()
+                if any(kw in err_lower for kw in self.RETRYABLE):
+                    print(f"[KeyRotator] Rate limited, rotating to next key...")
+                    continue
+                raise  # non-retryable error, raise immediately
+        raise last_error  # all keys exhausted
+
+
+def _init_client():
+    """Build the global Gemini client (rotator or single)."""
+    # Priority 1: Multiple comma-separated keys
+    raw_keys = os.environ.get('GEMINI_API_KEYS', '').strip()
+    if raw_keys:
+        keys = [k.strip() for k in raw_keys.split(',') if k.strip()]
+        clients = []
+        for k in keys:
+            try:
+                clients.append(genai.Client(api_key=k))
+            except Exception as e:
+                print(f"[Gemini] Bad key ...{k[-6:]}: {e}")
+        if clients:
+            print(f"[Gemini] Initialized rotator with {len(clients)} API keys")
+            return GeminiKeyRotator(clients)
+
+    # Priority 2: Single direct key
+    single_key = os.environ.get('GEMINI_API_KEY', '').strip()
+    if single_key and single_key != 'route429-managed':
+        c = genai.Client(api_key=single_key)
+        print(f"[Gemini] Initialized with single direct API key")
+        return GeminiKeyRotator([c])
+
+    # Priority 3: Route429 proxy fallback
+    proxy_url = os.environ.get('ROUTE429_BASE_URL', '').strip()
+    proxy_secret = os.environ.get('ROUTE429_PROXY_SECRET', '').strip()
+    if proxy_url:
+        opts = {'base_url': proxy_url, 'headers': {}}
+        if proxy_secret:
+            opts['headers']['X-Proxy-Secret'] = proxy_secret
+        c = genai.Client(api_key=single_key or 'route429-managed', http_options=opts)
+        print(f"[Gemini] Initialized via Route429 proxy -> {proxy_url}")
+        return GeminiKeyRotator([c])
+
+    print("[Gemini] WARNING: No API keys configured!")
+    return None
+
+
+client = _init_client()
 
 
 # ── Pydantic Schemas for Structured Output ───────────────────────────────
@@ -90,7 +146,7 @@ def generate_project_blueprint(prompt):
 
     try:
         response = client.models.generate_content(
-            model='gemini-3.6-flash',
+            model='gemini-3.5-flash-lite',
             contents=prompt,
             config=types.GenerateContentConfig(
                 system_instruction=(
@@ -123,7 +179,7 @@ def generate_code_review(code, language="python"):
         prompt = f"Review the following {language} code:\n\n{code}"
         
         response = client.models.generate_content(
-            model='gemini-3.6-flash',
+            model='gemini-3.5-flash-lite',
             contents=prompt,
             config=types.GenerateContentConfig(
                 system_instruction=(
@@ -168,7 +224,7 @@ def generate_video_quiz(video_id):
     
     try:
         response = client.models.generate_content(
-            model='gemini-3.6-flash',
+            model='gemini-3.5-flash-lite',
             contents=prompt,
             config=types.GenerateContentConfig(
                 system_instruction=(
@@ -225,7 +281,7 @@ def ask_oracle(message: str, history: list = None) -> str:
 
     try:
         response = client.models.generate_content(
-            model='gemini-3.6-flash',
+            model='gemini-3.5-flash-lite',
             contents=formatted_contents,
             config=types.GenerateContentConfig(
                 system_instruction=system_instruction,
@@ -331,7 +387,7 @@ def generate_quiz_from_document(text, num_questions=5, difficulty='intermediate'
 
     try:
         response = client.models.generate_content(
-            model='gemini-3.6-flash',
+            model='gemini-3.5-flash-lite',
             contents=prompt,
             config=types.GenerateContentConfig(
                 system_instruction=system_instruction,
@@ -452,7 +508,7 @@ def generate_diagnostic_quiz(designation, division, years_of_service, previous_t
         for attempt in range(max_retries):
             try:
                 response = client.models.generate_content(
-                    model='gemini-3.6-flash',
+                    model='gemini-3.5-flash-lite',
                     contents=prompt,
                     config=types.GenerateContentConfig(
                         system_instruction=system_instruction,
@@ -544,7 +600,7 @@ def evaluate_descriptive_answers(sections_with_answers):
     for attempt in range(max_retries):
         try:
             response = client.models.generate_content(
-                model='gemini-3.6-flash',
+                model='gemini-3.5-flash-lite',
                 contents=prompt,
                 config=types.GenerateContentConfig(
                     system_instruction=system_instruction,

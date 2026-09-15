@@ -271,7 +271,7 @@ export default function AIDiagnosticAssessment({ sections, onSubmit }) {
       </div>
 
       {/* Navigation */}
-      <div className="flex justify-between items-center mt-6">
+      <div className="flex justify-between items-center mt-6 pb-16">
         <button
           onClick={goPrev}
           disabled={isFirst}

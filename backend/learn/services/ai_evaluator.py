@@ -1,32 +1,10 @@
 import os
 import json
-from pathlib import Path
-from dotenv import load_dotenv
-from google import genai
 from google.genai import types
 from pydantic import BaseModel, Field
 
-# Ensure .env is loaded
-load_dotenv(Path(__file__).resolve().parent.parent.parent / '.env')
-# ── Gemini Client Configuration (shared logic with api/ai_services.py) ────
-GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', 'route429-managed')
-ROUTE429_BASE_URL = os.environ.get(
-    'ROUTE429_BASE_URL',
-    'https://route429.parth-ie-kalash.workers.dev/p/flybeta-sih'
-)
-ROUTE429_PROXY_SECRET = os.environ.get('ROUTE429_PROXY_SECRET', '')
-
-try:
-    if GEMINI_API_KEY and GEMINI_API_KEY != 'route429-managed':
-        client = genai.Client(api_key=GEMINI_API_KEY)
-    else:
-        _http_options = {'base_url': ROUTE429_BASE_URL, 'headers': {}}
-        if ROUTE429_PROXY_SECRET:
-            _http_options['headers']['X-Proxy-Secret'] = ROUTE429_PROXY_SECRET
-        client = genai.Client(api_key=GEMINI_API_KEY, http_options=_http_options)
-except Exception as e:
-    print(f"[Gemini] Failed to initialize evaluator client: {e}")
-    client = None
+# Reuse the shared Gemini client (with key rotation) from api.ai_services
+from api.ai_services import client
 
 
 # ── Structured Output Schema ─────────────────────────────────────────────
@@ -56,7 +34,7 @@ def evaluate_code(domain_name, code_content):
 
     try:
         response = client.models.generate_content(
-            model='gemini-3.6-flash',
+            model='gemini-3.5-flash-lite',
             contents=prompt,
             config=types.GenerateContentConfig(
                 system_instruction=(

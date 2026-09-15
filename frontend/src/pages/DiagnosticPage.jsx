@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ProfileIntake from '../components/diagnostic/ProfileIntake';
 import AIDiagnosticAssessment from '../components/diagnostic/AIDiagnosticAssessment';
 import DiagnosticResults from '../components/diagnostic/DiagnosticResults';
@@ -27,6 +27,8 @@ export default function DiagnosticPage() {
   const { user, loading: authLoading } = useAuth();
   const { saveProfile, profile: existingProfile, hasCompletedDiagnostic } = useCompetency();
   const navigate = useNavigate();
+  const location = useLocation();
+  const isOnboarding = location.pathname === '/onboarding';
 
   // View state: 'intake' | 'generating' | 'quiz' | 'submitting' | 'results' | 'history'
   const [view, setView] = useState('intake');
@@ -177,7 +179,7 @@ export default function DiagnosticPage() {
             <span className="label-mono text-muted">
               FRAC Competency Diagnostic
             </span>
-            {!user && (
+            {!user && !isOnboarding && (
               <span
                 className="brutalist-badge"
                 style={{ background: '#059669', color: '#fff' }}
@@ -281,7 +283,7 @@ export default function DiagnosticPage() {
 
       {/* ── PROFILE INTAKE ── */}
       {view === 'intake' && (
-        <ProfileIntake onComplete={handleIntakeComplete} onSkip={handleSkip} />
+        <ProfileIntake onComplete={handleIntakeComplete} onSkip={isOnboarding ? handleSkip : undefined} />
       )}
 
       {/* ── AI QUIZ ── */}
