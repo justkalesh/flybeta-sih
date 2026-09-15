@@ -1,0 +1,79 @@
+{
+  "domain": {
+    "name": "digital-governance",
+    "title": "Digital Governance & Cybersecurity",
+    "icon": "shield-check",
+    "color": "#10B981",
+    "track_code": "TS-03"
+  },
+  "level": {
+    "number": 4,
+    "title": "DPI Systems Integration",
+    "description": "Aadhaar eKYC, DigiLocker verification, and UPI-based service delivery."
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "title": "India's Digital Public Infrastructure (DPI)",
+      "content_md": "# India's Digital Public Infrastructure (DPI)\n\nIndia has pioneered a unique approach to digitization called **Digital Public Infrastructure (DPI)**, often referred to as the \"India Stack\".\n\n## The Three Pillars of India Stack\n\n1. **Identity (Aadhaar)**: Providing a unique, verifiable digital identity to over 1.3 billion residents. This enables paperless, presence-less authentication.\n2. **Payments (UPI & AEPS)**: Creating an interoperable, real-time payment system allowing seamless digital transactions across banks.\n3. **Data Empowerment (DEPA)**: A framework enabling citizens to securely share their data across institutions using Consent Managers (e.g., Account Aggregators in finance, or DigiLocker for documents).\n\n## Relevance to Official Statistics\n\nDPI fundamentally changes how the government can collect and verify data:\n\n- **Targeted Subsidies**: Direct Benefit Transfer (DBT) relies on Aadhaar to eliminate ghosts and duplicates. Statistical surveys can now measure the precise impact of DBT.\n- **Real-time Data**: High-frequency UPI transaction data provides near real-time insights into consumption patterns, complementing traditional lagged surveys.\n- **Verification**: Instead of asking respondents for self-reported income, DEPA could theoretically (with consent) allow verification against tax or banking records for statistical purposes.",
+      "xp_reward": 10,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 2,
+      "title": "Aadhaar Authentication & eKYC",
+      "content_md": "# Aadhaar Authentication & eKYC\n\n## How Aadhaar Authentication Works\n\nAuthentication involves submitting a citizen's Aadhaar number along with demographic or biometric data to the CIDR (Central Identities Data Repository) managed by UIDAI. The CIDR responds with a simple \"Yes\" or \"No\".\n\n### Types of Authentication\n- **Demographic Auth**: Matching name, address, DOB.\n- **Biometric Auth**: Fingerprint or Iris scan matching.\n- **OTP Auth**: One-Time Password sent to the registered mobile number.\n\n## Aadhaar eKYC (Electronic Know Your Customer)\n\neKYC goes a step further. Instead of just a Yes/No, if the authentication is successful, UIDAI shares a digitally signed, encrypted version of the resident's demographic details (Name, Address, DOB, Gender, Photograph) with the requesting entity.\n\n### Benefits for Government Services\n- **Paperless**: Eliminates the need for physical photocopies of ID proofs.\n- **Presence-less**: Can be done remotely (e.g., via OTP).\n- **Instantaneous**: Verification happens in seconds.\n- **Non-repudiable**: Digitally signed data cannot be altered.\n\n## Security Guidelines (UIDAI)\n\nGovernment agencies using Aadhaar must adhere to strict security protocols:\n- **Aadhaar Vault**: Aadhaar numbers must never be stored in plain text in general databases. They must be encrypted and stored in a secure, isolated \"Aadhaar Vault\".\n- **Reference Keys**: The main database should only store a reference key (token) pointing to the vault.\n- **Masking**: When displaying Aadhaar numbers on screens or printouts, only the last 4 digits should be visible (e.g., XXXXXXXX1234).",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 3,
+      "title": "DigiLocker and Document Verification",
+      "content_md": "# DigiLocker and Document Verification\n\n## What is DigiLocker?\n\nDigiLocker is a flagship initiative under Digital India aimed at \"Paperless Governance\". It provides citizens with a shareable private space on a public cloud to store their digital documents.\n\n## Key Concepts\n\n1. **Issuer**: Government departments, educational boards, or agencies that issue electronic documents (e.g., CBSE issuing marksheets, Transport Dept issuing driving licenses).\n2. **Requester**: Entities requesting secure access to a particular e-document (e.g., an employer verifying a degree, or a government department processing a passport application).\n3. **Citizen**: The individual who consents to sharing their issued documents from their DigiLocker to the Requester.\n\n## How the Integration Works\n\nWhen a citizen applies for a government service (e.g., a scholarship):\n1. They select \"Fetch from DigiLocker\" on the portal.\n2. They authenticate via Aadhaar/OTP.\n3. They consent to share the specific document (e.g., Income Certificate).\n4. The portal fetches the *digitally signed* XML/JSON data directly from the Issuer via the DigiLocker API.\n\n## Benefits over Physical Documents\n\n- **Zero Forgery**: Because the data comes directly from the issuing authority and is digitally signed, it cannot be forged.\n- **Automated Processing**: Systems can parse the XML/JSON data automatically, eliminating manual data entry and human error.\n- **Instant Verification**: No need for physical verification processes that take weeks.",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 4,
+      "title": "Level Quiz: DPI & Digital Services",
+      "content_md": "# Level Quiz\n\nTest your understanding of India's Digital Public Infrastructure, Aadhaar, and DigiLocker.",
+      "xp_reward": 20,
+      "coins_reward": 10,
+      "is_mandatory": true,
+      "lesson_type": "quiz"
+    }
+  ],
+  "quiz_data": [
+    {
+      "question": "What are the three pillars of the 'India Stack' (Digital Public Infrastructure)?",
+      "options": ["Hardware, Software, Networking", "Identity, Payments, Data Empowerment", "E-Governance, E-Kranti, E-Bhasha", "Cloud, Edge, IoT"],
+      "correct_index": 1
+    },
+    {
+      "question": "What is the result of a successful Aadhaar eKYC transaction?",
+      "options": ["A simple 'Yes' or 'No' confirming identity", "A digitally signed package containing the resident's demographic details and photograph", "A physical smart card mailed to the resident", "An activation code for a new bank account"],
+      "correct_index": 1
+    },
+    {
+      "question": "According to UIDAI security guidelines, how must Aadhaar numbers be stored in a government database?",
+      "options": ["In plain text for easy searchability", "Masked with asterisks in all database columns", "Encrypted and stored in a highly secure, isolated 'Aadhaar Vault'", "Stored only on the end-user's local device"],
+      "correct_index": 2
+    },
+    {
+      "question": "In the DigiLocker ecosystem, what is the role of an 'Issuer'?",
+      "options": ["The individual citizen storing documents", "The entity requesting verification of a document", "The government agency or board that generates and signs the electronic document", "The cloud provider hosting the infrastructure"],
+      "correct_index": 2
+    },
+    {
+      "question": "What is a primary benefit of integrating DigiLocker into a government service portal?",
+      "options": ["It provides free internet access to citizens", "It completely eliminates forgery as documents are fetched directly from the issuing authority", "It reduces the need for the portal to have a firewall", "It allows the government to track citizens' physical locations"],
+      "correct_index": 1
+    }
+  ]
+}

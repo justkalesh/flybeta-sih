@@ -112,7 +112,7 @@ export default function TrackSelectionPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Legacy Tracks (exclude any that overlap with MoSPI tracks) */}
         {domains
-          .filter((d) => !MOSPI_TRACKS.some((t) => t.id === d.name))
+          .filter((d) => !MOSPI_TRACKS.some((t) => t.slug === d.name || t.id === d.name))
           .map((domain) => (
             <TrackCard key={`legacy-${domain.id || domain.name}`} domain={domain} />
           ))}
@@ -128,15 +128,15 @@ export default function TrackSelectionPage() {
               id={index === 0 ? 'tour-first-track' : undefined}
               className="brutalist-card flex flex-col overflow-hidden"
               style={{
-                borderColor: isGap ? '#DC2626' : 'var(--color-ink)',
-                borderWidth: isGap ? '4px' : '2px',
+                borderColor: 'var(--color-ink)',
+                borderWidth: '2px',
               }}
             >
               <div
                 className="h-36 md:h-52 border-b-2 relative overflow-hidden flex items-center justify-center group"
                 style={{
-                  borderColor: isGap ? '#DC2626' : 'var(--color-border)',
-                  background: isGap ? '#FEE2E2' : 'var(--color-canvas)',
+                  borderColor: 'var(--color-border)',
+                  background: 'var(--color-canvas)',
                 }}
               >
                 {/* Track Code Badge */}
@@ -170,14 +170,14 @@ export default function TrackSelectionPage() {
                     <IconComponent
                       size={72}
                       strokeWidth={1.5}
-                      style={{ color: isGap ? '#DC2626' : 'var(--color-primary)', opacity: 0.3 }}
+                      style={{ color: 'var(--color-primary)', opacity: 0.3 }}
                     />
                   );
                 })()}
               </div>
 
               {/* Card Body (Matching legacy TrackCard) */}
-              <div className="p-4 md:p-6 flex-grow flex flex-col" style={{ background: isGap ? '#FEF2F2' : 'var(--color-surface)' }}>
+              <div className="p-4 md:p-6 flex-grow flex flex-col" style={{ background: 'var(--color-surface)' }}>
                 <div className="mb-4">
                   <div className="flex justify-between items-start mb-2">
                     <span
@@ -200,7 +200,7 @@ export default function TrackSelectionPage() {
                 </div>
 
                 {/* Level info */}
-                <div className="border-t-2 pt-4 flex-grow" style={{ borderColor: isGap ? '#FCA5A5' : 'var(--color-border)' }}>
+                <div className="border-t-2 pt-4 flex-grow" style={{ borderColor: 'var(--color-border)' }}>
                   <div className="flex items-center gap-2 mb-2 text-muted">
                     <span className="label-mono uppercase">{track.level}</span>
                     <span className="text-border-light">•</span>
@@ -213,13 +213,13 @@ export default function TrackSelectionPage() {
                       <li
                         key={mod.id}
                         className="border-b border-border-light py-2 flex items-center gap-2 text-sm"
-                        style={{ borderColor: isGap ? '#FCA5A5' : 'var(--color-border-light)' }}
+                        style={{ borderColor: 'var(--color-border-light)' }}
                       >
                         <span
                           className="w-6 h-6 flex items-center justify-center border text-xs font-bold shrink-0"
                           style={{
-                            background: isGap ? '#FEE2E2' : 'var(--color-canvas)',
-                            borderColor: isGap ? '#FCA5A5' : 'var(--color-border)',
+                            background: 'var(--color-canvas)',
+                            borderColor: 'var(--color-border)',
                           }}
                         >
                           {i + 1}
@@ -232,13 +232,8 @@ export default function TrackSelectionPage() {
 
                 {/* CTA */}
                 <Link
-                  to={`/track/${track.id}`}
+                  to={`/track/${track.slug}`}
                   className="brutalist-btn brutalist-btn-primary w-full text-center mt-4 no-underline"
-                  style={isGap ? {
-                    background: '#DC2626',
-                    color: '#ffffff',
-                    borderColor: 'var(--color-ink)',
-                  } : {}}
                 >
                   Start Track →
                 </Link>

@@ -85,8 +85,8 @@ class Command(BaseCommand):
         if dry_run:
             self.stdout.write(self.style.WARNING('DRY RUN — no database writes.'))
         else:
-            self.stdout.write(self.style.WARNING('WIPING existing Domain, Level, and Lesson data...'))
-            Domain.objects.all().delete()
+            self.stdout.write(self.style.WARNING('Using update_or_create for Domain, Level, and Lesson data...'))
+            # Domain.objects.all().delete()
 
         # Counters
         stats = {
@@ -195,7 +195,7 @@ class Command(BaseCommand):
             defaults={
                 'title': level_data.get('title', f'Level {level_data["number"]}'),
                 'description': level_data.get('description', ''),
-                'quiz_data': level_data.get('quiz_data', None),
+                'quiz_data': data.get('quiz_data', level_data.get('quiz_data', None)),
             },
         )
         if created:

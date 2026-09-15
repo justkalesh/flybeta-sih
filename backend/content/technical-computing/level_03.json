@@ -1,0 +1,79 @@
+{
+  "domain": {
+    "name": "technical-computing",
+    "title": "Technical Computing & AI/ML",
+    "icon": "cpu",
+    "color": "#7C3AED",
+    "track_code": "TS-02"
+  },
+  "level": {
+    "number": 3,
+    "title": "GIS & Spatial Mapping",
+    "description": "Choropleth mapping, geo-tagging economic census, and remote sensing applications."
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "title": "GIS Fundamentals for Statistics",
+      "content_md": "# GIS Fundamentals for Statistics\n\n## What is GIS?\n\nA **Geographic Information System (GIS)** captures, stores, analyzes, and visualizes data linked to geographic locations.\n\n## Why GIS in Official Statistics?\n\n- **Spatial analysis** of poverty, health, and education indicators\n- **Census mapping** — enumeration block delineation\n- **Survey planning** — optimizing field routes and sampling frames\n- **Disaster response** — mapping affected areas for resource allocation\n- **SDG monitoring** — district-level performance visualization\n\n## Key GIS Concepts\n\n### Vector Data\nRepresents features as points, lines, and polygons:\n- **Points**: Village locations, market centers\n- **Lines**: Roads, rivers, railway lines\n- **Polygons**: District boundaries, forest areas, census blocks\n\n### Raster Data\nGrid-based representation (like satellite images):\n- Each cell contains a value (elevation, temperature, land use)\n- Resolution determines detail level\n\n### Coordinate Reference Systems (CRS)\n- **WGS 84 (EPSG:4326)**: Global standard, used by GPS\n- **UTM Zones**: India falls in zones 42-47\n- **Everest 1830**: Historical Indian datum\n\n## GIS Software Options\n\n| Software | Type | Best For |\n|----------|------|----------|\n| **QGIS** | Free, open-source | General mapping, analysis |\n| **ArcGIS** | Commercial | Enterprise workflows |\n| **Google Earth Engine** | Cloud-based | Satellite imagery analysis |\n| **GeoPandas (Python)** | Library | Programmatic spatial analysis |\n| **sf (R)** | Package | Statistical spatial analysis |",
+      "xp_reward": 10,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 2,
+      "title": "Choropleth Maps & Spatial Visualization",
+      "content_md": "# Choropleth Maps & Spatial Visualization\n\n## What is a Choropleth Map?\n\nA **choropleth map** uses color shading to represent the magnitude of a statistical variable across geographic regions.\n\n## Creating Choropleth Maps\n\n### Python: GeoPandas + matplotlib\n\n```python\nimport geopandas as gpd\nimport matplotlib.pyplot as plt\n\n# Load India district shapefile\nindia = gpd.read_file('india_districts.shp')\n\n# Merge with SDG scores\nindia = india.merge(sdg_scores, on='district_code')\n\n# Plot choropleth\nfig, ax = plt.subplots(1, 1, figsize=(15, 20))\nindia.plot(\n    column='sdg_score',\n    cmap='RdYlGn',\n    legend=True,\n    legend_kwds={'label': 'SDG Composite Score'},\n    ax=ax\n)\nax.set_title('SDG India Index: District-wise Performance')\nax.axis('off')\nplt.show()\n```\n\n### R: tmap\n\n```r\nlibrary(sf)\nlibrary(tmap)\n\nindia <- st_read('india_districts.shp')\nindia <- merge(india, sdg_scores, by = 'district_code')\n\ntm_shape(india) +\n  tm_fill('sdg_score', palette = 'RdYlGn', title = 'SDG Score') +\n  tm_borders(alpha = 0.3) +\n  tm_layout(title = 'SDG India Index')\n```\n\n## Color Scheme Guidelines\n\n| Data Type | Recommended Palette |\n|-----------|--------------------|\n| Sequential (low→high) | Blues, Greens, YlOrRd |\n| Diverging (below/above average) | RdBu, BrBG, RdYlGn |\n| Categorical | Set1, Paired, Dark2 |\n\n## Common Pitfalls\n\n1. **Misleading area bias** — Large districts dominate visually even if they have small populations\n2. **Too many classes** — Use 5-7 color breaks maximum\n3. **Wrong projection** — India looks distorted in Mercator; use Albers Equal-Area\n4. **Missing legend** — Always include scale, source, and color legend",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 3,
+      "title": "Geo-Tagging & Remote Sensing for Surveys",
+      "content_md": "# Geo-Tagging & Remote Sensing\n\n## Geo-Tagging in Field Surveys\n\n**Geo-tagging** means attaching GPS coordinates to survey records, enabling spatial analysis of collected data.\n\n### Benefits\n- Verify enumerator visits (did they actually go to the village?)\n- Map survey coverage in real-time\n- Enable spatial sampling and post-stratification\n- Link survey data to satellite imagery\n\n### Implementation\n\nModern CAPI (Computer-Assisted Personal Interviewing) tablets auto-capture GPS:\n\n```json\n{\n  \"household_id\": \"MH-PUN-0042\",\n  \"latitude\": 18.5204,\n  \"longitude\": 73.8567,\n  \"accuracy_m\": 4.2,\n  \"timestamp\": \"2024-01-15T10:30:00\"\n}\n```\n\n## Remote Sensing Applications\n\n### Crop Area Estimation\n- **FASAL** (Forecasting Agricultural output using Space, Agro-meteorology & Land-based observations)\n- Satellite imagery (Sentinel-2, LISS-IV) classifies crop types\n- Validates ground-truth data from crop-cutting experiments\n\n### Night Lights as Economic Indicator\n- **VIIRS** (Visible Infrared Imaging Radiometer Suite) satellite captures nighttime lights\n- Correlated with economic activity, urbanization, and electrification\n- Used as a proxy for sub-national GDP estimation in data-scarce regions\n\n### Land Use / Land Cover (LULC)\n- Track urbanization, deforestation, water body changes\n- Input for environmental statistics and SDG 15 (Life on Land)\n\n## Google Earth Engine\n\n```javascript\n// Nighttime lights for India (2023)\nvar viirs = ee.ImageCollection('NOAA/VIIRS/DNB/MONTHLY_V1/VCMSLCFG')\n  .filterDate('2023-01-01', '2023-12-31')\n  .select('avg_rad')\n  .mean();\n\nMap.addLayer(viirs.clip(india), {\n  min: 0, max: 60,\n  palette: ['black', 'blue', 'yellow', 'white']\n}, 'Night Lights 2023');\n```\n\n## Privacy Considerations\n\n- GPS coordinates of individual households must be **anonymized** before publication\n- Random displacement (jittering) of 1-5 km protects respondent identity\n- Aggregate to district level for public datasets",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 4,
+      "title": "Level Quiz: GIS & Spatial Mapping",
+      "content_md": "# Level Quiz\n\nTest your understanding of GIS and spatial mapping for official statistics.",
+      "xp_reward": 20,
+      "coins_reward": 10,
+      "is_mandatory": true,
+      "lesson_type": "quiz"
+    }
+  ],
+  "quiz_data": [
+    {
+      "question": "What type of GIS data represents district boundaries?",
+      "options": ["Raster data", "Point data", "Polygon data", "Line data"],
+      "correct_index": 2
+    },
+    {
+      "question": "Which Python library is commonly used for geospatial data analysis?",
+      "options": ["NumPy", "GeoPandas", "scikit-learn", "Requests"],
+      "correct_index": 1
+    },
+    {
+      "question": "What is the recommended maximum number of color classes in a choropleth map?",
+      "options": ["3-4", "5-7", "10-12", "15-20"],
+      "correct_index": 1
+    },
+    {
+      "question": "What satellite data product is used as a proxy for sub-national economic activity?",
+      "options": ["LANDSAT vegetation index", "VIIRS nighttime lights", "Sentinel-1 radar", "MODIS snow cover"],
+      "correct_index": 1
+    },
+    {
+      "question": "Why must GPS coordinates of surveyed households be anonymized before publication?",
+      "options": ["To reduce file size", "To comply with the Collection of Statistics Act and protect respondent identity", "To improve map accuracy", "To standardize coordinate systems"],
+      "correct_index": 1
+    }
+  ]
+}

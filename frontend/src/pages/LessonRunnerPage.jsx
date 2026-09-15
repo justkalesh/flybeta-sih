@@ -4,6 +4,7 @@ import { getDomain, getCachedDomain, completeLesson } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import MarkdownRenderer from '../components/ui/MarkdownRenderer';
 import LevelBossQuiz from '../components/interactive/LevelBossQuiz';
+import InlineLevelQuiz from '../components/interactive/InlineLevelQuiz';
 import CapstoneEvaluator from '../components/interactive/CapstoneEvaluator';
 import AuthModal from '../components/auth/AuthModal';
 import { recordActivity } from '../components/ActivityHeatmap';
@@ -142,6 +143,11 @@ export default function LessonRunnerPage() {
     setCompleting(true);
     try {
       const result = await completeLesson(currentLesson.id);
+
+      // We still want to guarantee the level_completed flag is set correctly on the overlay for quizzes
+      if (currentLesson.lesson_type === 'quiz' || currentLesson.lesson_type === 'boss') {
+        result.level_completed = true;
+      }
 
       // Update AuthContext with new stats (instant Navbar update)
       updateUser(result.user);
@@ -307,13 +313,30 @@ export default function LessonRunnerPage() {
             <h1 className="heading-lg m-0">{currentLesson.title}</h1>
           </div>
 
-          {/* Markdown Content */}
-          <div className="brutalist-card p-8">
-            <MarkdownRenderer content={currentLesson.content_md} />
-          </div>
+          {/* Lesson Content */}
+          {(currentLesson.lesson_type === 'quiz' || currentLesson.lesson_type === 'boss') ? (
+            <div>
+              {/* Show markdown intro if it exists */}
+              {currentLesson.content_md && (
+                <div className="brutalist-card p-8 mb-6">
+                  <MarkdownRenderer content={currentLesson.content_md} />
+                </div>
+              )}
+              {/* Interactive Quiz */}
+              <InlineLevelQuiz
+                quizData={currentLevel.quiz_data || []}
+                onComplete={handleComplete}
+                accent={meta.accent}
+              />
+            </div>
+          ) : (
+            <div className="brutalist-card p-8">
+              <MarkdownRenderer content={currentLesson.content_md} />
+            </div>
+          )}
 
-          {/* Boss Quiz or Capstone */}
-          {!nextLesson && (
+          {/* Boss Quiz or Capstone (only for theory lessons on the last position) */}
+          {!nextLesson && currentLesson.lesson_type !== 'quiz' && currentLesson.lesson_type !== 'boss' && (
             <div className="mt-16 overflow-visible pb-12">
               {levelNum === 10 ? (
                 <CapstoneEvaluator preselectedDomain={domain?.id} />
@@ -342,7 +365,10 @@ export default function LessonRunnerPage() {
               </Link>
             )}
 
-            {!(!nextLesson && (levelNum === 10 || currentLevel.quiz_data)) && (
+            {!(!nextLesson && (levelNum === 10 || currentLevel.quiz_data))
+              && currentLesson.lesson_type !== 'quiz'
+              && currentLesson.lesson_type !== 'boss'
+              && (
               <button
                 onClick={handleComplete}
                 disabled={completing}

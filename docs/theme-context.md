@@ -13,20 +13,20 @@ Every theme must store its assets in a dedicated folder inside `frontend/public/
 ```
 frontend/public/
 ├── doremon-theme/            ← Doraemon Blue theme assets
-│   ├── doremon.png           ← Cloud domain character
-│   ├── sizuka.png            ← AI domain character
-│   ├── suniyo.png            ← Data Science domain character
-│   └── doremon_flybeta.png   ← Full-page background image
+│   ├── doremon.webp           ← Cloud domain character
+│   ├── sizuka.webp            ← AI domain character
+│   ├── suniyo.webp            ← Data Science domain character
+│   └── doremon_flybeta.webp   ← Full-page background image
 ├── shinchan-theme/           ← (future) Shinchan theme
-│   ├── cloud.png
-│   ├── ai.png
-│   ├── data.png
-│   └── shinchan_bg.png
+│   ├── cloud.webp
+│   ├── ai.webp
+│   ├── data.webp
+│   └── shinchan_bg.webp
 └── one-piece-theme/          ← (future) One Piece theme
-    ├── cloud.png
-    ├── ai.png
-    ├── data.png
-    └── onepiece_bg.png
+    ├── cloud.webp
+    ├── ai.webp
+    ├── data.webp
+    └── onepiece_bg.webp
 ```
 
 **Naming convention for the folder:** `[theme-name]-theme/`
@@ -45,9 +45,9 @@ If using character images (like Doraemon), create a mapping object in `TrackCard
 
 ```js
 const DORAEMON_IMAGES = {
-  'cloud': '/doremon-theme/doremon.png',
-  'ai':    '/doremon-theme/sizuka.png',
-  'data':  '/doremon-theme/suniyo.png',
+  'cloud': '/doremon-theme/doremon.webp',
+  'ai':    '/doremon-theme/sizuka.webp',
+  'data':  '/doremon-theme/suniyo.webp',
 };
 ```
 
@@ -62,7 +62,7 @@ When a theme provides a global background image (e.g., `doremon_flybeta.png`), i
 to the root layout wrapper in `Layout.jsx` with these CSS properties:
 
 ```css
-background-image: url('/[theme]-theme/background.png');
+background-image: url('/[theme]-theme/background.webp');
 background-size: cover;
 background-position: center;
 background-attachment: fixed;
@@ -180,4 +180,7 @@ const THEME_BACKGROUNDS = {
 | Theme Key | Label | Primary Color | Background Image | Status |
 |-----------|-------|--------------|-----------------|--------|
 | `neo-brutalism` | Neo-Brutalism | `#E52E2E` (Red) | None (grid-bg) | ✅ Active |
-| `doraemon-blue` | Doraemon Blue | `#3182ce` (Blue) | `doremon_flybeta.png` | ✅ Active |
+| `doraemon-blue` | Doraemon Blue | `#3182ce` (Blue) | `doremon_flybeta.webp` | ✅ Active |
+| `shinchan` | Shinchan | `#FF6B35` (Orange) | `shinchan_bg.webp` | ✅ Active |
+| `princess` | Princess | `#EC4899` (Pink) | `princess_bg.webp` | ✅ Active |
+| `anime` | Anime | `#10B981` (Green) | `anime_bg.webp` | ✅ Active |

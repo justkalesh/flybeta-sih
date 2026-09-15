@@ -1,0 +1,79 @@
+{
+  "domain": {
+    "name": "digital-governance",
+    "title": "Digital Governance & Cybersecurity",
+    "icon": "shield-check",
+    "color": "#10B981",
+    "track_code": "TS-03"
+  },
+  "level": {
+    "number": 1,
+    "title": "Cybersecurity Fundamentals for Government",
+    "description": "CERT-In guidelines, threat modeling, and incident response for statistical systems."
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "title": "The Threat Landscape for Official Statistics",
+      "content_md": "# The Threat Landscape for Official Statistics\n\nOfficial statistical databases contain critical national information. Compromise of this data can impact financial markets, policy decisions, and citizen trust.\n\n## Key Threat Vectors\n\n1. **Data Exfiltration**: Theft of pre-release macroeconomic data (e.g., GDP figures) for insider trading.\n2. **Ransomware**: Encrypting government survey databases to extort money, halting official publications.\n3. **Data Manipulation**: Altering official statistics to manipulate public perception or financial markets.\n4. **DDoS Attacks**: Overwhelming government portals (like the MoSPI website) during major data releases.\n5. **Phishing**: Targeting government officials to steal credentials and access internal networks (e.g., e-Office).\n\n## CERT-In Guidelines\n\nThe **Indian Computer Emergency Response Team (CERT-In)** mandates strict cybersecurity protocols for government entities:\n\n- **Incident Reporting**: All cyber incidents must be reported to CERT-In within 6 hours.\n- **Log Synchronization**: Servers must synchronize clocks to NIC/NPL NTP servers to ensure accurate audit trails.\n- **Log Retention**: ICT system logs must be maintained securely for a rolling period of 180 days.\n- **Vulnerability Audits**: Systems must undergo regular audits by CERT-In empanelled auditors.\n\n## The CIA Triad in Statistics\n\n- **Confidentiality**: Ensuring unreleased GDP data or individual survey responses remain secret.\n- **Integrity**: Ensuring published CPI figures have not been altered by malicious actors.\n- **Availability**: Ensuring the MoSPI data portal is accessible to researchers and policymakers 24/7.",
+      "xp_reward": 10,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 2,
+      "title": "Endpoint Security & Access Control",
+      "content_md": "# Endpoint Security & Access Control\n\n## Securing the End User\n\nFor government officials handling sensitive statistical data, security starts at the endpoint (laptops, mobile devices).\n\n### Multi-Factor Authentication (MFA)\n- Essential for accessing internal portals, e-Office, and VPNs.\n- E.g., Parichay / Jan Parichay SSO systems implement OTP or token-based MFA.\n\n### Endpoint Detection and Response (EDR)\n- Next-generation antivirus installed on all government devices.\n- Actively monitors for suspicious behavior (e.g., rapid file encryption indicating ransomware).\n\n### USB & Media Restrictions\n- Transferring sensitive survey data via unauthorized USB drives is a major vulnerability.\n- Systems must use Endpoint Data Loss Prevention (DLP) to block or monitor USB usage.\n\n## Principle of Least Privilege\n\nUsers should only have the minimum access rights necessary to perform their duties.\n\n### Role-Based Access Control (RBAC) in Statistical Systems\n- **Data Entry Operator**: Can input new survey data, but cannot view aggregate tables or edit past entries.\n- **Statistical Officer**: Can view and analyze data for their assigned state/sector, but cannot publish to the public portal.\n- **Director/Publisher**: Can approve and publish finalized reports.\n- **Database Administrator**: Can manage the database structure, but access to raw survey microdata should be restricted and audited.\n\n## Secure Remote Access\n\nWhen working remotely (e.g., from a field office or home):\n- Use the **NIC VPN** (Virtual Private Network) to access internal servers.\n- Never process sensitive unreleased data on public Wi-Fi without a VPN.\n- Ensure government-issued devices are not used for personal browsing.",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 3,
+      "title": "Secure Software Development Lifecycle (SSDLC)",
+      "content_md": "# Secure Software Development Lifecycle (SSDLC)\n\nWhen MoSPI develops new portals (e.g., for a new survey or census), security cannot be an afterthought. It must be integrated into every phase of development.\n\n## The SSDLC Phases\n\n1. **Requirements**: Define security requirements (e.g., compliance with CERT-In guidelines, DPDPA).\n2. **Design**: Threat modeling (identifying potential attack vectors before coding begins).\n3. **Development**: Secure coding practices (avoiding hardcoded passwords, validating all input).\n4. **Testing**: \n   - SAST (Static Application Security Testing): Scanning source code for vulnerabilities.\n   - DAST (Dynamic Application Security Testing): Simulating attacks on the running application.\n5. **Deployment**: Hardening servers, configuring firewalls, deploying WAF (Web Application Firewall).\n6. **Maintenance**: Regular patching and vulnerability scanning.\n\n## Common Web Vulnerabilities (OWASP Top 10)\n\nGovernment web portals must be protected against:\n\n- **Injection Flaws (SQLi)**: Attackers injecting malicious SQL commands into search fields to dump database contents.\n  - *Mitigation*: Use parameterized queries (e.g., Django ORM handles this automatically).\n- **Broken Authentication**: Attackers brute-forcing weak passwords or hijacking session tokens.\n  - *Mitigation*: Strong password policies, MFA, short session timeouts.\n- **Cross-Site Scripting (XSS)**: Attackers injecting malicious scripts into web pages viewed by other users.\n  - *Mitigation*: Strict output encoding and Content Security Policy (CSP).\n- **Security Misconfiguration**: Default passwords left unchanged, directory listing enabled, detailed error messages exposed.\n  - *Mitigation*: Automated hardening scripts, disabling debug modes in production.\n\n## Third-Party Audits\n\nBefore any new government portal goes live, it must obtain a **Safe to Host** certificate from a CERT-In empanelled auditor.",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 4,
+      "title": "Level Quiz: Cybersecurity Fundamentals",
+      "content_md": "# Level Quiz\n\nTest your understanding of cybersecurity fundamentals for government systems.",
+      "xp_reward": 20,
+      "coins_reward": 10,
+      "is_mandatory": true,
+      "lesson_type": "quiz"
+    }
+  ],
+  "quiz_data": [
+    {
+      "question": "According to CERT-In guidelines, within what timeframe must government entities report cyber incidents?",
+      "options": ["24 hours", "48 hours", "6 hours", "1 hour"],
+      "correct_index": 2
+    },
+    {
+      "question": "Which principle dictates that users should only have the minimum access rights necessary to perform their duties?",
+      "options": ["Principle of Maximum Utility", "Principle of Least Privilege", "Principle of Separation of Duties", "Principle of Zero Trust"],
+      "correct_index": 1
+    },
+    {
+      "question": "What is required before a new government web portal can go live?",
+      "options": ["A 'Safe to Host' certificate from a CERT-In empanelled auditor", "Approval from the Prime Minister's Office", "A public bug bounty program", "ISO 9001 Certification"],
+      "correct_index": 0
+    },
+    {
+      "question": "Which attack involves injecting malicious commands into database query fields?",
+      "options": ["Cross-Site Scripting (XSS)", "SQL Injection (SQLi)", "Denial of Service (DoS)", "Man-in-the-Middle (MitM)"],
+      "correct_index": 1
+    },
+    {
+      "question": "What is the primary purpose of synchronizing server clocks to NIC/NPL NTP servers?",
+      "options": ["To speed up database queries", "To ensure accurate and consistent audit trails across systems", "To prevent SQL injection", "To reduce server power consumption"],
+      "correct_index": 1
+    }
+  ]
+}

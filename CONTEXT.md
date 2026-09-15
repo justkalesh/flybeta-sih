@@ -80,9 +80,9 @@ User Dashboard (Profile API, Rank Progression, Theme Persistence).
 - **Phase 7 (Completed)**: Beginner Curriculum Upgrade 
   - Complete rewrite of 30 levels across all 3 tracks with strong metaphors.
   - Interactive `<FlipCard/>` components embedded in all lessons.
-  - `LevelBossQuiz` gatekeeper (60% pass rate) implemented for all 30 levels.
+  - `InlineLevelQuiz` standard quizzes implemented for all levels (replacing legacy LevelBossQuiz).
   - Track Roadmap UI updated to enforce level locking based on user progress.
-  - `pass_quiz` API endpoint added to unlock levels and award XP.
+  - Quizzes act as standard lessons; backend `complete` endpoint handles level unlocking natively without legacy XP hooks.
 - **Phase 8 (Completed)**: The AI Evaluator (Level 10 Capstone)
   - Created `CapstoneSubmission` model and `CapstoneSubmissionViewSet` API.
   - Built GitHub service (`github_service.py`) to fetch repository contents via authenticated Github API.

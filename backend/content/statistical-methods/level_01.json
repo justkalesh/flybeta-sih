@@ -1,0 +1,79 @@
+{
+  "domain": {
+    "name": "statistical-methods",
+    "title": "Statistical Methods & Survey Design",
+    "icon": "bar-chart",
+    "color": "#2563EB",
+    "track_code": "TS-01"
+  },
+  "level": {
+    "number": 1,
+    "title": "Survey Design & Sampling Techniques",
+    "description": "Multi-stage stratified random sampling, design effect, and sample size estimation for NSS/PLFS."
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "title": "Foundations of Survey Design",
+      "content_md": "# Foundations of Survey Design\n\nA **survey** is a systematic method of collecting data from a defined population to produce quantitative descriptions of the population's characteristics.\n\n## Why Surveys Matter in MoSPI\n\nThe Ministry of Statistics and Programme Implementation relies on large-scale surveys to:\n\n- Estimate national indicators (GDP, unemployment, poverty)\n- Monitor the Sustainable Development Goals (SDGs)\n- Inform policy decisions with evidence-based data\n\n## Key MoSPI Surveys\n\n| Survey | Frequency | Purpose |\n|--------|-----------|----------|\n| **PLFS** (Periodic Labour Force Survey) | Quarterly | Employment & unemployment estimates |\n| **AIDIS** (All India Debt & Investment Survey) | Decennial | Household assets & liabilities |\n| **NSS Rounds** | Annual/Thematic | Consumer expenditure, health, education |\n| **ASI** (Annual Survey of Industries) | Annual | Industrial production & employment |\n\n## Survey Design Process\n\n1. **Define Objectives** — What are we measuring? For whom?\n2. **Identify Target Population** — Who/what is being studied?\n3. **Choose Sampling Frame** — The list from which samples are drawn\n4. **Select Sampling Method** — Random, stratified, cluster, multi-stage\n5. **Determine Sample Size** — Statistical power vs. cost\n6. **Design Questionnaire** — Clear, unambiguous, pre-tested\n7. **Plan Field Operations** — Training, logistics, supervision\n8. **Data Processing & Analysis** — Cleaning, weighting, estimation\n\n## Census vs. Sample Survey\n\n- **Census**: Covers the entire population (e.g., Population Census)\n- **Sample Survey**: Covers a representative subset (e.g., PLFS)\n\nSample surveys are preferred when:\n- The population is too large for complete enumeration\n- Resources (time, budget) are limited\n- Timely estimates are needed",
+      "xp_reward": 10,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 2,
+      "title": "Sampling Methods for Official Statistics",
+      "content_md": "# Sampling Methods for Official Statistics\n\nChoosing the right sampling method is critical for producing reliable national estimates.\n\n## Simple Random Sampling (SRS)\n\nEvery unit in the population has an **equal probability** of being selected.\n\n- **Pros**: Simple, unbiased\n- **Cons**: Requires a complete sampling frame; impractical for large, dispersed populations\n\n## Stratified Random Sampling\n\nThe population is divided into **strata** (subgroups) based on known characteristics, then SRS is applied within each stratum.\n\n- **Example**: Stratify by state, then by urban/rural\n- **Pros**: Ensures representation of all subgroups; reduces sampling error\n- **Cons**: Requires prior knowledge of population characteristics\n\n## Cluster Sampling\n\nThe population is divided into **clusters** (e.g., villages, city blocks), and entire clusters are randomly selected.\n\n- **Pros**: Cost-effective for geographically dispersed populations\n- **Cons**: Higher sampling error if clusters are internally homogeneous\n\n## Multi-Stage Sampling\n\nCombines multiple sampling stages — the method used by most MoSPI surveys.\n\n### PLFS Example (2-Stage Design)\n\n**Stage 1**: Select First Stage Units (FSUs) — census villages (rural) or UFS blocks (urban)\n\n**Stage 2**: Select households within each FSU using systematic sampling\n\n### NSS Example (3-Stage Design)\n\n1. **Stage 1**: Select districts (stratified by state)\n2. **Stage 2**: Select villages/blocks within districts\n3. **Stage 3**: Select households within selected villages/blocks\n\n## Design Effect (DEFF)\n\nThe **design effect** measures how much the variance of an estimate increases due to the complex sampling design compared to SRS:\n\n```\nDEFF = Variance(complex design) / Variance(SRS)\n```\n\n- DEFF > 1 → Complex design is less efficient than SRS\n- Typical DEFF for household surveys: 1.5 – 3.0\n- Used to adjust sample size calculations",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 3,
+      "title": "Sample Size Estimation & Weighting",
+      "content_md": "# Sample Size Estimation & Weighting\n\n## Determining Sample Size\n\nThe required sample size depends on:\n\n1. **Desired precision** (margin of error)\n2. **Confidence level** (typically 95%)\n3. **Population variability** (estimated from previous surveys)\n4. **Design effect** (DEFF)\n5. **Expected non-response rate**\n\n### Basic Formula (SRS for proportions)\n\n```\nn = (Z² × p × (1-p)) / e²\n```\n\nWhere:\n- Z = 1.96 (for 95% confidence)\n- p = estimated proportion\n- e = desired margin of error\n\n### Adjusted for Complex Design\n\n```\nn_adjusted = n × DEFF / (1 - non_response_rate)\n```\n\n### PLFS Sample Size\n\n- ~12,800 FSUs per quarter\n- ~1,02,400 households per quarter\n- Designed to give state-level quarterly estimates\n\n## Survey Weights\n\nSurvey weights adjust for:\n\n1. **Unequal selection probabilities** — If rural areas are oversampled\n2. **Non-response** — Adjusting for households that refused or were absent\n3. **Post-stratification** — Calibrating to known population totals\n\n### Multiplier (Weight) Calculation\n\n```\nWeight = 1 / (Probability of Selection)\n```\n\nIf a village has a 1/500 chance of being selected, each household in that village gets a weight of 500 — meaning it \"represents\" 500 similar households.\n\n## Non-Sampling Errors\n\nWhile sampling error can be quantified, **non-sampling errors** are harder to control:\n\n- **Coverage error**: Missing parts of the population\n- **Measurement error**: Respondent misunderstanding or interviewer bias\n- **Processing error**: Data entry mistakes\n- **Non-response error**: Systematic differences between respondents and non-respondents\n\nMoSPI uses **field supervision**, **re-interviews**, and **data validation protocols** to minimize these errors.",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 4,
+      "title": "Level Quiz: Survey Design & Sampling",
+      "content_md": "# Level Quiz\n\nTest your understanding of survey design and sampling techniques.",
+      "xp_reward": 20,
+      "coins_reward": 10,
+      "is_mandatory": true,
+      "lesson_type": "quiz"
+    }
+  ],
+  "quiz_data": [
+    {
+      "question": "In the PLFS, what is the First Stage Unit (FSU) for rural areas?",
+      "options": ["Tehsil/Taluka", "Census village", "District", "State"],
+      "correct_index": 1
+    },
+    {
+      "question": "What does a Design Effect (DEFF) of 2.0 indicate?",
+      "options": ["The complex design is twice as efficient as SRS", "The variance is twice that of SRS due to the complex design", "The sample size should be halved", "The survey has a 2% margin of error"],
+      "correct_index": 1
+    },
+    {
+      "question": "In stratified sampling, what is a 'stratum'?",
+      "options": ["A randomly selected cluster of households", "A homogeneous subgroup of the population", "The total number of survey rounds", "A measure of sampling error"],
+      "correct_index": 1
+    },
+    {
+      "question": "If a household has a 1/200 probability of selection, what survey weight does it receive?",
+      "options": ["0.005", "20", "200", "2000"],
+      "correct_index": 2
+    },
+    {
+      "question": "Which type of error cannot be reduced by increasing sample size?",
+      "options": ["Sampling error", "Standard error", "Non-sampling error", "Margin of error"],
+      "correct_index": 2
+    }
+  ]
+}

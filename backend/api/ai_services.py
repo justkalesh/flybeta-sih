@@ -1,10 +1,11 @@
 """
-Real AI service for the Project Architect and Code Drishti features.
+Real AI service for the Project Architect, Doc Quiz Engine, and Diagnostic Evaluator.
 Uses the official google-genai SDK routed through Route429 proxy
 for automatic API key rotation on rate limits.
 """
 import os
 import json
+import time
 from google import genai
 from google.genai import types
 from pydantic import BaseModel, Field
@@ -438,16 +439,27 @@ def generate_diagnostic_quiz(designation, division, years_of_service, previous_t
             f'"ideal_answer_points": ["point1","point2","point3"], "igot_topic": "..."}}}}'
         )
 
-        response = client.models.generate_content(
-            model='gemini-3.6-flash',
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                system_instruction=system_instruction,
-                response_mime_type="application/json",
-                temperature=0.7,
-            ),
-        )
-        return json.loads(response.text)
+        max_retries = 3
+        last_error = None
+        for attempt in range(max_retries):
+            try:
+                response = client.models.generate_content(
+                    model='gemini-3.6-flash',
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        system_instruction=system_instruction,
+                        response_mime_type="application/json",
+                        temperature=0.7,
+                    ),
+                )
+                return json.loads(response.text)
+            except Exception as e:
+                last_error = e
+                wait_time = 2 ** (attempt + 1)
+                print(f"Gemini retry {attempt + 1}/{max_retries} for {quadrant_key}: {e}")
+                if attempt < max_retries - 1:
+                    time.sleep(wait_time)
+        raise Exception(f"Failed after {max_retries} retries: {last_error}")
 
     try:
         sections = []
@@ -518,20 +530,30 @@ def evaluate_descriptive_answers(sections_with_answers):
         "Keep feedback constructive (1-2 sentences). Respond ONLY with valid JSON."
     )
 
-    try:
-        response = client.models.generate_content(
-            model='gemini-3.6-flash',
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                system_instruction=system_instruction,
-                response_mime_type="application/json",
-                temperature=0.3,
-            ),
-        )
+    max_retries = 3
+    last_error = None
 
-        data = json.loads(response.text)
-        return data.get("evaluations", [])
+    for attempt in range(max_retries):
+        try:
+            response = client.models.generate_content(
+                model='gemini-3.6-flash',
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=system_instruction,
+                    response_mime_type="application/json",
+                    temperature=0.3,
+                ),
+            )
 
-    except Exception as e:
-        print(f"Gemini API Error (Descriptive Eval): {e}")
-        raise ValueError(f"Descriptive evaluation failed: {str(e)}")
+            data = json.loads(response.text)
+            return data.get("evaluations", [])
+
+        except Exception as e:
+            last_error = e
+            wait_time = 2 ** (attempt + 1)  # 2s, 4s, 8s
+            print(f"Gemini API Error (Descriptive Eval), attempt {attempt + 1}/{max_retries}: {e}")
+            if attempt < max_retries - 1:
+                print(f"Retrying in {wait_time}s...")
+                time.sleep(wait_time)
+
+    raise ValueError(f"Descriptive evaluation failed after {max_retries} retries: {str(last_error)}")

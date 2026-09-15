@@ -1,0 +1,79 @@
+{
+  "domain": {
+    "name": "digital-governance",
+    "title": "Digital Governance & Cybersecurity",
+    "icon": "shield-check",
+    "color": "#10B981",
+    "track_code": "TS-03"
+  },
+  "level": {
+    "number": 2,
+    "title": "Data Privacy & IT Act Compliance",
+    "description": "DPDPA 2023, consent management, data minimization, and purpose limitation."
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "title": "Digital Personal Data Protection Act (DPDPA) 2023",
+      "content_md": "# Digital Personal Data Protection Act (DPDPA) 2023\n\nThe DPDPA 2023 provides a comprehensive framework for processing digital personal data in India. Government statistical organizations, which handle massive amounts of citizen data, are directly impacted.\n\n## Core Principles\n\n1. **Consent, Lawfulness, & Transparency**: Personal data must be processed lawfully, fairly, and transparently. Consent must be free, specific, informed, unconditional, and unambiguous.\n2. **Purpose Limitation**: Data collected for a survey (e.g., PLFS) cannot be used for unrelated administrative actions (e.g., tax enforcement) unless specifically exempted by law.\n3. **Data Minimization**: Collect only the personal data that is strictly necessary for the specified purpose.\n4. **Data Accuracy**: Ensure personal data is accurate and complete, especially when it affects a decision regarding the Data Principal.\n5. **Storage Limitation**: Do not retain personal data perpetually. Delete or anonymize it once the purpose is served.\n6. **Reasonable Security Safeguards**: Implement measures to prevent data breaches.\n7. **Accountability**: The Data Fiduciary (e.g., MoSPI) is responsible for compliance.\n\n## Key Roles\n\n- **Data Principal**: The individual to whom the personal data relates (the citizen being surveyed).\n- **Data Fiduciary**: Any person/entity determining the purpose and means of processing personal data (e.g., MoSPI).\n- **Data Processor**: Any person processing personal data on behalf of a Data Fiduciary (e.g., a private survey agency contracted by MoSPI).",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 2,
+      "title": "Consent Management in Surveys",
+      "content_md": "# Consent Management in Surveys\n\nUnder DPDPA, processing personal data usually requires consent, though there are specific exemptions for the State.\n\n## Obtaining Valid Consent\n\nWhen a field investigator approaches a household for a survey:\n\n1. **Notice**: They must provide a clear notice detailing the personal data to be collected and the purpose of processing.\n2. **Language**: The notice must be available in English and any language specified in the Eighth Schedule to the Constitution.\n3. **Affirmative Action**: The citizen must give clear affirmative action signifying agreement (e.g., signing a form or digital consent via OTP).\n4. **Withdrawal**: The citizen has the right to withdraw consent at any time, with the same ease with which it was given.\n\n## \"Certain Legitimate Uses\" (Exemptions)\n\nThe State and its instrumentalities may process personal data without explicit consent under specific \"legitimate uses\", such as:\n\n- Provision of subsidies, benefits, services, certificates, or licenses, where the data principal has previously consented to the State processing their data.\n- Responding to medical emergencies.\n- For employment purposes.\n\n*Note: Even under exemptions, the principles of data minimization and security still apply.*",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 3,
+      "title": "Anonymization and Statistical Exemption",
+      "content_md": "# Anonymization and Statistical Exemption\n\n## The Statistical Purpose Exemption\n\nThe DPDPA contains provisions that may exempt the processing of personal data if it is necessary for research, archiving, or statistical purposes, PROVIDED that the personal data is not to be used to take any decision specific to a Data Principal.\n\nThis is crucial for MoSPI. The primary output of official statistics is aggregate data (e.g., inflation rate, unemployment rate), not individual profiling.\n\n## Anonymization vs. Pseudonymization\n\nTo safely store and share microdata (unit-level data from surveys), personal identifiers must be removed.\n\n### Pseudonymization\n- Replacing direct identifiers (Name, Aadhaar number) with a pseudonym or code (e.g., Household ID: HH-10293).\n- **Risk**: The data can be re-identified if combined with the key linking the pseudonym to the individual.\n- Under DPDPA, pseudonymized data is still considered personal data.\n\n### Anonymization\n- Irreversibly altering the data so that the Data Principal cannot be identified, directly or indirectly.\n- Techniques include: Data masking, aggregation, k-anonymity, dropping columns (Name, precise address), and adding statistical noise.\n- **Benefit**: Fully anonymized data falls outside the scope of the DPDPA.\n\n## Best Practices for Publishing Microdata\n\nBefore MoSPI publishes unit-level data for researchers:\n1. Drop direct identifiers (Names, Phone numbers).\n2. Coarsen geographic data (publish at district level, not village/street level).\n3. Top-code extreme values (e.g., instead of listing an exact income of ₹50,00,000, code it as \"₹20,00,000+\" to prevent identification of outliers).",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 4,
+      "title": "Level Quiz: Data Privacy & DPDPA",
+      "content_md": "# Level Quiz\n\nTest your understanding of data privacy laws and anonymization techniques.",
+      "xp_reward": 20,
+      "coins_reward": 10,
+      "is_mandatory": true,
+      "lesson_type": "quiz"
+    }
+  ],
+  "quiz_data": [
+    {
+      "question": "Under the DPDPA 2023, what is the term for the individual to whom the personal data relates?",
+      "options": ["Data Fiduciary", "Data Processor", "Data Principal", "Data Subject"],
+      "correct_index": 2
+    },
+    {
+      "question": "Which DPDPA principle states that data collected for a specific survey should not be used for unrelated administrative actions?",
+      "options": ["Data Minimization", "Purpose Limitation", "Storage Limitation", "Data Accuracy"],
+      "correct_index": 1
+    },
+    {
+      "question": "What is the key difference between anonymization and pseudonymization?",
+      "options": ["Anonymization is reversible; pseudonymization is irreversible.", "Anonymization uses encryption; pseudonymization does not.", "Pseudonymized data is fully exempt from DPDPA; anonymized data is not.", "Anonymization is irreversible; pseudonymized data can still be re-identified with the right key."],
+      "correct_index": 3
+    },
+    {
+      "question": "Which of the following is a technique used to anonymize microdata before publication?",
+      "options": ["Publishing full names in alphabetical order", "Providing the exact GPS coordinates of surveyed households", "Top-coding extreme values", "Retaining Aadhaar numbers as primary keys"],
+      "correct_index": 2
+    },
+    {
+      "question": "If MoSPI contracts a private agency to collect survey data on its behalf, what role does the private agency play under DPDPA?",
+      "options": ["Data Principal", "Data Fiduciary", "Data Auditor", "Data Processor"],
+      "correct_index": 3
+    }
+  ]
+}

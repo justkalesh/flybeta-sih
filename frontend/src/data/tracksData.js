@@ -1,6 +1,7 @@
 export const MOSPI_TRACKS = [
   {
     id: "mospi-ts-01",
+    slug: "statistical-methods",
     title: "Statistical Methods & Survey Design",
     tagline: "Survey methodology, sampling techniques, and national accounts estimation.",
     description: "Master official statistical methodologies including multi-stage sampling design, GDP estimation, CPI compilation, and SDG indicator frameworks aligned to MoSPI standards.",
@@ -17,6 +18,7 @@ export const MOSPI_TRACKS = [
   },
   {
     id: "mospi-ts-02",
+    slug: "technical-computing",
     title: "Technical Computing & AI/ML",
     tagline: "Python, R, GIS, and machine learning for official statistical operations.",
     description: "Build technical proficiency in statistical programming (Python, R, SQL), geospatial analysis (QGIS/ArcGIS), and AI/ML applications for survey data quality and automation.",
@@ -33,6 +35,7 @@ export const MOSPI_TRACKS = [
   },
   {
     id: "mospi-ts-03",
+    slug: "digital-governance",
     title: "Digital Governance & Cybersecurity",
     tagline: "Data privacy, Gov-Cloud, DPI systems, and digital compliance.",
     description: "Navigate the digital governance landscape for government statistical organizations — from DPDPA 2023 compliance and CERT-In cybersecurity to MeghRaj cloud architecture and DPI integration.",

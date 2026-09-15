@@ -37,9 +37,10 @@ This document maps the official Smart India Hackathon problem statement requirem
 **Requirement**: *AI-powered Intelligent Assessment Engine capable of generating objective-type questions (MCQs) and quizzes from uploaded learning materials. Instant evaluation, explanations, and personalized feedback.*
 
 **How FlyBeta satisfies this**:
-- **Code-Drishti (Generative Lab Evaluator)**: FlyBeta goes *beyond* simple MCQs. It allows officials to submit actual written solutions, architectural designs, or code snippets for evaluation. The Django backend sends the submission to Gemini alongside a strict grading rubric.
-- **Instant Feedback**: The AI instantly returns a structured evaluation containing a pass/fail status, a granular score out of 100, markdown-formatted constructive feedback, and actionable next steps without hallucination. 
-- *(Note on Uploading Materials)*: The specific feature allowing trainers to upload PDFs to auto-generate MCQs is currently a high-priority feature slated for the next development phase, though the underlying Gemini integration to achieve it is already fully operational in the backend.
+- **Doc Quiz Engine (AI Document Quiz Generator)**: Trainers and administrators can upload official MoSPI statistical manuals, circulars, or presentations (PDF/PPTX). The backend instantly processes these using Gemini.
+- **FRAC-Tagged MCQs**: The AI extracts key concepts and generates a set of high-quality Multiple Choice Questions (MCQs), automatically tagging each question against the 4-quadrant FRAC framework.
+- **Instant Evaluation & Explanations**: The engine returns a structured JSON containing the questions, correct options, and detailed explanations for *why* an option is correct. The generated quizzes are instantly playable in the Neo-Brutalist `QuizViewer` for immediate feedback.
+- **Capstone Evaluator**: For advanced labs (Level 10), users submit GitHub repositories. The AI Evaluator processes the entire codebase against a strict rubric and provides a granular pass/fail score with markdown-formatted feedback.
 
 ## 6. Comprehensive Analytics Dashboard (Learner & Administrator)
 **Requirement**: *Employee dashboard showing competencies, skill gaps, learning paths, and progress. Administrator dashboard showing workforce competencies, training effectiveness, and predictive analytics.*
@@ -66,8 +67,8 @@ This document maps the official Smart India Hackathon problem statement requirem
 ✅ AI Virtual Assistant (The Oracle)
 ✅ Interactive Dashboards (Admin & Learner)
 ✅ Gamified, secure, and scalable cloud architecture
-✅ Automated Evaluation with Instant Feedback (Code-Drishti)
+✅ Automated Evaluation with Instant Feedback (Capstone Evaluator)
+✅ Trainer Document Upload for MCQ Generation (Doc Quiz Engine)
 
 **Partially Satisfied / Next Steps:**
 ⚠️ **iGOT API Integration**: We provide recommendations, but require official government API keys to pull live iGOT catalogs and push telemetry data.
-⚠️ **Trainer Document Upload for MCQ Generation**: We have an advanced generative evaluator for lab submissions, but building the specific drag-and-drop UI for trainers to upload PDFs and auto-generate MCQs is the immediate next step for Phase 16.

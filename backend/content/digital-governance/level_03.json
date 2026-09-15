@@ -1,0 +1,79 @@
+{
+  "domain": {
+    "name": "digital-governance",
+    "title": "Digital Governance & Cybersecurity",
+    "icon": "shield-check",
+    "color": "#10B981",
+    "track_code": "TS-03"
+  },
+  "level": {
+    "number": 3,
+    "title": "Gov-Cloud (MeghRaj) Architecture",
+    "description": "Secure cloud deployment, role-based access, and data residency compliance."
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "title": "Introduction to GI Cloud (MeghRaj)",
+      "content_md": "# Introduction to GI Cloud (MeghRaj)\n\nThe **GI Cloud**, named **MeghRaj**, is an initiative by the Government of India to harness the benefits of Cloud Computing.\n\n## Objectives of MeghRaj\n\n- Optimum utilization of existing infrastructure.\n- Accelerate the delivery of e-services in the country.\n- Provide standard, secure, and interoperable cloud environments for government departments.\n- Reduce the cost of deploying web applications and portals.\n\n## Key Components\n\n- **National Data Centres (NDCs)**: Managed by NIC, providing the physical backbone.\n- **State Data Centres (SDCs)**: Extending the cloud infrastructure to state governments.\n- **Empanelled Cloud Service Providers (CSPs)**: Private cloud providers (like AWS, Azure, Google Cloud) that have been audited and approved by MeitY (Ministry of Electronics and IT) to host government data.\n\n## Deployment Models\n\nMoSPI can deploy its statistical applications across different cloud models depending on data sensitivity:\n\n1. **Public Cloud (Empanelled)**: Infrastructure shared with other organizations, hosted by private CSPs. Suitable for public-facing data portals.\n2. **Virtual Private Cloud (VPC)**: A logically isolated section of a public cloud. Better for data processing pipelines.\n3. **Government Community Cloud (GCC)**: Infrastructure provisioned for exclusive use by government organizations. Ideal for sensitive survey microdata.\n4. **Private Cloud**: Infrastructure dedicated entirely to a single organization (e.g., NIC Data Centres). Used for the most critical national databases.",
+      "xp_reward": 10,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 2,
+      "title": "Cloud Security & Data Residency",
+      "content_md": "# Cloud Security & Data Residency\n\n## Data Localization (Residency)\n\nA critical requirement for Indian government data is **data localization**.\n\n- **Rule**: All government data hosted on empaneled cloud services must reside within the geographic borders of India.\n- **Failover**: Disaster Recovery (DR) sites must also be located within India, preferably in a different seismic zone than the primary Data Centre.\n- **Access**: The cloud provider must ensure that administrative access to the infrastructure hosting government data is restricted to personnel located in India, where feasible, or tightly audited.\n\n## Shared Responsibility Model\n\nSecurity in the cloud is a shared responsibility between the Cloud Service Provider (CSP) and the Government Department (MoSPI).\n\n### CSP Responsibility (Security OF the Cloud)\n- Physical security of data centers.\n- Hypervisor security.\n- Network infrastructure security.\n\n### MoSPI Responsibility (Security IN the Cloud)\n- Data classification and encryption.\n- Identity and Access Management (IAM) — who gets to log in.\n- Application-level security (fixing SQL injection, XSS in the survey portal).\n- Operating system patching (if using IaaS).\n\n## Encryption Standards\n\n- **Data in Transit**: All data moving between the user and the cloud (or between cloud services) must be encrypted using TLS 1.2 or higher.\n- **Data at Rest**: Sensitive databases must be encrypted on the storage disks (e.g., using AES-256).",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 3,
+      "title": "Identity and Access Management (IAM)",
+      "content_md": "# Identity and Access Management (IAM)\n\nIAM is the framework that ensures the right people have the appropriate access to cloud resources.\n\n## Authentication vs. Authorization\n\n- **Authentication (AuthN)**: Proving who you are (e.g., username/password, biometric).\n- **Authorization (AuthZ)**: Determining what you are allowed to do (e.g., read-only access to a database).\n\n## Key IAM Concepts for Gov-Cloud\n\n### 1. Single Sign-On (SSO)\nGovernment employees shouldn't need 15 different passwords for 15 different portals. Systems like **Jan Parichay** provide SSO across government applications, reducing password fatigue and improving security.\n\n### 2. Role-Based Access Control (RBAC)\nAccess is granted based on the user's role within the organization, not their individual identity.\n- A user assigned the \"Survey Enumerator\" role automatically gets access to the data entry app, but not the backend database.\n- If the user is promoted to \"Statistical Officer\", their role changes, and access rights update automatically.\n\n### 3. Just-In-Time (JIT) Access\nFor administrative tasks, permanent access should be avoided. JIT grants temporary, elevated access for a specific timeframe to perform a specific task, then revokes it.\n\n### 4. Audit Logging\nEvery login attempt, permission change, and data access event must be logged. In the cloud, services like AWS CloudTrail or Azure Activity Log provide immutable audit trails required for compliance.",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 4,
+      "title": "Level Quiz: Gov-Cloud Architecture",
+      "content_md": "# Level Quiz\n\nTest your understanding of the MeghRaj cloud initiative and cloud security principles.",
+      "xp_reward": 20,
+      "coins_reward": 10,
+      "is_mandatory": true,
+      "lesson_type": "quiz"
+    }
+  ],
+  "quiz_data": [
+    {
+      "question": "What is the name of the Government of India's cloud initiative?",
+      "options": ["GovNet", "NIC Cloud", "MeghRaj", "BharatCloud"],
+      "correct_index": 2
+    },
+    {
+      "question": "Which cloud deployment model is provisioned for exclusive use by a specific community of government organizations?",
+      "options": ["Public Cloud", "Government Community Cloud (GCC)", "Hybrid Cloud", "Distributed Cloud"],
+      "correct_index": 1
+    },
+    {
+      "question": "Under the Shared Responsibility Model, which of the following is typically the responsibility of the government department (e.g., MoSPI) rather than the cloud provider?",
+      "options": ["Physical security of the data center servers", "Network infrastructure security", "Application-level security (e.g., fixing software bugs in the survey portal)", "Hypervisor patching"],
+      "correct_index": 2
+    },
+    {
+      "question": "What is the primary requirement for data localization for Indian government cloud deployments?",
+      "options": ["Data must be stored in at least three different countries", "Data must reside within the geographic borders of India", "Data must be stored on local USB drives only", "Data must be translated into Hindi before storage"],
+      "correct_index": 1
+    },
+    {
+      "question": "Which IAM concept involves granting temporary, elevated access for a specific timeframe to perform a specific task?",
+      "options": ["Single Sign-On (SSO)", "Role-Based Access Control (RBAC)", "Multi-Factor Authentication (MFA)", "Just-In-Time (JIT) Access"],
+      "correct_index": 3
+    }
+  ]
+}

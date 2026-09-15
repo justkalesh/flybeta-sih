@@ -1,0 +1,79 @@
+{
+  "domain": {
+    "name": "technical-computing",
+    "title": "Technical Computing & AI/ML",
+    "icon": "cpu",
+    "color": "#7C3AED",
+    "track_code": "TS-02"
+  },
+  "level": {
+    "number": 4,
+    "title": "AI/ML for Survey Quality Assurance",
+    "description": "Outlier detection, intelligent imputation, and NLP for policy document parsing."
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "title": "Machine Learning for Data Quality",
+      "content_md": "# Machine Learning for Data Quality\n\n## The Quality Challenge\n\nLarge-scale surveys generate millions of data points. Manual quality checks are:\n- Slow and labor-intensive\n- Inconsistent across reviewers\n- Unable to catch subtle patterns\n\nML can automate and enhance quality assurance at every stage.\n\n## Outlier Detection\n\n### Statistical Methods\n- **Z-score**: Flag values > 3 standard deviations from the mean\n- **IQR method**: Flag values below Q1 - 1.5×IQR or above Q3 + 1.5×IQR\n- **Mahalanobis distance**: Multivariate outlier detection\n\n### ML Methods\n- **Isolation Forest**: Isolates anomalies by randomly partitioning features\n- **DBSCAN**: Density-based clustering — outliers are points in low-density regions\n- **Autoencoders**: Neural networks trained on normal data; high reconstruction error = anomaly\n\n```python\nfrom sklearn.ensemble import IsolationForest\n\n# Train on survey features\nmodel = IsolationForest(contamination=0.05, random_state=42)\ndf['is_outlier'] = model.fit_predict(df[['income', 'expenditure', 'household_size']])\n\n# Flag outliers for manual review\noutliers = df[df['is_outlier'] == -1]\nprint(f\"{len(outliers)} records flagged for review\")\n```\n\n## Intelligent Imputation\n\nMissing data is inevitable in surveys. ML offers better imputation than simple mean/median:\n\n### Traditional Methods\n- Mean/median imputation (biased)\n- Hot-deck imputation (random donor)\n\n### ML Methods\n- **KNN Imputation**: Use k nearest neighbors to estimate missing values\n- **MICE** (Multiple Imputation by Chained Equations): Iterative regression-based\n- **MissForest**: Random forest-based imputation\n\n```python\nfrom sklearn.impute import KNNImputer\n\nimputer = KNNImputer(n_neighbors=5)\ndf_imputed = pd.DataFrame(\n    imputer.fit_transform(df[numeric_cols]),\n    columns=numeric_cols\n)\n```",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 2,
+      "title": "NLP for Policy Document Analysis",
+      "content_md": "# NLP for Policy Document Analysis\n\n## Natural Language Processing in Government\n\nGovernment statistical offices deal with enormous volumes of text:\n- Policy documents and circulars\n- Survey questionnaire responses (open-ended)\n- Annual reports and publications\n- Parliamentary questions and answers\n\nNLP can extract structure and insights from unstructured text.\n\n## Key NLP Applications\n\n### 1. Text Classification\nAutomatically categorize documents by topic, ministry, or priority.\n\n```python\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.naive_bayes import MultinomialNB\n\n# Train classifier on labeled policy documents\nvectorizer = TfidfVectorizer(max_features=5000)\nX = vectorizer.fit_transform(documents)\nclf = MultinomialNB()\nclf.fit(X, labels)\n\n# Classify new document\nnew_doc = vectorizer.transform([\"Draft guidelines on DPDPA compliance\"])\nprediction = clf.predict(new_doc)  # → 'digital_governance'\n```\n\n### 2. Named Entity Recognition (NER)\nExtract key entities from text:\n- **Organizations**: MoSPI, NITI Aayog, RBI\n- **Locations**: States, districts, constituencies\n- **Dates**: Policy effective dates, survey periods\n- **Statistics**: Figures, percentages, monetary values\n\n### 3. Topic Modeling\nDiscover hidden themes across a corpus of documents.\n\n```python\nfrom sklearn.decomposition import LatentDirichletAllocation\n\nlda = LatentDirichletAllocation(n_components=10, random_state=42)\nlda.fit(X)\n\n# Top words per topic\nfor i, topic in enumerate(lda.components_):\n    top_words = [feature_names[j] for j in topic.argsort()[-10:]]\n    print(f\"Topic {i}: {', '.join(top_words)}\")\n```\n\n### 4. Sentiment Analysis\nGauge public perception from:\n- Social media mentions of MoSPI publications\n- Stakeholder feedback on statistical products\n- Media coverage of GDP/inflation releases\n\n## LLMs in Government Statistics\n\n**Large Language Models** (GPT, Gemini) can:\n- Summarize lengthy policy documents\n- Draft responses to RTI queries\n- Generate assessment questions from training materials\n- Translate statistical reports across Indian languages\n\n**Caution**: LLMs must be used with oversight — never trust LLM output for official statistics without human verification.",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 3,
+      "title": "Responsible AI for Official Statistics",
+      "content_md": "# Responsible AI for Official Statistics\n\n## The AI Ethics Framework\n\nUsing AI/ML in official statistics requires adherence to ethical principles:\n\n### 1. Transparency\n- Document all ML models used in official estimates\n- Publish methodology papers alongside AI-enhanced statistics\n- Explain model decisions in plain language\n\n### 2. Fairness & Bias\n- Training data may reflect historical biases\n- Models must be tested for disparate impact across demographics\n- Regular bias audits are essential\n\n### 3. Privacy\n- ML models trained on microdata must not leak individual information\n- Differential privacy techniques add noise to protect individuals\n- Federated learning enables model training without centralizing data\n\n### 4. Accountability\n- Clear ownership of AI-driven decisions\n- Human-in-the-loop for high-stakes applications\n- Regular model performance monitoring\n\n## OECD AI Principles for Statistics\n\n1. AI should complement, not replace, statistical methodologies\n2. AI-enhanced estimates must meet the same quality standards as traditional ones\n3. Statistical confidentiality must be maintained\n4. AI models must be validated against ground-truth data\n5. International comparability must be preserved\n\n## Practical Guidelines\n\n| Do | Don't |\n|----|-------|\n| Use AI for quality checks and automation | Use AI to generate official statistics without validation |\n| Document model versions and training data | Deploy black-box models in production |\n| Test on held-out data before deployment | Assume AI results are always correct |\n| Maintain human oversight | Let AI make final policy decisions |\n| Audit for bias regularly | Train on unrepresentative datasets |\n\n## Future Directions\n\n- **Synthetic data generation** for testing without privacy risk\n- **Real-time nowcasting** using alternative data sources (satellite, mobile, transactions)\n- **Automated statistical report generation** with LLM assistance\n- **Cross-country harmonization** using NLP to align questionnaires",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 4,
+      "title": "Level Quiz: AI/ML for Survey QA",
+      "content_md": "# Level Quiz\n\nTest your understanding of AI and machine learning for survey quality assurance.",
+      "xp_reward": 20,
+      "coins_reward": 10,
+      "is_mandatory": true,
+      "lesson_type": "quiz"
+    }
+  ],
+  "quiz_data": [
+    {
+      "question": "Which algorithm is commonly used for unsupervised outlier detection in survey data?",
+      "options": ["Linear Regression", "Isolation Forest", "Logistic Regression", "K-Means Clustering"],
+      "correct_index": 1
+    },
+    {
+      "question": "What does MICE stand for in the context of missing data imputation?",
+      "options": ["Machine Intelligence for Census Estimation", "Multiple Imputation by Chained Equations", "Multi-Instance Classification Engine", "Merged Index of Consumer Expenditure"],
+      "correct_index": 1
+    },
+    {
+      "question": "Which NLP technique discovers hidden themes across a collection of documents?",
+      "options": ["Sentiment analysis", "Named entity recognition", "Topic modeling", "Text classification"],
+      "correct_index": 2
+    },
+    {
+      "question": "What privacy technique adds controlled noise to protect individual data in ML models?",
+      "options": ["Data masking", "Encryption", "Differential privacy", "Tokenization"],
+      "correct_index": 2
+    },
+    {
+      "question": "According to OECD principles, AI-enhanced statistics must meet what standard?",
+      "options": ["Higher quality than traditional statistics", "The same quality standards as traditional ones", "Lower quality thresholds for faster delivery", "No specific quality requirements"],
+      "correct_index": 1
+    }
+  ]
+}

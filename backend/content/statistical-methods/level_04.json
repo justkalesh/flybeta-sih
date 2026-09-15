@@ -1,0 +1,79 @@
+{
+  "domain": {
+    "name": "statistical-methods",
+    "title": "Statistical Methods & Survey Design",
+    "icon": "bar-chart",
+    "color": "#2563EB",
+    "track_code": "TS-01"
+  },
+  "level": {
+    "number": 4,
+    "title": "SDG Indicator Frameworks",
+    "description": "Mapping official statistics to UN Sustainable Development Goal indicators."
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "title": "India's SDG Monitoring Framework",
+      "content_md": "# India's SDG Monitoring Framework\n\n## The 2030 Agenda\n\nIn 2015, all 193 UN member states adopted the **2030 Agenda for Sustainable Development** — a blueprint for peace and prosperity built around **17 Sustainable Development Goals (SDGs)**, **169 targets**, and **231 unique indicators**.\n\n## MoSPI's Role\n\nMoSPI is the **nodal ministry** for SDG indicator monitoring in India. The NSO:\n\n- Maintains the **National Indicator Framework (NIF)** — India's localized version of the global SDG indicators\n- Publishes the **SDG India Index** (in collaboration with NITI Aayog)\n- Coordinates data flows from 50+ ministries and state statistical bureaus\n\n## National Indicator Framework (NIF)\n\n| Feature | Detail |\n|---------|--------|\n| Total indicators | 306 (as of latest revision) |\n| Data sources | NSS, Census, Administrative records, Ministry MIS |\n| Review cycle | Annual review by the Statistical Coordination Committee |\n| Classification | Tier I (data available), Tier II (methodology exists, no data), Tier III (no methodology) |\n\n## SDG India Index\n\nPublished by **NITI Aayog** using MoSPI data:\n\n- Ranks all **36 states/UTs** on SDG performance\n- Composite score: 0 (worst) to 100 (best)\n- Categories: Aspirant (0-49), Performer (50-64), Front Runner (65-99), Achiever (100)\n\n## Key Statistical SDGs\n\n| SDG | MoSPI Relevance |\n|-----|------------------|\n| SDG 1 (No Poverty) | Poverty estimation via NSS consumer expenditure |\n| SDG 8 (Decent Work) | PLFS employment & unemployment data |\n| SDG 9 (Industry) | ASI industrial statistics |\n| SDG 10 (Inequalities) | Gini coefficient from NSS data |",
+      "xp_reward": 10,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 2,
+      "title": "Data Gaps & Tier Classification",
+      "content_md": "# Data Gaps & Tier Classification\n\n## The Tier System\n\nThe UN Inter-Agency Expert Group on SDGs (IAEG-SDGs) classifies indicators into tiers based on data availability:\n\n### Tier I\n- **Methodology**: Internationally established\n- **Data**: Regularly produced by at least 50% of countries\n- **Example**: Under-5 mortality rate (SDG 3.2.1)\n\n### Tier II\n- **Methodology**: Internationally established\n- **Data**: NOT regularly produced by countries\n- **Example**: Proportion of youth not in education, employment, or training (SDG 8.6.1)\n\n### Tier III (Eliminated in 2020)\n- **Methodology**: Not yet established\n- All former Tier III indicators have been reclassified or deleted\n\n## India's Data Gaps\n\nDespite having a strong statistical system, India faces challenges:\n\n### Frequency Gaps\n- Consumer Expenditure Survey: Last published 2011-12 (2017-18 was junked)\n- Time Use Survey: Conducted only once (2019)\n\n### Coverage Gaps\n- Informal sector employment: Difficult to capture in establishment surveys\n- Migration data: PLFS captures some, but internal migration is underestimated\n\n### Disaggregation Gaps\n- SDGs require data disaggregated by gender, age, disability, geography\n- Many indicators only available at national/state level, not district\n\n## Addressing Gaps\n\nMoSPI strategies:\n\n1. **Administrative Data Integration**: Use GST, EPFO, and NREGASoft data to supplement surveys\n2. **Big Data/AI**: Satellite imagery for poverty mapping, mobile data for migration\n3. **Coordination**: State Statistical Bureaus strengthened under the National Statistical Commission\n4. **Capacity Building**: Training programs for statistical officers at NSSTA",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 3,
+      "title": "Statistical Quality & International Standards",
+      "content_md": "# Statistical Quality & International Standards\n\n## UN Fundamental Principles of Official Statistics\n\nAdopted by the UN General Assembly in 2014, these 10 principles guide all national statistical offices:\n\n1. **Relevance, impartiality, and equal access** — Statistics serve the public good\n2. **Professional standards and ethics** — Methods follow scientific principles\n3. **Accountability and transparency** — Sources and methods are published\n4. **Prevention of misuse** — Statisticians may comment on misinterpretation\n5. **Cost-effectiveness** — Resources used efficiently\n6. **Confidentiality** — Individual data is strictly protected\n7. **Legislation** — Statistical laws provide the framework\n8. **Coordination** — Consistency across agencies\n9. **International standards** — Follow UN/OECD guidelines\n10. **International cooperation** — Bilateral and multilateral exchange\n\n## India's Statistical Legislation\n\n### Collection of Statistics Act, 2008\n- Empowers the central government to collect statistics on any subject\n- Penalizes false or misleading information\n- Ensures confidentiality of individual responses\n\n### National Statistical Commission (NSC)\n- Advisory body on statistical quality and methodology\n- Reviews survey designs, sampling frames, and estimation procedures\n- Recommends improvements to the statistical system\n\n## Data Quality Dimensions\n\n| Dimension | Description |\n|-----------|-------------|\n| **Relevance** | Does the data meet user needs? |\n| **Accuracy** | How close are estimates to true values? |\n| **Timeliness** | Is data available when needed? |\n| **Accessibility** | Can users easily find and use the data? |\n| **Coherence** | Are different statistics consistent? |\n| **Interpretability** | Is metadata adequate for proper use? |\n\n## SDDS Plus\n\nIndia subscribes to the IMF's **Special Data Dissemination Standard Plus (SDDS Plus)** — the highest tier of data transparency, requiring:\n- Advance release calendars\n- Specified coverage and periodicity\n- Public access to methodology documentation",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 4,
+      "title": "Level Quiz: SDG Indicator Frameworks",
+      "content_md": "# Level Quiz\n\nTest your understanding of SDG monitoring and statistical quality frameworks.",
+      "xp_reward": 20,
+      "coins_reward": 10,
+      "is_mandatory": true,
+      "lesson_type": "quiz"
+    }
+  ],
+  "quiz_data": [
+    {
+      "question": "How many Sustainable Development Goals are there in the 2030 Agenda?",
+      "options": ["12", "15", "17", "21"],
+      "correct_index": 2
+    },
+    {
+      "question": "What is the nodal ministry for SDG indicator monitoring in India?",
+      "options": ["NITI Aayog", "Ministry of Statistics and Programme Implementation (MoSPI)", "Ministry of Finance", "Ministry of Planning"],
+      "correct_index": 1
+    },
+    {
+      "question": "In the SDG India Index, what category does a state with a score of 72 fall into?",
+      "options": ["Aspirant", "Performer", "Front Runner", "Achiever"],
+      "correct_index": 2
+    },
+    {
+      "question": "Which IMF data standard does India subscribe to for maximum transparency?",
+      "options": ["GDDS (General Data Dissemination System)", "SDDS (Special Data Dissemination Standard)", "SDDS Plus", "DQAF (Data Quality Assessment Framework)"],
+      "correct_index": 2
+    },
+    {
+      "question": "Which Indian legislation empowers the government to collect official statistics?",
+      "options": ["Right to Information Act 2005", "Information Technology Act 2000", "Collection of Statistics Act 2008", "Census Act 1948"],
+      "correct_index": 2
+    }
+  ]
+}

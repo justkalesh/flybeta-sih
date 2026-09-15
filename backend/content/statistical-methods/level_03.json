@@ -1,0 +1,79 @@
+{
+  "domain": {
+    "name": "statistical-methods",
+    "title": "Statistical Methods & Survey Design",
+    "icon": "bar-chart",
+    "color": "#2563EB",
+    "track_code": "TS-01"
+  },
+  "level": {
+    "number": 3,
+    "title": "Price & Labour Statistics",
+    "description": "CPI compilation methodology, PLFS quarterly estimates, and seasonal adjustment."
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "title": "Consumer Price Index (CPI) Compilation",
+      "content_md": "# Consumer Price Index (CPI) Compilation\n\nThe **Consumer Price Index** measures the average change in prices paid by consumers for a basket of goods and services over time.\n\n## India's CPI Framework\n\nSince 2011, India uses **CPI (Combined)** as the headline inflation measure, compiled by the NSO.\n\n### CPI Variants\n\n| CPI Type | Compiled By | Coverage |\n|----------|------------|----------|\n| CPI (Combined) | NSO/MoSPI | Rural + Urban combined |\n| CPI (Rural) | NSO/MoSPI | Rural areas only |\n| CPI (Urban) | NSO/MoSPI | Urban areas only |\n| CPI (IW) | Labour Bureau | Industrial workers |\n| CPI (AL/RL) | Labour Bureau | Agricultural/Rural labourers |\n\n## CPI Compilation Steps\n\n### 1. Define the Basket\n\nThe consumption basket is derived from the **Consumer Expenditure Survey** (CES). The current basket (base 2012=100) covers:\n\n- **Food & Beverages** (45.86% weight)\n- **Housing** (10.07%)\n- **Fuel & Light** (6.84%)\n- **Clothing & Footwear** (6.53%)\n- **Miscellaneous** (30.70%)\n\n### 2. Price Collection\n\n- **1,114 urban markets** and **1,181 villages** across India\n- Prices collected for **299 items** on weekly/monthly basis\n- Field price collectors visit markets and record actual transaction prices\n\n### 3. Index Calculation\n\nCPI uses the **Modified Laspeyres formula**:\n\n```\nCPI = Σ (w_i × P_it / P_i0) × 100\n```\n\nWhere w_i = weight of item i, P_it = current price, P_i0 = base year price\n\n### 4. Inflation Rate\n\n```\nInflation (YoY) = ((CPI_current - CPI_same_month_last_year) / CPI_same_month_last_year) × 100\n```",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 2,
+      "title": "Periodic Labour Force Survey (PLFS)",
+      "content_md": "# Periodic Labour Force Survey (PLFS)\n\nThe **PLFS** is India's primary survey for measuring employment and unemployment, conducted by the NSO.\n\n## PLFS Design\n\n- **Launched**: April 2017 (replacing the quinquennial Employment-Unemployment Survey)\n- **Frequency**: Continuous (quarterly urban + annual rural)\n- **Sample**: ~12,800 FSUs per quarter\n\n## Key Indicators\n\n| Indicator | Definition |\n|-----------|------------|\n| **LFPR** (Labour Force Participation Rate) | % of working-age population in the labour force |\n| **WPR** (Worker Population Ratio) | % of working-age population that is employed |\n| **UR** (Unemployment Rate) | % of labour force that is unemployed |\n| **FLFPR** | Female Labour Force Participation Rate |\n\n## Activity Status Classification\n\n### Usual Status (Annual)\n\n- **Principal Status (ps)**: Major activity during the reference year (365 days)\n- **Subsidiary Status (ss)**: Secondary activity for at least 30 days\n- **Usual Status (ps+ss)**: Combined — the standard reporting metric\n\n### Current Weekly Status (CWS)\n\nActivity status based on a **7-day reference period** — used for quarterly estimates.\n\n### Current Daily Status (CDS)\n\nActivity status for each day of the reference week — most granular measure.\n\n## Rotation Panel Design\n\nThe urban PLFS uses a **rotation panel**:\n\n- Each selected household is visited **4 times** over a year (once per quarter)\n- 75% of the sample overlaps between consecutive quarters\n- Enables quarter-on-quarter comparisons with reduced sampling error\n\n## Quarterly Bulletins\n\nQuarterly bulletins (urban only) provide:\n- UR, LFPR, WPR by gender and age group\n- Sector-wise employment distribution\n- Comparison with same quarter previous year",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 3,
+      "title": "Seasonal Adjustment & Time Series",
+      "content_md": "# Seasonal Adjustment & Time Series\n\n## Why Seasonal Adjustment?\n\nMany economic indicators exhibit **seasonal patterns**:\n\n- Agricultural output peaks during harvest seasons\n- Employment rises during festival/construction seasons\n- Consumer spending spikes in Q3 (October-December)\n\nWithout seasonal adjustment, comparing January's unemployment to October's unemployment is misleading — you'd be comparing a seasonal trough to a seasonal peak.\n\n## Components of a Time Series\n\n1. **Trend (T)**: Long-term direction (growth or decline)\n2. **Seasonal (S)**: Regular, predictable fluctuations within a year\n3. **Cyclical (C)**: Medium-term business cycle fluctuations\n4. **Irregular (I)**: Random, unpredictable variations\n\n```\nObserved Value = T × S × C × I  (multiplicative model)\n```\n\n## X-13 ARIMA-SEATS\n\nThe international standard method for seasonal adjustment, developed by the **US Census Bureau**.\n\nMoSPI uses this for:\n- Quarterly GDP estimates\n- Index of Industrial Production (IIP)\n- Trade statistics\n\n### Process\n\n1. **Pre-adjustment**: Remove calendar effects (trading days, holidays like Diwali)\n2. **Decomposition**: Separate trend, seasonal, and irregular components\n3. **Output**: Seasonally adjusted series showing the underlying trend\n\n## Practical Example\n\nIf Q3 GDP is always 5% higher due to festival spending:\n\n- **Unadjusted**: Q3 GDP = ₹55 lakh crore\n- **Seasonal Factor**: 1.05\n- **Adjusted**: ₹55 / 1.05 = **₹52.38 lakh crore**\n\nThis adjusted figure can be meaningfully compared to Q1 or Q2.\n\n## Quality Checks\n\nNSO validates seasonal adjustment by checking:\n- Stability of seasonal factors over time\n- Absence of residual seasonality in adjusted series\n- Consistency between seasonally adjusted and trend estimates",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 4,
+      "title": "Level Quiz: Price & Labour Statistics",
+      "content_md": "# Level Quiz\n\nTest your understanding of CPI compilation and PLFS methodology.",
+      "xp_reward": 20,
+      "coins_reward": 10,
+      "is_mandatory": true,
+      "lesson_type": "quiz"
+    }
+  ],
+  "quiz_data": [
+    {
+      "question": "What is the largest weight category in India's CPI (Combined) basket?",
+      "options": ["Housing at 10.07%", "Fuel & Light at 6.84%", "Food & Beverages at 45.86%", "Miscellaneous at 30.70%"],
+      "correct_index": 2
+    },
+    {
+      "question": "What reference period does the PLFS Current Weekly Status (CWS) use?",
+      "options": ["30 days", "365 days", "7 days", "1 day"],
+      "correct_index": 2
+    },
+    {
+      "question": "In the PLFS rotation panel, what percentage of the urban sample overlaps between quarters?",
+      "options": ["25%", "50%", "75%", "100%"],
+      "correct_index": 2
+    },
+    {
+      "question": "Which method is the international standard for seasonal adjustment of economic time series?",
+      "options": ["ARIMA Box-Jenkins", "X-13 ARIMA-SEATS", "Hodrick-Prescott filter", "Kalman smoothing"],
+      "correct_index": 1
+    },
+    {
+      "question": "What formula is used for CPI compilation in India?",
+      "options": ["Fisher Ideal Index", "Paasche Index", "Modified Laspeyres formula", "Chain-linked volume index"],
+      "correct_index": 2
+    }
+  ]
+}

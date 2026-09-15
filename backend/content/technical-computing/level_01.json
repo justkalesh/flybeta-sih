@@ -1,0 +1,79 @@
+{
+  "domain": {
+    "name": "technical-computing",
+    "title": "Technical Computing & AI/ML",
+    "icon": "cpu",
+    "color": "#7C3AED",
+    "track_code": "TS-02"
+  },
+  "level": {
+    "number": 1,
+    "title": "Python & R for Statistical Computing",
+    "description": "Automated CPI processing, reproducible analysis pipelines, and data visualization."
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "title": "Why Python & R for Government Statistics",
+      "content_md": "# Why Python & R for Government Statistics\n\n## The Shift from Legacy Tools\n\nTraditionally, MoSPI relied on **Fortran**, **COBOL**, and proprietary tools (SAS, SPSS) for data processing. Modern statistical offices worldwide are adopting **Python** and **R** because:\n\n- **Free and open-source** — No licensing costs\n- **Reproducible research** — Script-based workflows can be audited and repeated\n- **Rich ecosystem** — Thousands of statistical packages\n- **Community support** — Active global community of statistical programmers\n\n## Python vs R: When to Use Which?\n\n| Feature | Python | R |\n|---------|--------|---|\n| **Best for** | General-purpose programming, automation, ML | Statistical analysis, visualization |\n| **Data manipulation** | pandas | dplyr, data.table |\n| **Visualization** | matplotlib, seaborn, plotly | ggplot2, lattice |\n| **Statistical modeling** | statsmodels, scipy | Built-in (lm, glm, nls) |\n| **Machine learning** | scikit-learn, TensorFlow | caret, tidymodels |\n| **Survey analysis** | Limited | survey package (gold standard) |\n| **Report generation** | Jupyter Notebooks | R Markdown, Quarto |\n\n## MoSPI Use Cases\n\n### Python\n- Automating CPI data processing pipelines\n- Web scraping price data from e-commerce portals\n- Building dashboards with Streamlit/Dash\n- Machine learning for outlier detection in survey data\n\n### R\n- Complex survey analysis (PLFS, NSS) using the `survey` package\n- Official statistical publication tables\n- Seasonal adjustment using `seasonal` (X-13 ARIMA-SEATS wrapper)\n- Reproducible analytical reports for Parliament",
+      "xp_reward": 10,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 2,
+      "title": "Data Wrangling with pandas & dplyr",
+      "content_md": "# Data Wrangling with pandas & dplyr\n\n## The Data Wrangling Pipeline\n\nRaw survey data is messy. Before analysis, you must:\n\n1. **Import** — Read CSV, Excel, or database tables\n2. **Clean** — Handle missing values, fix data types\n3. **Transform** — Create new variables, aggregate\n4. **Filter** — Subset rows and columns\n5. **Merge** — Combine multiple datasets\n\n## Python: pandas\n\n```python\nimport pandas as pd\n\n# Read PLFS unit-level data\ndf = pd.read_csv('plfs_unit_2023.csv')\n\n# Filter: Working-age population (15-64)\nworking_age = df[df['age'].between(15, 64)]\n\n# Group by state and calculate unemployment rate\nstate_ur = (working_age\n    .groupby('state_code')\n    .agg(\n        labour_force=('in_labour_force', 'sum'),\n        unemployed=('is_unemployed', 'sum')\n    )\n    .assign(ur=lambda x: x['unemployed'] / x['labour_force'] * 100)\n    .sort_values('ur', ascending=False)\n)\n```\n\n## R: dplyr (tidyverse)\n\n```r\nlibrary(tidyverse)\n\n# Read and process PLFS data\nplfs <- read_csv('plfs_unit_2023.csv')\n\nstate_ur <- plfs %>%\n  filter(between(age, 15, 64)) %>%\n  group_by(state_code) %>%\n  summarise(\n    labour_force = sum(in_labour_force),\n    unemployed = sum(is_unemployed)\n  ) %>%\n  mutate(ur = unemployed / labour_force * 100) %>%\n  arrange(desc(ur))\n```\n\n## Handling Survey Weights\n\nCritical for official statistics — always apply survey weights:\n\n```python\n# Weighted mean using pandas\nweighted_income = (df['income'] * df['weight']).sum() / df['weight'].sum()\n```\n\n```r\n# Using the survey package\nlibrary(survey)\ndesign <- svydesign(~1, weights = ~weight, data = plfs)\nsvymean(~income, design)\n```\n\n## Common Pitfalls\n\n- Ignoring survey weights → biased estimates\n- Using `mean()` instead of weighted mean → incorrect national averages\n- Not accounting for complex survey design → underestimated standard errors",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 3,
+      "title": "Data Visualization for Official Reports",
+      "content_md": "# Data Visualization for Official Reports\n\n## Why Visualization Matters\n\nMoSPI officers present data to Parliament, the media, and international bodies. Clear, accurate visualizations can:\n\n- Communicate complex findings instantly\n- Support evidence-based policy decisions\n- Prevent misinterpretation of statistical trends\n\n## Chart Selection Guide\n\n| Data Type | Best Chart | Example |\n|-----------|-----------|----------|\n| Trend over time | Line chart | GDP growth rate (quarterly) |\n| Comparison across categories | Bar chart | State-wise unemployment rates |\n| Part-to-whole | Pie/Donut chart | Sectoral composition of GVA |\n| Distribution | Histogram/Box plot | Income distribution from NSS |\n| Correlation | Scatter plot | Literacy rate vs. per-capita income |\n| Geographic | Choropleth map | District-wise SDG scores |\n\n## Python: matplotlib & seaborn\n\n```python\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n# GDP growth line chart\nplt.figure(figsize=(12, 6))\nplt.plot(quarters, gdp_growth, marker='o', linewidth=2)\nplt.axhline(y=0, color='red', linestyle='--', alpha=0.5)\nplt.title('India Quarterly GDP Growth Rate (%)', fontsize=16)\nplt.xlabel('Quarter')\nplt.ylabel('Growth Rate (%)')\nplt.grid(True, alpha=0.3)\nplt.show()\n```\n\n## R: ggplot2\n\n```r\nlibrary(ggplot2)\n\nggplot(gdp_data, aes(x = quarter, y = growth_rate)) +\n  geom_line(size = 1.2, color = '#2563EB') +\n  geom_point(size = 3) +\n  geom_hline(yintercept = 0, linetype = 'dashed', color = 'red') +\n  labs(title = 'India Quarterly GDP Growth Rate (%)',\n       x = 'Quarter', y = 'Growth Rate (%)') +\n  theme_minimal()\n```\n\n## Best Practices for Official Publications\n\n1. **Always label axes** with units\n2. **Include data source** — \"Source: NSO, MoSPI\"\n3. **Use consistent color schemes** across publications\n4. **Avoid 3D charts** — they distort perception\n5. **Start Y-axis at zero** for bar charts (not for line charts)\n6. **Include error bars** or confidence intervals where applicable",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 4,
+      "title": "Level Quiz: Python & R for Statistics",
+      "content_md": "# Level Quiz\n\nTest your understanding of Python and R for statistical computing.",
+      "xp_reward": 20,
+      "coins_reward": 10,
+      "is_mandatory": true,
+      "lesson_type": "quiz"
+    }
+  ],
+  "quiz_data": [
+    {
+      "question": "Which R package is considered the gold standard for complex survey analysis?",
+      "options": ["ggplot2", "dplyr", "survey", "tidyverse"],
+      "correct_index": 2
+    },
+    {
+      "question": "In pandas, which function is used to group data and compute aggregates?",
+      "options": ["df.pivot()", "df.groupby()", "df.merge()", "df.filter()"],
+      "correct_index": 1
+    },
+    {
+      "question": "Why must survey weights be applied when analyzing PLFS data?",
+      "options": ["To speed up computation", "To reduce file size", "To produce unbiased population-level estimates", "To comply with data privacy laws"],
+      "correct_index": 2
+    },
+    {
+      "question": "Which chart type is best for showing district-wise SDG performance across India?",
+      "options": ["Pie chart", "Histogram", "Choropleth map", "Box plot"],
+      "correct_index": 2
+    },
+    {
+      "question": "What is the primary advantage of R Markdown over traditional Excel reports?",
+      "options": ["Faster processing speed", "Better color palettes", "Reproducibility and version control", "Lower memory usage"],
+      "correct_index": 2
+    }
+  ]
+}

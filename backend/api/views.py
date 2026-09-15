@@ -255,15 +255,14 @@ class LessonViewSet(ReadOnlyModelViewSet):
                     level_progress.is_completed = True
                     level_progress.save()
 
-                # Auto-unlock next level if this level has no boss quiz
-                if not lesson.level.quiz_data:
-                    domain_progress, _ = DomainProgress.objects.get_or_create(
-                        user=user,
-                        domain=lesson.level.domain
-                    )
-                    if domain_progress.highest_unlocked_level == lesson.level.number:
-                        domain_progress.highest_unlocked_level += 1
-                        domain_progress.save()
+                # Auto-unlock next level
+                domain_progress, _ = DomainProgress.objects.get_or_create(
+                    user=user,
+                    domain=lesson.level.domain
+                )
+                if domain_progress.highest_unlocked_level == lesson.level.number:
+                    domain_progress.highest_unlocked_level += 1
+                    domain_progress.save()
 
         # Re-fetch profile so serializer sees updated domain_progress
         profile = StudentProfile.objects.select_related('user').get(user=user)
@@ -573,7 +572,7 @@ class DiagnosticQuizGenerateView(APIView):
             return Response({'sections': sections}, status=status.HTTP_200_OK)
 
         except ValueError as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': str(e)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         except Exception as e:
             traceback.print_exc()
             return Response(
@@ -674,7 +673,7 @@ class DiagnosticSubmitView(APIView):
             }, status=status.HTTP_201_CREATED)
 
         except ValueError as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': str(e)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         except Exception as e:
             traceback.print_exc()
             return Response(

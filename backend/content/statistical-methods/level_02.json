@@ -1,0 +1,79 @@
+{
+  "domain": {
+    "name": "statistical-methods",
+    "title": "Statistical Methods & Survey Design",
+    "icon": "bar-chart",
+    "color": "#2563EB",
+    "track_code": "TS-01"
+  },
+  "level": {
+    "number": 2,
+    "title": "National Accounts & GDP Compilation",
+    "description": "Production approach, expenditure method, and base year revision workflows."
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "title": "Understanding National Accounts",
+      "content_md": "# Understanding National Accounts\n\nThe **System of National Accounts (SNA)** is an internationally agreed framework for measuring a country's economic activity.\n\n## What Are National Accounts?\n\nNational accounts provide a comprehensive, consistent, and integrated set of macroeconomic statistics for:\n\n- **Production** — What goods and services are produced?\n- **Income** — How is income generated and distributed?\n- **Expenditure** — How is output used (consumption, investment, exports)?\n- **Capital** — What assets does the economy hold?\n\n## India's National Accounts\n\nMoSPI's **National Statistical Office (NSO)** compiles India's national accounts following the **SNA 2008** standard.\n\n### Key Publications\n\n| Publication | Frequency | Content |\n|------------|-----------|----------|\n| Advance Estimate | January | First GDP estimate for current fiscal year |\n| First Revised Estimate | January (next year) | Updated with more complete data |\n| Second Revised Estimate | January (year+2) | Further revisions |\n| Third Revised Estimate | January (year+3) | Near-final estimates |\n\n## GDP: The Central Measure\n\n**Gross Domestic Product (GDP)** = Total value of all final goods and services produced within a country's borders in a given period.\n\n### Three Approaches to GDP\n\n1. **Production Approach**: Sum of Gross Value Added (GVA) across all sectors\n2. **Income Approach**: Sum of all factor incomes (wages, profits, rent, interest)\n3. **Expenditure Approach**: C + I + G + (X - M)\n\nAll three should yield the same GDP in theory. In practice, India primarily uses the **Production Approach** (GVA-based).",
+      "xp_reward": 10,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 2,
+      "title": "GDP Estimation: Production & Expenditure Methods",
+      "content_md": "# GDP Estimation Methods\n\n## Production Approach (GVA Method)\n\nIndia's primary method for GDP estimation.\n\n```\nGVA = Output - Intermediate Consumption\nGDP = Σ GVA (all sectors) + Product Taxes - Product Subsidies\n```\n\n### Sectoral Classification (GVA at Basic Prices)\n\n| Sector | Sub-sectors |\n|--------|-------------|\n| **Agriculture** | Crops, livestock, forestry, fishing |\n| **Industry** | Mining, manufacturing, electricity, construction |\n| **Services** | Trade, transport, financial services, public admin |\n\n### Data Sources for GVA\n\n- **Agriculture**: Crop production statistics, livestock census\n- **Manufacturing**: Annual Survey of Industries (ASI), IIP\n- **Services**: MCA21 corporate filings, RBI banking data\n\n## Expenditure Approach\n\n```\nGDP = C + I + G + (X - M)\n```\n\nWhere:\n- **C** = Private Final Consumption Expenditure (PFCE)\n- **I** = Gross Fixed Capital Formation (GFCF)\n- **G** = Government Final Consumption Expenditure (GFCE)\n- **X - M** = Net Exports\n\n### Data Sources\n\n- PFCE: NSS Consumer Expenditure Survey, NSSO rounds\n- GFCF: RBI data on capital formation, ASI\n- GFCE: Union & State budget documents\n- Trade: DGCIS (Directorate General of Commercial Intelligence)\n\n## Base Year Revision\n\nIndia revises the GDP base year approximately every 5-7 years to reflect structural changes in the economy.\n\n| Base Year | Key Changes |\n|-----------|-------------|\n| 2004-05 | Introduced quarterly GDP estimates |\n| **2011-12** | Current base year; shifted from GDP at factor cost to GVA at basic prices; incorporated MCA21 data |\n| 2022-23 | Upcoming revision; will incorporate GST data, digital economy metrics |",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 3,
+      "title": "Constant vs Current Prices & Deflators",
+      "content_md": "# Constant vs Current Prices & Deflators\n\n## The Price Problem\n\nIf India's GDP grows from ₹200 lakh crore to ₹220 lakh crore, did the economy actually produce 10% more goods — or did prices just rise by 10%?\n\n## Current Prices (Nominal GDP)\n\nGDP measured at **current market prices** — includes both real growth AND inflation.\n\n## Constant Prices (Real GDP)\n\nGDP measured at the prices of a **fixed base year** (currently 2011-12) — isolates real growth by removing the effect of inflation.\n\n```\nReal GDP Growth = (Real GDP_t - Real GDP_{t-1}) / Real GDP_{t-1} × 100\n```\n\n## GDP Deflator\n\nThe **implicit price deflator** converts nominal GDP to real GDP:\n\n```\nGDP Deflator = (Nominal GDP / Real GDP) × 100\n```\n\n### GDP Deflator vs CPI\n\n| Feature | GDP Deflator | CPI |\n|---------|-------------|-----|\n| Coverage | All goods & services produced | Consumer basket only |\n| Weights | Change every period | Fixed basket |\n| Imports | Excluded | Included |\n| Use | Deflating national accounts | Measuring retail inflation |\n\n## Deflation in Practice\n\nFor each sector of GVA, NSO uses sector-specific deflators:\n\n- **Agriculture**: WPI for agricultural commodities\n- **Manufacturing**: WPI for manufactured products\n- **Services**: CPI components, service-specific indices\n\n## Real vs Nominal: Why It Matters\n\nA policymaker who only looks at nominal GDP might conclude the economy is booming — when in reality, high inflation is masking stagnant real output. MoSPI officers must always distinguish between the two when briefing stakeholders.",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 4,
+      "title": "Level Quiz: National Accounts & GDP",
+      "content_md": "# Level Quiz\n\nTest your understanding of national accounts and GDP compilation.",
+      "xp_reward": 20,
+      "coins_reward": 10,
+      "is_mandatory": true,
+      "lesson_type": "quiz"
+    }
+  ],
+  "quiz_data": [
+    {
+      "question": "What is India's current base year for GDP estimation?",
+      "options": ["2004-05", "2011-12", "2017-18", "2022-23"],
+      "correct_index": 1
+    },
+    {
+      "question": "In the Production Approach, GDP equals GVA plus what?",
+      "options": ["Net factor income from abroad", "Product taxes minus product subsidies", "Depreciation of fixed assets", "Government final consumption expenditure"],
+      "correct_index": 1
+    },
+    {
+      "question": "Which data source is primarily used for estimating manufacturing GVA?",
+      "options": ["PLFS quarterly bulletins", "Annual Survey of Industries (ASI)", "Census of India decennial data", "RBI monthly banking statistics"],
+      "correct_index": 1
+    },
+    {
+      "question": "What does a GDP deflator of 120 indicate?",
+      "options": ["Real GDP is 20% higher than nominal GDP", "Prices have risen 20% since the base year", "The economy contracted by 20%", "Nominal GDP is 20% lower than real GDP"],
+      "correct_index": 1
+    },
+    {
+      "question": "In the expenditure approach, what does 'G' represent?",
+      "options": ["Gross Domestic Product", "Government Final Consumption Expenditure", "Gross Fixed Capital Formation", "Gross National Income"],
+      "correct_index": 1
+    }
+  ]
+}

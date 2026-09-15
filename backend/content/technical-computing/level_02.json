@@ -1,0 +1,79 @@
+{
+  "domain": {
+    "name": "technical-computing",
+    "title": "Technical Computing & AI/ML",
+    "icon": "cpu",
+    "color": "#7C3AED",
+    "track_code": "TS-02"
+  },
+  "level": {
+    "number": 2,
+    "title": "SQL, Stata & SPSS for Official Data",
+    "description": "Query optimization, survey analysis commands, and database management for microdata."
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "title": "SQL for Statistical Databases",
+      "content_md": "# SQL for Statistical Databases\n\n## Why SQL?\n\nStructured Query Language (SQL) is the standard for managing and querying **relational databases**. MoSPI stores microdata, administrative records, and aggregated statistics in databases that require SQL.\n\n## Core SQL Operations\n\n### SELECT — Retrieve Data\n```sql\nSELECT state_code, COUNT(*) as households, AVG(monthly_income) as avg_income\nFROM plfs_household\nWHERE survey_round = 'Q1_2024'\nGROUP BY state_code\nORDER BY avg_income DESC;\n```\n\n### JOIN — Combine Tables\n```sql\nSELECT h.household_id, h.state_code, p.age, p.education_level\nFROM plfs_household h\nINNER JOIN plfs_person p ON h.household_id = p.household_id\nWHERE p.employment_status = 'unemployed';\n```\n\n### Aggregation with Survey Weights\n```sql\nSELECT state_code,\n       SUM(weight * is_unemployed) / SUM(weight * in_labour_force) * 100 as weighted_ur\nFROM plfs_person\nWHERE age BETWEEN 15 AND 64\nGROUP BY state_code;\n```\n\n## Database Design for Surveys\n\n### Star Schema\n- **Fact table**: Survey responses (one row per respondent)\n- **Dimension tables**: State codes, occupation codes, industry codes\n- **Advantages**: Fast queries, easy to understand\n\n### Normalization\n- Avoid data redundancy\n- Maintain referential integrity\n- Use foreign keys to link tables\n\n## PostgreSQL vs SQLite\n\n| Feature | PostgreSQL | SQLite |\n|---------|-----------|--------|\n| Best for | Production databases, multi-user | Local analysis, prototyping |\n| Concurrency | Full multi-user support | Single-writer |\n| Performance | Excellent for large datasets | Good for < 1GB |\n| MoSPI use | Centralized data warehouse | Officer's local analysis |",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 2,
+      "title": "Stata for Survey Analysis",
+      "content_md": "# Stata for Survey Analysis\n\n## Why Stata in Government?\n\nStata is widely used in Indian government statistical offices because:\n- **Purpose-built** for survey data analysis\n- **svy commands** handle complex survey designs natively\n- **Reproducible** .do files serve as audit trails\n- **NSSTA training** includes Stata modules\n\n## Setting Up Survey Design\n\n```stata\n* Declare survey design\nsvyset psu_id [pw=weight], strata(stratum_id)\n\n* This tells Stata:\n*   - psu_id: Primary Sampling Unit identifier\n*   - pw=weight: Probability weight variable\n*   - strata(stratum_id): Stratification variable\n```\n\n## Common Survey Commands\n\n```stata\n* Weighted mean income by state\nsvy: mean monthly_income, over(state_code)\n\n* Weighted proportion in employment categories\nsvy: proportion employment_status, over(gender)\n\n* Weighted regression\nsvy: regress log_income education_years age i.gender\n\n* Weighted tabulation\nsvy: tabulate sector employment_status, row\n```\n\n## Working with PLFS Data\n\n```stata\n* Load PLFS unit-level data\nuse \"plfs_person_q1_2024.dta\", clear\n\n* Keep working-age population\nkeep if inrange(age, 15, 64)\n\n* Calculate state-wise unemployment rate\nsvyset [pw=weight]\nsvy: mean is_unemployed, over(state_code)\n\n* Export results\nesttab using \"state_ur.csv\", replace\n```\n\n## Data Management\n\n```stata\n* Merge household and person files\nuse \"plfs_household.dta\", clear\nmerge 1:m household_id using \"plfs_person.dta\"\n\n* Label variables\nlabel variable monthly_income \"Monthly Household Income (Rs)\"\nlabel define gender_lbl 1 \"Male\" 2 \"Female\"\nlabel values gender gender_lbl\n```",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 3,
+      "title": "SPSS for Statistical Reporting",
+      "content_md": "# SPSS for Statistical Reporting\n\n## SPSS in MoSPI\n\nSPSS (Statistical Package for the Social Sciences) has been used in Indian government offices for decades, particularly for:\n- Generating publication-ready frequency tables\n- Cross-tabulations for NSS reports\n- Basic descriptive statistics\n\n## SPSS Syntax for Survey Analysis\n\n### Complex Samples Setup\n```spss\nCSPLAN ANALYSIS\n  /PLAN FILE='plfs_design.csaplan'\n  /PLANVARS ANALYSISWEIGHT=weight\n  /DESIGN STRATA=stratum_id CLUSTER=psu_id\n  /ESTIMATOR TYPE=WR.\n```\n\n### Weighted Frequency Tables\n```spss\nCSTABULATE\n  /PLAN FILE='plfs_design.csaplan'\n  /TABLES employment_status BY gender\n  /CELLS TABLEPCT COUNT\n  /STATISTICS SE.\n```\n\n### Descriptive Statistics\n```spss\nCSDESCRIPTIVES\n  /PLAN FILE='plfs_design.csaplan'\n  /SUMMARY VARIABLES=monthly_income\n  /MEAN SE COUNT\n  /SUBPOP TABLE=state_code.\n```\n\n## SPSS vs Modern Alternatives\n\n| Feature | SPSS | R/Python |\n|---------|------|----------|\n| Learning curve | GUI-friendly, low | Steeper, code-based |\n| Cost | Commercial license | Free |\n| Reproducibility | Syntax files | Scripts + version control |\n| Flexibility | Limited | Unlimited |\n| Community | Shrinking | Growing rapidly |\n\n## Migration Path\n\nMany statistical offices are transitioning from SPSS to R/Python:\n1. **Phase 1**: Learn R/Python alongside SPSS\n2. **Phase 2**: Reproduce existing SPSS outputs in R/Python\n3. **Phase 3**: Build new analyses natively in R/Python\n4. **Phase 4**: Archive SPSS syntax, fully adopt open-source tools\n\n## Best Practice: Reproducible Workflows\n\nRegardless of tool, always:\n- Save analysis scripts (not just outputs)\n- Document data transformations\n- Version-control your code\n- Separate raw data from processed data",
+      "xp_reward": 15,
+      "coins_reward": 5,
+      "is_mandatory": true,
+      "lesson_type": "theory"
+    },
+    {
+      "order": 4,
+      "title": "Level Quiz: SQL, Stata & SPSS",
+      "content_md": "# Level Quiz\n\nTest your understanding of SQL, Stata, and SPSS for official data analysis.",
+      "xp_reward": 20,
+      "coins_reward": 10,
+      "is_mandatory": true,
+      "lesson_type": "quiz"
+    }
+  ],
+  "quiz_data": [
+    {
+      "question": "In Stata, which prefix is used before commands to account for complex survey design?",
+      "options": ["weight:", "complex:", "svy:", "survey:"],
+      "correct_index": 2
+    },
+    {
+      "question": "What SQL clause is used to filter rows AFTER a GROUP BY aggregation?",
+      "options": ["WHERE", "FILTER", "HAVING", "LIMIT"],
+      "correct_index": 2
+    },
+    {
+      "question": "In a star schema database design, what does the fact table contain?",
+      "options": ["Lookup codes and labels", "Survey responses and measurements", "Database configuration settings", "User authentication records"],
+      "correct_index": 1
+    },
+    {
+      "question": "What is the primary advantage of using syntax files in SPSS over point-and-click?",
+      "options": ["Faster computation", "Better visualizations", "Reproducibility and audit trail", "Larger dataset support"],
+      "correct_index": 2
+    },
+    {
+      "question": "Which Stata command merges two datasets with a one-to-many relationship?",
+      "options": ["append", "merge 1:m", "joinby", "cross"],
+      "correct_index": 1
+    }
+  ]
+}

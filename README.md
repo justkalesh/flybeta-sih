@@ -21,16 +21,12 @@ A context-aware, globally accessible floating chat widget designed to resolve le
 - **Prompt Engineering**: The backend injects a strict system prompt instructing the model to act as a Senior ISS Officer / Data Science Mentor. It guides the user using Socratic questioning rather than just giving away the answer, ensuring active learning.
 - **UI/UX**: Features a sleek, draggable floating UI with Markdown support, syntax highlighting, and a typing indicator to maintain the platform's gamified aesthetic.
 
-### 2. Code-Drishti (Generative Lab Evaluator)
-Traditional multiple-choice quizzes are ineffective for advanced data architecture. FlyBeta implements interactive labs where users submit written solutions, data models, or code.
-- **How it works**: When a user submits an interactive lab assignment, the submission is sent to the `api/ai/evaluate/` endpoint.
-- **Evaluation Engine**: The backend fetches the official "Rubric" and "Solution Framework" for that specific lesson from the database. It asks Gemini to evaluate the user's submission strictly against this rubric.
-- **Output**: The AI returns a structured JSON response containing:
-  - `passed` (boolean): Whether the submission met the standard.
-  - `score` (0-100): Granular grading.
-  - `feedback` (markdown text): Specific, constructive feedback highlighting flaws or praising optimizations.
-  - `next_steps`: Actionable advice for improvement.
-- **Integration**: The result is instantly processed by the gamification engine, awarding XP, unlocking the next level, and updating the officer's FRAC competency matrix.
+### 2. AI Document Quiz Generator (Doc Quiz Engine)
+Traditional static quizzes are ineffective for rapid knowledge transfer. FlyBeta allows trainers to upload official MoSPI statistical manuals, circulars, or presentations (PDF/PPTX) and instantly generate dynamic assessments.
+- **How it works**: When a document is uploaded, the frontend sends it to the `api/ai/quiz/generate/` endpoint.
+- **Extraction & Tagging**: The backend uses Gemini to extract key concepts and generates a set of High-Quality Multiple Choice Questions (MCQs), automatically tagging each question against the 4-quadrant FRAC framework.
+- **Output**: The engine returns a structured JSON containing the questions, correct options, and detailed explanations for *why* an option is correct.
+- **Integration**: The generated quizzes are instantly playable in the Neo-Brutalist `QuizViewer`, providing immediate grading and feedback to the user.
 
 ### 3. AI Skill-Gap Diagnostics (FRAC Matrix)
 Upon onboarding, officers take a 12-question diagnostic test mapped to the 4-quadrant MoSPI FRAC framework.
@@ -43,7 +39,8 @@ Upon onboarding, officers take a 12-question diagnostic test mapped to the 4-qua
 - **FRAC Diagnostic Assessment**: 12-question competency quiz with real-time radar chart scoring across 4 quadrants.
 - **Pre-Signup Skill Gap Analysis**: Users see results before creating an account.
 - **Structured Tracks & Roadmaps**: Follow beautifully designed, step-by-step skill trees mapped to FRAC competencies.
-- **Interactive Labs (Code-Drishti)**: Solve real-world coding problems with flip-card lessons evaluated by AI.
+- **Interactive Labs**: Solve real-world coding problems with flip-card lessons.
+- **Doc Quiz Engine**: AI-powered document-to-quiz generator for instant PDF/PPTX assessments.
 - **AI-Powered Evaluation**: Instant feedback using Google Gemini AI (via Route429 proxy).
 - **Oracle Widget**: Conversational AI assistant for contextual help.
 - **Admin Analytics Dashboard**: Division heatmaps, cadre analysis, and training effectiveness charts.
