@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LandingNavbar from './LandingNavbar';
 import AuthModal from '../auth/AuthModal';
-import ThemePickerModal from './ThemePickerModal';
+import OnboardingChoiceModal from './OnboardingChoiceModal';
 import { useAuth } from '../../context/AuthContext';
 
 export default function HeroSection() {
   const [showAuth, setShowAuth] = useState(false);
-  const [showThemePicker, setShowThemePicker] = useState(false);
+  const [showChoice, setShowChoice] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -15,8 +15,7 @@ export default function HeroSection() {
     if (user) {
       navigate('/dashboard');
     } else {
-      // Step 1 of onboarding: Theme Picker → then routes to /diagnostic
-      setShowThemePicker(true);
+      setShowChoice(true);
     }
   };
 
@@ -86,7 +85,7 @@ export default function HeroSection() {
           gamified levels, boss quizzes, and an AI-powered capstone evaluator.
         </p>
 
-        {/* CTA — opens Theme Picker for unauthenticated, Dashboard for authenticated */}
+        {/* CTA — opens Choice Modal for unauthenticated, Dashboard for authenticated */}
         <button
           onClick={handleCTA}
           className="mt-12 inline-block px-12 py-5 bg-[#059669] text-white font-black text-xl uppercase tracking-wider no-underline border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-[8px] active:translate-y-[8px] active:shadow-none transition-all cursor-pointer"
@@ -102,18 +101,19 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* ── Theme Picker Modal (Step 1 of onboarding) ───────────────── */}
-      <ThemePickerModal
-        isOpen={showThemePicker}
-        onClose={() => setShowThemePicker(false)}
+      {/* ── Onboarding Choice Modal ──────────────────────────────────── */}
+      <OnboardingChoiceModal
+        isOpen={showChoice}
+        onClose={() => setShowChoice(false)}
+        onLoginClick={() => setShowAuth(true)}
       />
 
-      {/* ── Auth Modal (legacy fallback) ────────────────────────────── */}
+      {/* ── Auth Modal (opened when "Welcome Back" is clicked) ────────── */}
       <AuthModal
         isOpen={showAuth}
         onClose={() => setShowAuth(false)}
-        initialView="register"
-        customMessage="Create your account to start your adventure!"
+        initialView="login"
+        customMessage="Welcome back! Sign in to continue your journey."
       />
     </section>
   );

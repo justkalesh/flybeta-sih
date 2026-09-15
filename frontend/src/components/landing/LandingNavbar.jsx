@@ -4,12 +4,14 @@ import Logo from '../ui/Logo';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import AuthModal from '../auth/AuthModal';
+import OnboardingChoiceModal from './OnboardingChoiceModal';
 import { useState } from 'react';
 
 export default function LandingNavbar() {
   const { isDarkMode, toggleDarkMode } = useTheme();
   const { user } = useAuth();
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isChoiceOpen, setIsChoiceOpen] = useState(false);
 
   const scrollToSection = (e, id) => {
     e.preventDefault();
@@ -55,7 +57,7 @@ export default function LandingNavbar() {
           </Link>
         ) : (
           <button
-            onClick={() => setIsAuthOpen(true)}
+            onClick={() => setIsChoiceOpen(true)}
             className="bg-black text-white px-6 py-2.5 font-bold hover:bg-[#EAB308] hover:text-black border-4 border-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] uppercase tracking-wider text-sm cursor-pointer"
           >
             GET STARTED
@@ -71,7 +73,20 @@ export default function LandingNavbar() {
         </button>
       </div>
 
-      <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
+      {/* Onboarding Choice Modal */}
+      <OnboardingChoiceModal
+        isOpen={isChoiceOpen}
+        onClose={() => setIsChoiceOpen(false)}
+        onLoginClick={() => setIsAuthOpen(true)}
+      />
+
+      {/* Auth Modal (opened when "Welcome Back" is clicked) */}
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        initialView="login"
+        customMessage="Welcome back! Sign in to continue your journey."
+      />
     </nav>
   );
 }

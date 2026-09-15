@@ -4,7 +4,7 @@ from google import genai
 from google.genai import types
 from pydantic import BaseModel, Field
 
-# ── Route429 Proxy Configuration (shared with api/ai_services.py) ────────
+# ── Gemini Client Configuration (shared logic with api/ai_services.py) ────
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', 'route429-managed')
 ROUTE429_BASE_URL = os.environ.get(
     'ROUTE429_BASE_URL',
@@ -12,17 +12,16 @@ ROUTE429_BASE_URL = os.environ.get(
 )
 ROUTE429_PROXY_SECRET = os.environ.get('ROUTE429_PROXY_SECRET', '')
 
-_http_options = {'base_url': ROUTE429_BASE_URL}
-if ROUTE429_PROXY_SECRET:
-    _http_options['headers'] = {'X-Proxy-Secret': ROUTE429_PROXY_SECRET}
-
 try:
-    client = genai.Client(
-        api_key=GEMINI_API_KEY,
-        http_options=_http_options,
-    )
+    if GEMINI_API_KEY and GEMINI_API_KEY != 'route429-managed':
+        client = genai.Client(api_key=GEMINI_API_KEY)
+    else:
+        _http_options = {'base_url': ROUTE429_BASE_URL, 'headers': {}}
+        if ROUTE429_PROXY_SECRET:
+            _http_options['headers']['X-Proxy-Secret'] = ROUTE429_PROXY_SECRET
+        client = genai.Client(api_key=GEMINI_API_KEY, http_options=_http_options)
 except Exception as e:
-    print(f"[Route429] Failed to initialize Gemini client (evaluator): {e}")
+    print(f"[Gemini] Failed to initialize evaluator client: {e}")
     client = None
 
 

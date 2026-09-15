@@ -11,9 +11,9 @@ from google.genai import types
 from pydantic import BaseModel, Field
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
 
-# ── Route429 Proxy Configuration ─────────────────────────────────────────
-# Route429 sits between us and Gemini, managing a pool of API keys.
-# It automatically rotates to the next key on HTTP 429 (rate limit).
+# ── Gemini Client Configuration ──────────────────────────────────────────
+# Mode 1: Direct API key (set GEMINI_API_KEY to a real key)
+# Mode 2: Route429 proxy (set GEMINI_API_KEY to 'route429-managed')
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', 'route429-managed')
 ROUTE429_BASE_URL = os.environ.get(
     'ROUTE429_BASE_URL',
@@ -21,20 +21,23 @@ ROUTE429_BASE_URL = os.environ.get(
 )
 ROUTE429_PROXY_SECRET = os.environ.get('ROUTE429_PROXY_SECRET', '')
 
-# Initialize the Gemini client through Route429 proxy
-# - api_key is a dummy value; Route429 injects the real key server-side
-# - http_options overrides the base URL to point at the proxy
-_http_options = {'base_url': ROUTE429_BASE_URL}
-if ROUTE429_PROXY_SECRET:
-    _http_options['headers'] = {'X-Proxy-Secret': ROUTE429_PROXY_SECRET}
-
 try:
-    client = genai.Client(
-        api_key=GEMINI_API_KEY,
-        http_options=_http_options,
-    )
+    if GEMINI_API_KEY and GEMINI_API_KEY != 'route429-managed':
+        # Direct mode — use the real API key, no proxy
+        client = genai.Client(api_key=GEMINI_API_KEY)
+        print(f"[Gemini] Initialized with direct API key")
+    else:
+        # Proxy mode — route through Route429
+        _http_options = {'base_url': ROUTE429_BASE_URL, 'headers': {}}
+        if ROUTE429_PROXY_SECRET:
+            _http_options['headers']['X-Proxy-Secret'] = ROUTE429_PROXY_SECRET
+        client = genai.Client(
+            api_key=GEMINI_API_KEY,
+            http_options=_http_options,
+        )
+        print(f"[Gemini] Initialized via Route429 proxy → {ROUTE429_BASE_URL}")
 except Exception as e:
-    print(f"[Route429] Failed to initialize Gemini client: {e}")
+    print(f"[Gemini] Failed to initialize client: {e}")
     client = None
 
 
