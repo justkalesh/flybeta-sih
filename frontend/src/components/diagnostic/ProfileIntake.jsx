@@ -45,14 +45,15 @@ const PREVIOUS_TRAININGS = [
   'None',
 ];
 
-export default function ProfileIntake({ onComplete, onSkip }) {
+export default function ProfileIntake({ onComplete, onSkip, fresh = false }) {
   const { profile: existingProfile } = useCompetency();
+  const prefill = fresh ? null : existingProfile;
 
-  // Pre-fill from existing profile if available (returning user)
-  const [designation, setDesignation] = useState(existingProfile?.designation || '');
-  const [division, setDivision] = useState(existingProfile?.division || '');
-  const [yearsOfService, setYearsOfService] = useState(existingProfile?.yearsOfService || '');
-  const [previousTrainings, setPreviousTrainings] = useState(existingProfile?.previousTrainings || []);
+  // Pre-fill from existing profile if available (returning user), unless fresh=true
+  const [designation, setDesignation] = useState(prefill?.designation || '');
+  const [division, setDivision] = useState(prefill?.division || '');
+  const [yearsOfService, setYearsOfService] = useState(prefill?.yearsOfService || '');
+  const [previousTrainings, setPreviousTrainings] = useState(prefill?.previousTrainings || []);
 
   const handleTrainingToggle = (training) => {
     if (training === 'None') {

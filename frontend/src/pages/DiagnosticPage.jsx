@@ -268,30 +268,34 @@ export default function DiagnosticPage() {
         </div>
       )}
 
-      {/* ── SUBMITTING STATE ── */}
-      {view === 'submitting' && (
-        <div className="flex flex-col items-center justify-center min-h-[40vh] gap-4">
-          <div className="brutalist-card p-10 text-center bg-surface" style={{ maxWidth: 500 }}>
-            <Loader2 size={48} className="mx-auto mb-4 animate-spin" style={{ color: 'var(--color-primary)' }} />
-            <h3 className="heading-md mb-2">Evaluating Responses</h3>
-            <p className="text-muted text-sm">
-              AI is grading your MCQs and evaluating descriptive answers...
-            </p>
-          </div>
+      {/* ── AI QUIZ (stays mounted during submission so answers aren't lost) ── */}
+      {(view === 'quiz' || view === 'submitting') && quizData && (
+        <div style={{ position: 'relative' }}>
+          {view === 'submitting' && (
+            <div style={{
+              position: 'fixed', inset: 0, zIndex: 999,
+              background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(6px)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <div className="brutalist-card p-10 text-center bg-surface" style={{ maxWidth: 500 }}>
+                <Loader2 size={48} className="mx-auto mb-4 animate-spin" style={{ color: 'var(--color-primary)' }} />
+                <h3 className="heading-md mb-2">Evaluating Responses</h3>
+                <p className="text-muted text-sm">
+                  AI is grading your MCQs and evaluating descriptive answers...
+                </p>
+              </div>
+            </div>
+          )}
+          <AIDiagnosticAssessment
+            sections={quizData.sections}
+            onSubmit={handleQuizSubmit}
+          />
         </div>
       )}
 
       {/* ── PROFILE INTAKE ── */}
       {view === 'intake' && (
-        <ProfileIntake onComplete={handleIntakeComplete} onSkip={isOnboarding ? handleSkip : undefined} />
-      )}
-
-      {/* ── AI QUIZ ── */}
-      {view === 'quiz' && quizData && (
-        <AIDiagnosticAssessment
-          sections={quizData.sections}
-          onSubmit={handleQuizSubmit}
-        />
+        <ProfileIntake fresh onComplete={handleIntakeComplete} onSkip={isOnboarding ? handleSkip : undefined} />
       )}
 
       {/* ── RESULTS ── */}

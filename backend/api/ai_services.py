@@ -720,6 +720,9 @@ def evaluate_descriptive_answers(sections_with_answers):
             )
 
             data = json.loads(response.text)
+            # Handle Gemini returning either {"evaluations": [...]} or just [...]
+            if isinstance(data, list):
+                return data
             return data.get("evaluations", [])
 
         except Exception as e:

@@ -588,6 +588,7 @@ class DiagnosticSubmitView(APIView):
     Submit answers, auto-grade MCQs, AI-grade descriptives, persist attempt.
     Accepts both authenticated and guest users.
     """
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -625,11 +626,14 @@ class DiagnosticSubmitView(APIView):
             for section in sections:
                 quadrant = section['frac_quadrant']
                 desc = section.get('descriptive', {})
+                # Handle AI sometimes returning descriptive as a list instead of dict
+                if isinstance(desc, list):
+                    desc = desc[0] if desc else {}
                 user_answer = answers_payload.get(quadrant, {}).get('descriptive_answer', '')
                 descriptive_inputs.append({
                     'frac_quadrant': quadrant,
-                    'question_text': desc.get('question_text', ''),
-                    'ideal_answer_points': desc.get('ideal_answer_points', []),
+                    'question_text': desc.get('question_text', '') if isinstance(desc, dict) else '',
+                    'ideal_answer_points': desc.get('ideal_answer_points', []) if isinstance(desc, dict) else [],
                     'user_answer': user_answer,
                 })
 
