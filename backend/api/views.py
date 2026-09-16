@@ -405,6 +405,7 @@ class OracleChatView(APIView):
     def post(self, request):
         message = request.data.get('message', '').strip()
         history = request.data.get('history', [])
+        user_context = request.data.get('user_context', None)
 
         if not message:
             return Response(
@@ -413,7 +414,7 @@ class OracleChatView(APIView):
             )
 
         try:
-            reply = ask_oracle(message, history)
+            reply = ask_oracle(message, history, user_context)
             return Response({'reply': reply}, status=status.HTTP_200_OK)
         except Exception as e:
             traceback.print_exc()

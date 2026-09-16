@@ -225,8 +225,8 @@ export const extractVideoKnowledge = async (videoUrl) => {
   return data;
 };
 
-export const askOracle = async (message, history) => {
-  const { data } = await api.post('ai/oracle/', { message, history });
+export const askOracle = async (message, history, userContext = null) => {
+  const { data } = await api.post('ai/oracle/', { message, history, user_context: userContext });
   return data.reply;
 };
 

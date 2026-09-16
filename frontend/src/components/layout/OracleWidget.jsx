@@ -2,20 +2,46 @@ import { useState, useRef, useEffect } from 'react';
 import { Sparkles, X, Send, Bot } from 'lucide-react';
 import { askOracle } from "../../services/api";
 import { useTheme } from "../../context/ThemeContext";
+import { useAuth } from "../../context/AuthContext";
+import { useCompetency } from "../../context/CompetencyContext";
 
 const ORACLE_WELCOME = {
   role: 'ai',
-  content: "I'm The Oracle — your AI mentor across FlyBeta. Ask me anything about Data Science, AI, or Cloud Computing. 🔮",
+  content: "I'm The Oracle — your AI mentor across FlyBeta. Ask me anything about your learning, courses, iGOT programmes, or platform features. 🔮",
 };
 
 export default function OracleWidget() {
   const { themeKey } = useTheme();
+  const { user } = useAuth();
+  const { profile } = useCompetency();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([ORACLE_WELCOME]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+
+  // Build user context for personalized Oracle responses
+  const buildUserContext = () => {
+    const ctx = {};
+    if (user) {
+      ctx.username = user.username || user.email;
+    }
+    if (profile) {
+      ctx.designation = profile.designation;
+      ctx.division = profile.division;
+      ctx.yearsOfService = profile.yearsOfService;
+      ctx.previousTrainings = profile.previousTrainings;
+      ctx.scores = {
+        statistical: profile.comp_statistical || 0,
+        technical: profile.comp_technical || 0,
+        digital_governance: profile.comp_digital_governance || 0,
+        behavioural: profile.comp_behavioural || 0,
+      };
+      ctx.completedDiagnostic = !!profile.completedAt;
+    }
+    return Object.keys(ctx).length > 0 ? ctx : null;
+  };
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
@@ -40,8 +66,8 @@ export default function OracleWidget() {
     setIsTyping(true);
 
     try {
-      // Call live Gemini API
-      const reply = await askOracle(trimmed, messages);
+      // Call live Gemini API with user context
+      const reply = await askOracle(trimmed, messages, buildUserContext());
       setMessages((prev) => [...prev, { role: 'ai', content: reply }]);
     } catch (error) {
       console.error(error);
