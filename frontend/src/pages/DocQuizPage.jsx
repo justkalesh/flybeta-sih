@@ -496,14 +496,12 @@ export default function DocQuizPage() {
                   📄 Upload New Document
                 </button>
                 <button
-                  onClick={() => {
-                    setSelectedAnswers({});
-                    setSubmitted(false);
-                  }}
+                  onClick={handleGenerate}
+                  disabled={loading}
                   className="brutalist-btn w-full md:w-auto"
                   style={{ border: '3px solid var(--color-ink)' }}
                 >
-                  🔄 Retake Quiz
+                  🔄 Regenerate Quiz
                 </button>
               </>
             )}
