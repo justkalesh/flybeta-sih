@@ -185,14 +185,7 @@ export default function ProfileIntake({ onComplete, onSkip, fresh = false }) {
             </div>
           </div>
 
-          <div className="pt-4 flex flex-col items-end gap-3">
-            <button
-              type="submit"
-              disabled={!isValid}
-              className="brutalist-btn bg-primary text-white flex items-center gap-2 px-8 py-3 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Start FRAC Diagnostic <ArrowRight size={20} />
-            </button>
+          <div className="pt-6 flex items-center justify-center gap-5 flex-wrap">
             {onSkip && (
               <button
                 type="button"
@@ -207,12 +200,43 @@ export default function ProfileIntake({ onComplete, onSkip, fresh = false }) {
                     });
                   }
                 }}
-                className="text-sm font-semibold cursor-pointer bg-transparent border-none underline disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ color: 'var(--color-muted)' }}
+                className="text-sm font-bold uppercase tracking-wider cursor-pointer bg-transparent px-6 py-3 border-none transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                style={{
+                  color: 'var(--color-muted)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = 'var(--color-ink)';
+                  e.currentTarget.style.textDecoration = 'underline';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'var(--color-muted)';
+                  e.currentTarget.style.textDecoration = 'none';
+                }}
               >
-                Skip assessment & continue →
+                Skip assessment →
               </button>
             )}
+            <button
+              type="submit"
+              disabled={!isValid}
+              className="flex items-center gap-2 px-10 py-4 border-4 font-black uppercase tracking-widest text-lg cursor-pointer transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{
+                backgroundColor: 'var(--color-primary)',
+                color: '#fff',
+                borderColor: 'var(--color-border)',
+                boxShadow: 'var(--shadow-brutal)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translate(2px, 2px)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-brutal-sm)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'none';
+                e.currentTarget.style.boxShadow = 'var(--shadow-brutal)';
+              }}
+            >
+              Start FRAC Diagnostic <ArrowRight size={20} />
+            </button>
           </div>
         </form>
       </div>
