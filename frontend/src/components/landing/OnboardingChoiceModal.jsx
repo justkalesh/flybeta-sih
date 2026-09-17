@@ -36,8 +36,8 @@ export default function OnboardingChoiceModal({ isOpen, onClose, onLoginClick })
           onClick={onClose}
           className="absolute top-3 right-3 bg-transparent border-2 p-1.5 cursor-pointer transition-colors z-10"
           style={{
-            borderColor: 'var(--color-border)',
-            color: 'var(--color-ink)',
+            borderColor: 'var(--color-canvas)',
+            color: 'var(--color-canvas)',
           }}
         >
           <X size={18} />
