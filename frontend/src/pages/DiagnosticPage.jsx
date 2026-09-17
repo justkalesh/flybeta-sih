@@ -6,6 +6,7 @@ import AIDiagnosticAssessment from '../components/diagnostic/AIDiagnosticAssessm
 import DiagnosticResults from '../components/diagnostic/DiagnosticResults';
 import AttemptHistory from '../components/diagnostic/AttemptHistory';
 import AuthModal from '../components/auth/AuthModal';
+import ThemeSelector from '../components/onboarding/ThemeSelector';
 import { useCompetency } from '../context/CompetencyContext';
 import { generateDiagnosticQuiz, submitDiagnosticQuiz, fetchDiagnosticHistory } from '../services/api';
 import { BarChart3, History, Loader2, AlertTriangle } from 'lucide-react';
@@ -30,8 +31,8 @@ export default function DiagnosticPage() {
   const location = useLocation();
   const isOnboarding = location.pathname === '/onboarding';
 
-  // View state: 'intake' | 'generating' | 'quiz' | 'submitting' | 'results' | 'history'
-  const [view, setView] = useState('intake');
+  // View state: 'theme-select' | 'intake' | 'generating' | 'quiz' | 'submitting' | 'results' | 'history'
+  const [view, setView] = useState(isOnboarding ? 'theme-select' : 'intake');
   const [intakeData, setIntakeData] = useState(null);
   const [quizData, setQuizData] = useState(null);
   const [answers, setAnswers] = useState({});
@@ -159,7 +160,8 @@ export default function DiagnosticPage() {
 
   return (
     <div id="tour-page-diagnostic">
-      {/* Page Header */}
+      {/* Page Header (hidden during theme selection) */}
+      {view !== 'theme-select' && (
       <header className="mb-10">
         <div
           className="bg-surface p-5 md:p-8 inline-block"
@@ -230,6 +232,7 @@ export default function DiagnosticPage() {
           </div>
         )}
       </header>
+      )}
 
       {/* Error Banner */}
       {error && (
@@ -315,6 +318,13 @@ export default function DiagnosticPage() {
         <AttemptHistory attempts={history} onRetake={handleRetake} />
       )}
 
+      {/* ── THEME SELECTOR (first step of onboarding) ── */}
+      {view === 'theme-select' && (
+        <ThemeSelector
+          onComplete={() => setView('intake')}
+        />
+      )}
+
       {/* Auth Modal */}
       <AuthModal
         isOpen={showAuth}
@@ -324,6 +334,8 @@ export default function DiagnosticPage() {
             // Reset tour so it starts fresh on dashboard
             localStorage.removeItem('mospi_has_seen_tour');
             localStorage.setItem('mospi_tour_page', '0');
+            // Show theme selector before navigating to dashboard
+            setShowAuth(false);
             navigate('/dashboard');
           }
         }}

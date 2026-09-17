@@ -124,13 +124,13 @@ const TOUR_PAGES = [
     ],
   },
   {
-    path: '/labs/architect',
+    path: '/labs/quiz-generator',
     steps: [
       {
         element: '#tour-page-labs',
         popover: {
-          title: '🏗️ AI Labs',
-          description: 'Two tools: Blueprint Lab generates step-by-step project plans from your idea. Doc Quiz Engine creates FRAC-tagged MCQs from uploaded documents (PDF/PPTX) for self-assessment.',
+          title: '🧪 AI Labs',
+          description: 'Two powerful tools: Doc Quiz Engine generates FRAC-tagged MCQs from uploaded documents (PDF/PPTX) for self-assessment. Blueprint Lab creates step-by-step project plans from your idea using AI.',
           side: 'bottom',
           align: 'center',
         },

@@ -23,24 +23,40 @@ export default function OnboardingChoiceModal({ isOpen, onClose, onLoginClick })
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-md border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
-        style={{ background: 'var(--color-canvas, #F9F8F6)' }}
+        className="relative w-full max-w-md border-4"
+        style={{
+          background: 'var(--color-canvas)',
+          borderColor: 'var(--color-border)',
+          boxShadow: 'var(--shadow-brutal-lg)',
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 bg-transparent border-2 border-black p-1.5 cursor-pointer hover:bg-red-100 transition-colors z-10"
+          className="absolute top-3 right-3 bg-transparent border-2 p-1.5 cursor-pointer transition-colors z-10"
+          style={{
+            borderColor: 'var(--color-border)',
+            color: 'var(--color-ink)',
+          }}
         >
           <X size={18} />
         </button>
 
         {/* Header */}
-        <div className="bg-black text-white px-6 py-4">
-          <h2 className="heading-md text-white m-0" style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        <div
+          className="px-6 py-4"
+          style={{ background: 'var(--color-ink)', color: 'var(--color-canvas)' }}
+        >
+          <h2
+            className="heading-md m-0"
+            style={{ color: 'var(--color-canvas)', textTransform: 'uppercase', letterSpacing: '0.05em' }}
+          >
             Welcome to FlyBeta
           </h2>
-          <p className="text-sm mt-1 opacity-80 font-mono">How would you like to begin?</p>
+          <p className="text-sm mt-1 opacity-80 font-mono" style={{ color: 'var(--color-canvas)' }}>
+            How would you like to begin?
+          </p>
         </div>
 
         {/* Options */}
@@ -48,7 +64,27 @@ export default function OnboardingChoiceModal({ isOpen, onClose, onLoginClick })
           {/* New User */}
           <button
             onClick={handleNew}
-            className="w-full flex items-center gap-4 p-5 border-4 border-black bg-[#059669] text-white font-black text-left uppercase tracking-wider shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none transition-all cursor-pointer"
+            className="w-full flex items-center gap-4 p-5 border-4 bg-[#059669] text-white font-black text-left uppercase tracking-wider transition-all cursor-pointer"
+            style={{
+              borderColor: 'var(--color-border)',
+              boxShadow: 'var(--shadow-brutal)',
+            }}
+            onMouseDown={(e) => {
+              e.currentTarget.style.transform = 'translate(6px, 6px)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.transform = 'translate(3px, 3px)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-brutal-sm)';
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translate(3px, 3px)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-brutal-sm)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'none';
+              e.currentTarget.style.boxShadow = 'var(--shadow-brutal)';
+            }}
           >
             <div className="shrink-0 w-12 h-12 bg-white/20 border-2 border-white/40 flex items-center justify-center">
               <Rocket size={24} />
@@ -64,10 +100,38 @@ export default function OnboardingChoiceModal({ isOpen, onClose, onLoginClick })
           {/* Returning User */}
           <button
             onClick={handleReturning}
-            className="w-full flex items-center gap-4 p-5 border-4 border-black text-black font-black text-left uppercase tracking-wider shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none transition-all cursor-pointer"
-            style={{ background: 'var(--color-surface, #ffffff)' }}
+            className="w-full flex items-center gap-4 p-5 border-4 font-black text-left uppercase tracking-wider transition-all cursor-pointer"
+            style={{
+              background: 'var(--color-surface)',
+              color: 'var(--color-ink)',
+              borderColor: 'var(--color-border)',
+              boxShadow: 'var(--shadow-brutal)',
+            }}
+            onMouseDown={(e) => {
+              e.currentTarget.style.transform = 'translate(6px, 6px)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.transform = 'translate(3px, 3px)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-brutal-sm)';
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translate(3px, 3px)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-brutal-sm)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'none';
+              e.currentTarget.style.boxShadow = 'var(--shadow-brutal)';
+            }}
           >
-            <div className="shrink-0 w-12 h-12 border-2 border-black flex items-center justify-center" style={{ background: 'var(--color-canvas, #F9F8F6)' }}>
+            <div
+              className="shrink-0 w-12 h-12 border-2 flex items-center justify-center"
+              style={{
+                background: 'var(--color-canvas)',
+                borderColor: 'var(--color-border)',
+                color: 'var(--color-ink)',
+              }}
+            >
               <UserCheck size={24} />
             </div>
             <div>

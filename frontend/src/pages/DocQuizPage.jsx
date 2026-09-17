@@ -129,7 +129,7 @@ export default function DocQuizPage() {
     : 0;
 
   return (
-    <div id="tour-page-quiz">
+    <div id="tour-page-labs">
       <LabsSubNav />
 
       {/* ── Hero ──────────────────────────────────────────────── */}
